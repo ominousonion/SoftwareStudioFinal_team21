@@ -49,7 +49,7 @@ public class GameClient extends JFrame{
 		}
 	}
 	
-	private class ConnectionThread extends Thread{
+	public class ConnectionThread extends Thread{
 		
 		ConnectionThread(){
 			
