@@ -2,7 +2,11 @@ package client;
 
 import javax.swing.*;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.*;
 
 public class GameClient extends JFrame{
@@ -14,10 +18,13 @@ public class GameClient extends JFrame{
 	private String destinationIPAddr;
 	private int destinationPortNum;
 	private Socket socket;
-	private ConnectionThread connection;
+	private PrintWriter writer;
+	//private ConnectionThread connection;
 	
+	//character data
+	private String name = "default";
 	
-	GameClient(){
+	public GameClient(){
 		//create applet
 		this.applet = new MainApplet();
 		this.applet.init();
@@ -33,10 +40,20 @@ public class GameClient extends JFrame{
 		
 	}
 	
+	public GameClient(String IP,int portNum){
+		this();
+		this.destinationIPAddr = IP;
+		this.destinationPortNum = portNum;
+	}
+	
 	//connect to server
 	public void connect(){
 		try{
-			this.socket=new Socket(this.destinationIPAddr,this.destinationPortNum);
+			this.socket = new Socket(this.destinationIPAddr,this.destinationPortNum);
+			this.writer = new PrintWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+			Thread clientThread = new ConnectionThread(reader);
+			clientThread.start();
 		}
 		catch (UnknownHostException e){
 			e.printStackTrace();
@@ -50,19 +67,30 @@ public class GameClient extends JFrame{
 	}
 	
 	public class ConnectionThread extends Thread{
-		
-		ConnectionThread(){
-			
+		private BufferedReader reader;
+		public ConnectionThread(BufferedReader reader){
+			this.reader = reader;
 		}
-		
-		public void run(){
-			
-		}
-		
+		public void run() {
+			while(true) {
+				try {
+					String line = this.reader.readLine();
+					//message accept
+				} catch (IOException e){
+					e.printStackTrace();
+				}
+			}
+		}	
+	}
+	
+	public void sendMessage(String message){
+		message = name.concat(":").concat(message);//use string split
+		this.writer.println(message);
+		this.writer.flush();
 	}
 	
 	public static void main(String [] args){
-		GameClient client=new GameClient();
-
+		GameClient client=new GameClient("127.0.0.1",8000);// IP and portnum
+		client.connect();
 	}
 }

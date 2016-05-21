@@ -2,5 +2,14 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/user/Desktop/軟實/final/lib/Ani.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Desktop/軟實/final/lib/controlP5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Desktop/軟實/final/lib/core.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Desktop/軟實/final/lib/jl1.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Desktop/軟實/final/lib/jsminim.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Desktop/軟實/final/lib/minim.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Desktop/軟實/final/lib/mp3spi1.9.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Desktop/軟實/final/lib/tritonus_aos.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Desktop/軟實/final/lib/tritonus_share.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
