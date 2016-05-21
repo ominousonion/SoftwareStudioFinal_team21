@@ -15,20 +15,16 @@ public class GameMap {
 	//constructor
 	GameMap(MainApplet applet){
 		this.applet=applet;
-		
-		//create components
-		components=new ArrayList<MapComponent>();
-	
 		this.x=300;
 		this.y=0;
 		this.width=900;
 		this.height=670;
 		this.SquareX=x+150;
-		this.SquareY=35;
+		this.SquareY=30;
 		this.SquareWidth=600;
-		//MapComponent block = new Block(SquareX, SquareY, applet);
-		//this.components.add(block);
+		
 	}
+
 	
 	public void display(){
 		this.applet.noStroke();
@@ -40,6 +36,5 @@ public class GameMap {
 		/*for(MapComponent mc: components){
 			mc.display();
 		}*/
-
 	}
 }
