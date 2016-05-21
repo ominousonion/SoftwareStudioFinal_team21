@@ -1,7 +1,7 @@
 package client;
 
 import java.util.ArrayList;
-import java.util.Random;
+
 
 public class GameMap {
 	private MainApplet applet;

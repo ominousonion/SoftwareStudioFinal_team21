@@ -13,6 +13,7 @@ public class MainApplet extends PApplet{
 	
 	
 	public void setup(){
+		size(width,height);
 		map=new GameMap(this);
 		state=new CharacterState(this);
 		
@@ -20,9 +21,7 @@ public class MainApplet extends PApplet{
 	
 	public void draw(){
 		map.display();
-	}
-	
-	public void keyPressed(){
 		state.display();
 	}
+	
 }
