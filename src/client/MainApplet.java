@@ -12,6 +12,7 @@ public class MainApplet extends PApplet{
 	
 	
 	public void setup(){
+		size(width,height);
 		map=new GameMap(this);
 		state=new CharacterState(this);
 
