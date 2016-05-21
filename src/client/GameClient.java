@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import java.io.IOException;
 import java.net.*;
-
+@SuppressWarnings("serial")
 public class GameClient extends JFrame{
 	private final static int windowWidth = 1200, windowHeight = 670;
 	//applet
