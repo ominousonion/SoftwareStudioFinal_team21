@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.*;
 
 public class GameClient extends JFrame{
-	private final static int windowWidth = 1200, windowHeight = 670;
+	private final static int windowWidth = 1200, windowHeight = 720;
 	//applet
 	private MainApplet applet;
 	
