@@ -11,14 +11,15 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameServer extends JFrame{
-	
+
 	private ServerSocket serverSocket;
 	private ArrayList<ConnectionThread> connections;
 	private JTextArea textArea;
 	private HashMap<String, Integer> groupData = new HashMap<String, Integer>();
-	
+
 	GameServer(int portNum){
 		super("server");
+		this.readData();
 		this.setSize(400,300);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.textArea = new JTextArea();
@@ -36,7 +37,7 @@ public class GameServer extends JFrame{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void ServerRunning(){
 		this.textArea.append("Server starts waiting for client.\n");
 		// Create a loop to make server wait for client forever (unless you stop it)
@@ -57,7 +58,7 @@ public class GameServer extends JFrame{
 			}
 		}
 	}
-	
+
 	public class ConnectionThread extends Thread{
 		private Socket socket;
 		private BufferedReader reader;
@@ -75,13 +76,14 @@ public class GameServer extends JFrame{
 			while(true) {
 				try {
 					String line = this.reader.readLine();
-					broadcast(line);    // line is message from server
+					String [] info = line.split(":");	// info[0] name, info[1] message
+					//broadcast();
 				} catch (IOException e){
 					e.printStackTrace();
 				}
 			}
 		}
-		
+
 		public void sendMessage(String message) {
 			this.writer.println(message);
 			this.writer.flush();
@@ -107,11 +109,11 @@ public class GameServer extends JFrame{
 			    ex.printStackTrace();
 		}
 		try{
-			writer.close(); 
+			writer.close();
 		}catch(IOException ex) {
 		}
 	}
-	
+
 	public void readData(){
 		String group;
 		int times;
@@ -126,8 +128,8 @@ public class GameServer extends JFrame{
 			System.out.println("Can't not find file");
 		}
 	}
-	
-	public static void main(String[] args) {	
+
+	public static void main(String[] args) {
 		GameServer server = new GameServer(8000);
 		server.ServerRunning();
 	}

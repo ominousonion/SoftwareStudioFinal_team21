@@ -12,7 +12,8 @@ public class Character {
 	private String group;
 	private int oneStep;
 	private int preX, preY, x, y;
-	
+	private int score;
+
 	//constructor
 	Character(int x,int y, int width, int height, MainApplet parent){
 		this.iniX = x;
@@ -23,14 +24,14 @@ public class Character {
 		this.height = height;
 		this.parent = parent;
 	}
-	
+
 	public void display(){
 		// Displays the image at point (0, height/2) at half of its size
 		parent.image(chImg, 0, height/2, chImg.width/2, chImg.height/2);
 		// animation : Ani.to
-			
+
 	}
-	
+
 	public void loadData(){
 		chImg = parent.loadImage(chImgAddress);
 		chImg.resize(width,height);
@@ -39,7 +40,7 @@ public class Character {
 		itemImg.resize(20,20);
 		*/
 	}
-	
+
 	public void move(String dir){   //undo:check for boundary
 		if(dir.equals("up")){
 			preY = y;
@@ -48,7 +49,7 @@ public class Character {
 		else if(dir.equals("down")){
 			preY = y;
 			this.y = this.y + oneStep;
-		} 
+		}
 		else if(dir.equals("left")){
 			preX = x;
 			this.x = this.x - oneStep;
@@ -58,12 +59,20 @@ public class Character {
 			this.x = this.x + oneStep;
 		}
 	}
-	
+
 	public void setGroup(String group){
 		this.group = group;
 	}
 	
 	public String getGroup(){
 		return group;
+	}
+	
+	public void setScore(int score){
+		this.score = score;
+	}
+	
+	public int getScore(){
+		return score;
 	}
 }
