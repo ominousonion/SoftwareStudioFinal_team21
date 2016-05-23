@@ -5,6 +5,7 @@ import processing.core.PImage;
 
 public class Character {
 	//attributions
+<<<<<<< HEAD
 	final public int iniX, iniY, width, height;
 	private MainApplet parent;
 	private PImage chImg, itemImg;
@@ -23,9 +24,22 @@ public class Character {
 		this.width = width;
 		this.height = height;
 		this.parent = parent;
+=======
+	final public int x, y, width, height;
+	private MainApplet applet;
+	private int d=1;
+	//constructor
+	Character(MainApplet applet,int x,int y, int width, int height){
+		this.applet=applet;
+		this.x=x;
+		this.y=y;
+		this.width=width;
+		this.height=height;
+>>>>>>> origin/master
 	}
 
 	public void display(){
+<<<<<<< HEAD
 		// Displays the image at point (0, height/2) at half of its size
 		parent.image(chImg, 0, height/2, chImg.width/2, chImg.height/2);
 		// animation : Ani.to
@@ -74,5 +88,10 @@ public class Character {
 	
 	public int getScore(){
 		return score;
+=======
+		this.applet.noStroke();
+		this.applet.fill(255, 0, 0);
+		this.applet.rect(x+d, y+d, width-d*2, height-d*2);
+>>>>>>> origin/master
 	}
 }

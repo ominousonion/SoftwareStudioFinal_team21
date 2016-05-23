@@ -1,18 +1,22 @@
 package client;
 
-public class MapComponent {
+import processing.core.PApplet;
+
+public abstract class MapComponent {
 	//attributions
-	final public int x, y, width, height;
+	final public int x, y;
+	public int width=40;
+	public PApplet applet;
 	
 	//constructor
-	MapComponent(int x,int y, int width, int height){
+	MapComponent(int x,int y,PApplet applet){
+
 		this.x=x;
 		this.y=y;
-		this.width=width;
-		this.height=height;
+		this.applet=applet;
 	}
 	
-	public void display(){
-		
-	}
+
+	public void display(){};
+
 }
