@@ -7,7 +7,7 @@ import java.util.Random;
 public class GameMap {
 	private MainApplet applet;
 	//attributions
-	final public int x, y, width, height, SquareX, SquareY, SquareWidth, SquareUnit;
+	final public int x, y, width, height, SquareX, SquareY, SquareWidth, SquareHeight, SquareUnit;
 	//map components
 	public ArrayList<MapComponent> components;
 	//character
@@ -23,6 +23,7 @@ public class GameMap {
 		this.SquareX=x+150;
 		this.SquareY=30;
 		this.SquareWidth=600;
+		this.SquareHeight=600;
 		this.SquareUnit=this.SquareWidth/15;
 		
 		components = new ArrayList<MapComponent>();
@@ -41,7 +42,7 @@ public class GameMap {
 			
 		}
 		
-		character=new Character(applet, SquareX, SquareY+SquareUnit*14, SquareUnit, SquareUnit);
+		character=new Character(SquareX, SquareY+SquareUnit*14, SquareUnit, SquareUnit, applet);
 		
 	}
 

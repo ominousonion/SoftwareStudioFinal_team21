@@ -9,6 +9,7 @@ public class Block extends MapComponent{
 	
 	Block(int x, int y, PApplet applet) {
 		super(x, y, applet);
+		this.passable=false;
 	}
 	
 	public void display(){
