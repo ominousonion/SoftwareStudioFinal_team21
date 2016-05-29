@@ -12,6 +12,7 @@ public class GameMap {
 	public ArrayList<MapComponent> components;
 	//character
 	public Character character;
+	public Character opponent;
 	
 	//constructor
 	GameMap(MainApplet applet){
@@ -43,7 +44,7 @@ public class GameMap {
 		}
 		
 		character=new Character(SquareX, SquareY+SquareUnit*14, SquareUnit, SquareUnit, applet);
-		
+		opponent=new Character(SquareX+SquareWidth-SquareUnit, SquareY, SquareUnit, SquareUnit, applet);
 	}
 
 	
@@ -58,5 +59,6 @@ public class GameMap {
 			mc.display();
 		}
 		this.character.display();
+		this.opponent.display();
 	}
 }

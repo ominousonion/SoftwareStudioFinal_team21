@@ -14,6 +14,7 @@ public class Character {
 	public int oneStep;
 	private int preX, preY;
 	public int x, y;
+	public String name;
 
 	//constructor
 	Character(int x,int y, int width, int height, MainApplet parent){
@@ -28,6 +29,10 @@ public class Character {
 
 	}
 
+	public void setName(String name){
+		this.name=name;
+	}
+	
 	public void display(){
 		// Displays the image at point (0, height/2) at half of its size
 		//parent.image(chImg, 0, height/2, chImg.width/2, chImg.height/2);
