@@ -16,10 +16,16 @@ public class Floor extends MapComponent{
 	}
 	
 	public void display(){
+<<<<<<< HEAD
 		/*this.applet.noStroke();
 		this.applet.fill(200, 100, 100);
 		this.applet.rect(x, y, width, width);*/
 		this.applet.image(this.img, this.x, this.y);
+=======
+		this.applet.image(img,x,y);
+		this.applet.noStroke();
+		this.applet.fill(200, 100, 100);
+>>>>>>> 17b8dd3980a7e32b3cbadf287225b05f77791d3b
 	}
 
 }
