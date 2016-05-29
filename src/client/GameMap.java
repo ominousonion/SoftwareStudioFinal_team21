@@ -41,7 +41,7 @@ public class GameMap{
 		Random r = new Random();
 		int ran;
 		
-		this.mapFile=new File("map/mapfile_"+mapNumber+".txt");
+		this.mapFile=new File("./src/map/mapfile_1.map");
 		try
 		{
 			Scanner sc=new Scanner(mapFile);

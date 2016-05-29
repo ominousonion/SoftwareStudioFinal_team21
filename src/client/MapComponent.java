@@ -18,8 +18,8 @@ public abstract class MapComponent extends PApplet {
 		this.x=x;
 		this.y=y;
 		this.applet=applet;
-		String filename =("img/map_"+num);
-		img = loadImage(filename,"png");
+		String filename =("./src/img/map_"+num+".png");
+		img = loadImage(filename);
 	}
 
 	public void display(){};
