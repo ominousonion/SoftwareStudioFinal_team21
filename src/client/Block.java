@@ -13,9 +13,8 @@ public class Block extends MapComponent{
 	}
 	
 	public void display(){
-		this.applet.image(img,x,y);
+		this.applet.image(img,x,y,width,width);
 		this.applet.noStroke();
-		this.applet.fill(200, 100, 100);
 	}
 
 }

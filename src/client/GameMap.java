@@ -55,7 +55,7 @@ public class GameMap{
 				}else if(mapData<=3){
 					components.add(new OccupiedArea(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,mapData,this.applet));
 				}else{
-					components.add(new Floor(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,mapData,this.applet));
+					components.add(new Block(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,mapData,this.applet));
 				}
 				i++;
 			}
