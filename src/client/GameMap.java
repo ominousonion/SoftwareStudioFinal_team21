@@ -2,8 +2,7 @@ package client;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
-import java.io.*;
+
 
 public class GameMap {
 	private MainApplet applet;
@@ -13,11 +12,11 @@ public class GameMap {
 	public ArrayList<MapComponent> components;
 	//character
 	public Character character;
-	private File mapFile;
-	
+	public Character opponent;
+	private int ch_X, ch_Y, op_X, op_Y;
+	private GameClient gc;
 	//constructor
-	GameMap(int mapNumber,MainApplet applet){
-		
+	GameMap(MainApplet applet, GameClient gc){
 		this.applet=applet;
 		this.x=300;
 		this.y=0;
@@ -28,36 +27,28 @@ public class GameMap {
 		this.SquareWidth=600;
 		this.SquareHeight=600;
 		this.SquareUnit=this.SquareWidth/15;
+		this.gc = gc;
+		op_X = SquareX+SquareWidth-SquareUnit;
+		op_Y = SquareY;
+		ch_X = SquareX;
+		ch_Y = SquareY+SquareUnit*14;
 		
 		components = new ArrayList<MapComponent>();
+		Random r = new Random();
+		int ran;
 		
-		
-		
-		
-		
-		
-		this.mapFile=new File("map/mapfile_"+mapNumber+".txt");
-		try
-		{
-			Scanner sc=new Scanner(mapFile);
-			int mapData;
-			int i=0;
-			
-			while(sc.hasNext()&& i<225){
-				mapData=sc.nextInt();
-				if(mapData==0){
-					components.add(new Floor(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,mapData,this.applet));
-				}else if(mapData<=3){
-					components.add(new OccupiedArea(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,mapData,this.applet));
-				}else{
-					components.add(new Floor(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,mapData,this.applet));
-				}
-				i++;
+		for(int i=0;i<225;i++){
+			ran = r.nextInt(3);
+			if(i==13||i==14||i==29||i==195||i==210||i==211){
+				components.add(new Floor(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,this.applet));
+			}else if(ran==0){
+				components.add(new Block(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,this.applet));
+			}else{
+				components.add(new Floor(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,this.applet));
 			}
-			sc.close();
-		}catch (IOException e) {System.out.println(e);}
-		
-		
+			
+		}
+		iniCharacter(gc.seq);
 	}
 
 	
@@ -72,5 +63,19 @@ public class GameMap {
 			mc.display();
 		}
 		this.character.display();
+		this.opponent.display();
+	}
+	
+	public void iniCharacter(int seq){
+		System.out.println("seq: "+seq);
+		if(seq==1){
+			character= new Character(ch_X, ch_Y, SquareUnit, SquareUnit, applet);
+			opponent = new Character(op_X, op_Y, SquareUnit, SquareUnit, applet);
+		}
+		else{
+			character= new Character(op_X, op_Y, SquareUnit, SquareUnit, applet);
+			opponent = new Character(ch_X, ch_Y, SquareUnit, SquareUnit, applet);
+		}
 	}
 }
+
