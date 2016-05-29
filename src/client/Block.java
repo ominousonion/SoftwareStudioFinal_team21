@@ -4,18 +4,18 @@ package client;
 import processing.core.PApplet;
 
 public class Block extends MapComponent{
-
-	private int d=2; 
 	
-	Block(int x, int y, PApplet applet) {
-		super(x, y, applet);
+	Block(int x, int y,int num, PApplet applet) {
+		super(x, y,num, applet);
 		this.passable=false;
+		this.occupiedStage=0;
+		
 	}
 	
 	public void display(){
 		this.applet.noStroke();
 		this.applet.fill(200, 100, 100);
-		this.applet.rect(x+d, y+d, width-2*d, width-2*d);
+		this.applet.rect(x, y, width, width);
 	}
 
 }

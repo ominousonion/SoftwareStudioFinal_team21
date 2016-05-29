@@ -50,6 +50,8 @@ public class GameServer extends JFrame{
 						+ connectionToClient.getPort()+"\n");
 				ConnectionThread client = new ConnectionThread(connectionToClient);
 				client.start();
+				if(connections.isEmpty()) client.sendMessage("server:setting_1");
+				else client.sendMessage("server:setting_2");
 				connections.add(client);
 			} catch (BindException e){
 				//e.printStackTrace();
@@ -76,8 +78,11 @@ public class GameServer extends JFrame{
 			while(true) {
 				try {
 					String line = this.reader.readLine();
-					String [] info = line.split(":");	// info[0] name, info[1] message
-					//broadcast();
+					textArea.append(line+"\n");
+					for(ConnectionThread ct: connections){
+						if(ct.equals(this)==false)
+							ct.sendMessage(line);
+					}
 				} catch (IOException e){
 					e.printStackTrace();
 				}
@@ -89,12 +94,14 @@ public class GameServer extends JFrame{
 			this.writer.flush();
 		}
 	}
+	/*
 	public void broadcast(String message){
 			//send message to every clients in the list
 			for (ConnectionThread connection: connections) {
 				connection.sendMessage(message);
 			}
 		}
+		*/
 
 	public void writeToFile(){          //write user's input to text file
 		BufferedWriter writer = null;

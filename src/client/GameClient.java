@@ -13,6 +13,7 @@ public class GameClient extends JFrame{
 	private final static int windowWidth = 1200, windowHeight = 720;
 	//applet
 	private MainApplet applet;
+	public int seq = 0;
 
 	//connection
 	private String destinationIPAddr;
@@ -25,15 +26,11 @@ public class GameClient extends JFrame{
 	private String name = "default";
 
 	public GameClient(){
-		//create applet
-		this.applet = new MainApplet();
-		this.applet.init();
-		this.applet.start();
-		this.applet.setFocusable(true);
+
 
 		//create window
 		this.setTitle("team21_final");
-		this.setContentPane(applet);
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(windowWidth,windowHeight);
 		this.setVisible(true);
@@ -68,6 +65,7 @@ public class GameClient extends JFrame{
 
 	public class ConnectionThread extends Thread{
 		private BufferedReader reader;
+		//public int seq = 0;
 		public ConnectionThread(BufferedReader reader){
 			this.reader = reader;
 		}
@@ -76,6 +74,11 @@ public class GameClient extends JFrame{
 				try {
 					String line = this.reader.readLine();
 					//message accept
+					String [] info = line.split(":");	// info[0] name, info[1] message
+					System.out.println(info[1]);
+					if(info[1].equals("setting_1")) seq = 1;
+					else seq = 2;
+					if(applet!=null)applet.map.opponent.move(info[1]);
 				} catch (IOException e){
 					e.printStackTrace();
 				}
@@ -92,5 +95,11 @@ public class GameClient extends JFrame{
 	public static void main(String [] args){
 		GameClient client=new GameClient("127.0.0.1",8000);// IP and portnum
 		client.connect();
+		//create applet
+		client.applet = new MainApplet(client);
+		client.applet.init();
+		client.applet.start();
+		client.applet.setFocusable(true);
+		client.setContentPane(client.applet);
 	}
 }
