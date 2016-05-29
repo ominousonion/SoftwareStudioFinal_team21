@@ -48,6 +48,7 @@ public class GameMap {
 			}else{
 				components.add(new Floor(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,this.applet));
 			}
+			
 		}
 
 		iniCharacter(gc.seq);
