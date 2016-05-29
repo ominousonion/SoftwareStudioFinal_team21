@@ -3,26 +3,74 @@ package client;
 import java.awt.event.KeyEvent;
 
 import processing.core.PApplet;
+
 @SuppressWarnings("serial")
 public class MainApplet extends PApplet{
 	private GameMap map;
-
 	private final static int width = 1200, height = 650;
 	private CharacterState state;
-	
+	private boolean isStart;//paul
+	private boolean isExplain;
+	private Button btn;//Paul added
+	private BackButton backbtn;
 	
 	public void setup(){
 		size(width,height);
 		map=new GameMap(this);
 		state=new CharacterState(this);
-	
+		isStart = true;
+		isExplain = false;
+		btn = new Button(this);
+		backbtn = new BackButton(this);
 	}
 	
 	public void draw(){
-		map.display();
-		state.display();
+		if( isStart == true && isExplain == false){
+			background(0);
+			backbtn.hideButton();
+			btn.showButton();
+			btn.display();
+		}
+		else if( isExplain == true ){
+			background(167);
+			btn.hideButton();
+			backbtn.showButton();
+			backbtn.display();
+		}
+		else{
+			btn.hideButton();
+			backbtn.hideButton();
+			map.display();
+			state.display();
+		}
 	}
 	
+	/*control the behavior of buttonA*/
+	public void buttonA()
+	{
+		isStart = false;//go to the game scene
+		//btn.hideButton();//hide the button
+	}
+	
+	/*control the behavior of buttonB*/
+	public void buttonB(){ 
+		isExplain = true;
+		//btn.hideButton();
+	}
+	
+	/*control the behavior of buttonC*/
+	public void buttonC(){
+		System.exit(0);//leave the game
+	}
+	
+	/*control the behavior of backButton*/
+	public void backBtn()
+	{
+		isExplain = false;
+		//backbtn.hideButton();
+		//btn.showButton();
+	}
+		
 	public void keyPressed(KeyEvent e){
 		int pos_x=this.map.character.x, pos_y=this.map.character.y;
 		int step=this.map.character.oneStep;
@@ -69,3 +117,4 @@ public class MainApplet extends PApplet{
 	}
 	
 }
+
