@@ -2,14 +2,16 @@ package client;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
+import java.io.*;
 
-
-public class GameMap {
+public class GameMap{
 	private MainApplet applet;
 	//attributions
 	final public int x, y, width, height, SquareX, SquareY, SquareWidth, SquareHeight, SquareUnit;
 	//map components
 	public ArrayList<MapComponent> components;
+	private File mapFile;
 	//character
 	public Character character;
 	public Character opponent;
@@ -18,7 +20,7 @@ public class GameMap {
 	private GameClient gc;
 
 	//constructor
-	GameMap(MainApplet applet, GameClient gc){
+	GameMap(MainApplet applet,int mapNumber,GameClient gc){
 		this.applet=applet;
 		this.x=300;
 		this.y=0;
@@ -39,16 +41,26 @@ public class GameMap {
 		Random r = new Random();
 		int ran;
 		
-		for(int i=0;i<225;i++){
-			ran = r.nextInt(3);
-			if(i==13||i==14||i==29||i==195||i==210||i==211){
-				components.add(new Floor(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,this.applet));
-			}else if(ran==0){
-				components.add(new Block(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,this.applet));
-			}else{
-				components.add(new Floor(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,this.applet));
+		this.mapFile=new File("map/mapfile_"+mapNumber+".txt");
+		try
+		{
+			Scanner sc=new Scanner(mapFile);
+			int mapData;
+			int i=0;
+			
+			while(sc.hasNext()&& i<225){
+				mapData=sc.nextInt();
+				if(mapData==0){
+					components.add(new Floor(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,mapData,this.applet));
+				}else if(mapData<=3){
+					components.add(new OccupiedArea(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,mapData,this.applet));
+				}else{
+					components.add(new Floor(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,mapData,this.applet));
+				}
+				i++;
 			}
-		}
+			sc.close();
+		}catch (IOException e) {System.out.println(e);}
 
 		iniCharacter(gc.seq);
 
