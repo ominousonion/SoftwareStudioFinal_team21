@@ -94,7 +94,6 @@ public class MainApplet extends PApplet{
 				}	
 				break;
 			case KeyEvent.VK_DOWN :
-				
 				index=(pos_y-this.map.SquareY+this.map.SquareUnit)/this.map.SquareUnit*15+(pos_x-this.map.SquareX)/this.map.SquareUnit;
 				if(pos_y+step < this.map.SquareY+this.map.SquareHeight){
 					com=this.map.components.get(index);
@@ -105,7 +104,6 @@ public class MainApplet extends PApplet{
 				}	
 				break;
 			case KeyEvent.VK_LEFT :
-				
 				index=(pos_y-this.map.SquareY)/this.map.SquareUnit*15+(pos_x-this.map.SquareX-this.map.SquareUnit)/this.map.SquareUnit;
 				if(pos_x-step >= this.map.SquareX){
 					com=this.map.components.get(index);
@@ -116,7 +114,6 @@ public class MainApplet extends PApplet{
 				}
 				break;
 			case KeyEvent.VK_RIGHT :
-				
 				index=(pos_y-this.map.SquareY)/this.map.SquareUnit*15+(pos_x-this.map.SquareX+this.map.SquareUnit)/this.map.SquareUnit;
 				if(pos_x+step <this.map.SquareX+this.map.SquareWidth){
 					com=this.map.components.get(index);
@@ -124,6 +121,13 @@ public class MainApplet extends PApplet{
 						gc.sendMessage("right");
 						this.map.character.move("right");
 					}		
+				}
+				break;
+			case KeyEvent.VK_SPACE:
+				index=(pos_y-this.map.SquareY)/this.map.SquareUnit*15+(pos_x-this.map.SquareX)/this.map.SquareUnit;
+				com=this.map.components.get(index);
+				if(com.getClass() == OccupiedArea.class){
+					((OccupiedArea)com).changeStage();
 				}
 				break;
 		}

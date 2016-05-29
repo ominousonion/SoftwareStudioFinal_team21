@@ -16,11 +16,6 @@ public class Floor extends MapComponent{
 	public void display(){
 		this.applet.image(img,x,y,width,width);
 		this.applet.noStroke();
-<<<<<<< HEAD
-		this.applet.fill(200, 100, 100);
-
-=======
->>>>>>> ca38e8c0861e88e2dac6f93cf94da9d462b834e1
 	}
 
 }
