@@ -62,10 +62,10 @@ public class GameMap{
 			sc.close();
 		}catch (IOException e) {System.out.println(e);}
 
-		iniCharacter(gc.seq);
+			iniCharacter(gc.seq);
+		}
 
-	}
-
+	
 	
 	public void display(){
 		this.applet.noStroke();

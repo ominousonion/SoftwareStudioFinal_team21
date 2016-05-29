@@ -1,6 +1,8 @@
 package client;
 
 import java.awt.event.KeyEvent;
+import java.util.Random;
+
 import processing.core.PApplet;
 @SuppressWarnings("serial")
 
@@ -15,13 +17,16 @@ public class MainApplet extends PApplet{
 	private Button btn;//Paul added
 	private BackButton backbtn;
 	
+	private Random r = new Random();
+	private int ran;
+	
 	public MainApplet(GameClient gc){
 		this.gc = gc;
 	}
 	
 	public void setup(){
 		size(width,height);
-		map=new GameMap(this, gc);
+		map=new GameMap(this,r.nextInt(1)+1, gc);
 		state=new CharacterState(this);
 		isStart = true;
 		isExplain = false;
