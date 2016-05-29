@@ -42,6 +42,7 @@ public class GameMap{
 		int ran;
 		
 		this.mapFile=new File("./src/map/mapfile_1.map");
+
 		try
 		{
 			Scanner sc=new Scanner(mapFile);

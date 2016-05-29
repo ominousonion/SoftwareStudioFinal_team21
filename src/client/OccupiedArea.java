@@ -1,9 +1,10 @@
 package client;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class OccupiedArea extends MapComponent{
-	
+
 	OccupiedArea(int x, int y,int num,PApplet applet) {
 		super(x, y, num,applet);
 		this.passable=true;
