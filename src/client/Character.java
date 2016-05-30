@@ -16,7 +16,9 @@ public class Character {
 	private int preX, preY;
 	public int x, y;
 	public String name;
-	public boolean moving;
+
+	public boolean move[]=new boolean[4];
+
 
 	//constructor
 	Character(int x,int y, int width, int height, MainApplet parent){
@@ -27,8 +29,9 @@ public class Character {
 		this.width = width;
 		this.height = height;
 		this.parent = parent;
-		this.oneStep = 40;
-		this.moving=false;
+
+		this.oneStep = 40;  //move speed
+		for(int i=0;i<4;i++) move[i]=false;
 
 	}
 
@@ -57,24 +60,20 @@ public class Character {
 
 	public void move(String dir){   //undo:check for boundary
 		if(dir.equals("up")){
-			Ani.to(this, (float)0.5, "y", this.y - oneStep );
-			/*preY = y;
-			this.y = this.y - oneStep;*/
+			preY = y;
+			this.y = this.y - oneStep;
 		}
 		else if(dir.equals("down")){
-			Ani.to(this, (float)0.5, "y", this.y + oneStep );
-			/*preY = y;
-			this.y = this.y + oneStep;*/
+			preY = y;
+			this.y = this.y + oneStep;
 		}
 		else if(dir.equals("left")){
-			Ani.to(this, (float)0.5, "x", this.x - oneStep );
-			/*preX = x;
-			this.x = this.x - oneStep;*/
+			preX = x;
+			this.x = this.x - oneStep;
 		}
 		else if(dir.equals("right")){
-			Ani.to(this, (float)0.5, "x", this.x + oneStep );
-			/*preX = x;
-			this.x = this.x + oneStep;*/
+			preX = x;
+			this.x = this.x + oneStep;
 		}
 	}
 
