@@ -6,6 +6,7 @@ public class CharacterState {
 	
 	int x,y,width,height;
 	private PApplet applet;
+	private int Max_occupies = 5;
 	
 	CharacterState(PApplet applet){
 		this.x=0;
@@ -17,7 +18,21 @@ public class CharacterState {
 	
 	public void display(){
 		this.applet.noStroke();
-		this.applet.fill(100, 255, 100);
+		
+		this.applet.fill(105, 105, 105);
 		this.applet.rect(x, y, width, height);
+		this.applet.fill( 0, 0, 0);
+		this.applet.text("Player1", 0, 20);
+		this.applet.fill(255, 255, 255);
+		this.applet.rect(10, this.height/2-50, width-20, 20);
+		this.applet.fill(131 ,139 ,131);
+		this.applet.rect(10, this.height/2-50, (width-20)/3, 20);
+		
+		this.applet.fill(100,149,237);
+		this.applet.rect(x, height/2, width, height/2);
+		this.applet.fill( 0, 0, 0);
+		this.applet.text("Player2", 0, height/2+20);
+		
+		
 	}
 }
