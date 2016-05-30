@@ -102,13 +102,7 @@ public class MainApplet extends PApplet{
 		int step=this.map.character.oneStep;
 		MapComponent com;
 		int index;
-<<<<<<< HEAD
-		switch(e.getKeyCode()){
-			case KeyEvent.VK_UP :
-=======
 		if(this.map.character.move[0]){
-				
->>>>>>> 703edeb1b2396d31a8ad292669287d1f63a851da
 				index=(pos_y-this.map.SquareY-this.map.SquareUnit)/this.map.SquareUnit*15+(pos_x-this.map.SquareX)/this.map.SquareUnit;
 				if(pos_y-step >= this.map.SquareY){
 					com=this.map.components.get(index);
