@@ -2,13 +2,14 @@ package client;
 
 import java.awt.event.KeyEvent;
 import java.util.Random;
+import de.looksgood.ani.Ani;
 
 import processing.core.PApplet;
 @SuppressWarnings("serial")
 
 public class MainApplet extends PApplet{
 	public GameMap map;
-
+	private Ani ani;
 	private final static int width = 1200, height = 650;
 	private CharacterState state;
 	private GameClient gc;
@@ -25,6 +26,7 @@ public class MainApplet extends PApplet{
 	}
 	
 	public void setup(){
+		Ani.init(this);
 		size(width,height);
 		map=new GameMap(this,r.nextInt(1)+1, gc);
 		state=new CharacterState(this);
@@ -83,7 +85,6 @@ public class MainApplet extends PApplet{
 		int index;
 		switch(e.getKeyCode()){
 			case KeyEvent.VK_UP :
-				
 				index=(pos_y-this.map.SquareY-this.map.SquareUnit)/this.map.SquareUnit*15+(pos_x-this.map.SquareX)/this.map.SquareUnit;
 				if(pos_y-step >= this.map.SquareY){
 					com=this.map.components.get(index);

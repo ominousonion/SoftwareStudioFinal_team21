@@ -1,5 +1,6 @@
 package client;
 
+import de.looksgood.ani.Ani;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -15,6 +16,7 @@ public class Character {
 	private int preX, preY;
 	public int x, y;
 	public String name;
+	public boolean moving;
 
 	//constructor
 	Character(int x,int y, int width, int height, MainApplet parent){
@@ -26,6 +28,7 @@ public class Character {
 		this.height = height;
 		this.parent = parent;
 		this.oneStep = 40;
+		this.moving=false;
 
 	}
 
@@ -54,20 +57,24 @@ public class Character {
 
 	public void move(String dir){   //undo:check for boundary
 		if(dir.equals("up")){
-			preY = y;
-			this.y = this.y - oneStep;
+			Ani.to(this, (float)0.5, "y", this.y - oneStep );
+			/*preY = y;
+			this.y = this.y - oneStep;*/
 		}
 		else if(dir.equals("down")){
-			preY = y;
-			this.y = this.y + oneStep;
+			Ani.to(this, (float)0.5, "y", this.y + oneStep );
+			/*preY = y;
+			this.y = this.y + oneStep;*/
 		}
 		else if(dir.equals("left")){
-			preX = x;
-			this.x = this.x - oneStep;
+			Ani.to(this, (float)0.5, "x", this.x - oneStep );
+			/*preX = x;
+			this.x = this.x - oneStep;*/
 		}
 		else if(dir.equals("right")){
-			preX = x;
-			this.x = this.x + oneStep;
+			Ani.to(this, (float)0.5, "x", this.x + oneStep );
+			/*preX = x;
+			this.x = this.x + oneStep;*/
 		}
 	}
 
