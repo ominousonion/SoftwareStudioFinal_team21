@@ -1,5 +1,6 @@
 package client;
 
+import de.looksgood.ani.Ani;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -16,6 +17,9 @@ public class Character {
 	public int x, y;
 	public String name;
 
+	public boolean move[]=new boolean[4];
+
+
 	//constructor
 	Character(int x,int y, int width, int height, MainApplet parent){
 		this.iniX = x;
@@ -25,7 +29,9 @@ public class Character {
 		this.width = width;
 		this.height = height;
 		this.parent = parent;
-		this.oneStep = 40;
+
+		this.oneStep = 40;  //move speed
+		for(int i=0;i<4;i++) move[i]=false;
 
 	}
 
