@@ -53,6 +53,8 @@ public class MainApplet extends PApplet{
 			backbtn.hideButton();
 			map.display();
 			state.display();
+			checkMove();
+			
 		}
 	}
 	
@@ -77,12 +79,28 @@ public class MainApplet extends PApplet{
 	}
 	
 	public void keyPressed(KeyEvent e){
+		switch(e.getKeyCode()){
+		case KeyEvent.VK_UP :
+			this.map.character.move[0]=true;
+		break;
+		case KeyEvent.VK_DOWN :
+			this.map.character.move[1]=true;
+		break;
+		case KeyEvent.VK_LEFT :
+			this.map.character.move[2]=true;
+		break;
+		case KeyEvent.VK_RIGHT :
+			this.map.character.move[3]=true;
+		break;
+	}
+	}
+	
+	public void checkMove(){
 		int pos_x=this.map.character.x, pos_y=this.map.character.y;
 		int step=this.map.character.oneStep;
 		MapComponent com;
 		int index;
-		switch(e.getKeyCode()){
-			case KeyEvent.VK_UP :
+		if(this.map.character.move[0]){
 				
 				index=(pos_y-this.map.SquareY-this.map.SquareUnit)/this.map.SquareUnit*15+(pos_x-this.map.SquareX)/this.map.SquareUnit;
 				if(pos_y-step >= this.map.SquareY){
@@ -92,8 +110,7 @@ public class MainApplet extends PApplet{
 						this.map.character.move("up");
 					}	
 				}	
-				break;
-			case KeyEvent.VK_DOWN :
+		}else if(this.map.character.move[1]){
 				index=(pos_y-this.map.SquareY+this.map.SquareUnit)/this.map.SquareUnit*15+(pos_x-this.map.SquareX)/this.map.SquareUnit;
 				if(pos_y+step < this.map.SquareY+this.map.SquareHeight){
 					com=this.map.components.get(index);
@@ -102,8 +119,7 @@ public class MainApplet extends PApplet{
 						this.map.character.move("down");
 					}
 				}	
-				break;
-			case KeyEvent.VK_LEFT :
+		}else if(this.map.character.move[2]){
 				index=(pos_y-this.map.SquareY)/this.map.SquareUnit*15+(pos_x-this.map.SquareX-this.map.SquareUnit)/this.map.SquareUnit;
 				if(pos_x-step >= this.map.SquareX){
 					com=this.map.components.get(index);
@@ -112,24 +128,32 @@ public class MainApplet extends PApplet{
 						this.map.character.move("left");
 					}	
 				}
-				break;
-			case KeyEvent.VK_RIGHT :
+		}else if(this.map.character.move[3]){
 				index=(pos_y-this.map.SquareY)/this.map.SquareUnit*15+(pos_x-this.map.SquareX+this.map.SquareUnit)/this.map.SquareUnit;
 				if(pos_x+step <this.map.SquareX+this.map.SquareWidth){
 					com=this.map.components.get(index);
 					if(com.passable){
 						gc.sendMessage("right");
 						this.map.character.move("right");
-					}		
+					}
 				}
-				break;
-			case KeyEvent.VK_SPACE:
-				index=(pos_y-this.map.SquareY)/this.map.SquareUnit*15+(pos_x-this.map.SquareX)/this.map.SquareUnit;
-				com=this.map.components.get(index);
-				if(com.getClass() == OccupiedArea.class){
-					((OccupiedArea)com).changeStage();
-				}
-				break;
+		}
+	}
+	
+	public void keyReleased(KeyEvent e){
+		switch(e.getKeyCode()){
+			case KeyEvent.VK_UP :
+				this.map.character.move[0]=false;
+			break;
+			case KeyEvent.VK_DOWN :
+				this.map.character.move[1]=false;
+			break;
+			case KeyEvent.VK_LEFT :
+				this.map.character.move[2]=false;
+			break;
+			case KeyEvent.VK_RIGHT :
+				this.map.character.move[3]=false;
+			break;
 		}
 	}
 	

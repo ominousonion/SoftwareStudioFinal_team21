@@ -15,6 +15,7 @@ public class Character {
 	private int preX, preY;
 	public int x, y;
 	public String name;
+	public boolean move[]=new boolean[4];
 
 	//constructor
 	Character(int x,int y, int width, int height, MainApplet parent){
@@ -25,8 +26,8 @@ public class Character {
 		this.width = width;
 		this.height = height;
 		this.parent = parent;
-		this.oneStep = 40;
-
+		this.oneStep = 40;  //move speed
+		for(int i=0;i<4;i++) move[i]=false;
 	}
 
 	public void setName(String name){
