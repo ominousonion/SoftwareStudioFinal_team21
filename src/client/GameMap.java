@@ -51,13 +51,7 @@ public class GameMap{
 			
 			while(sc.hasNext()&& i<225){
 				mapData=sc.nextInt();
-				if(mapData==0){
-					components.add(new Floor(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,mapData,this.applet));
-				}else if(mapData<=3){
-					components.add(new OccupiedArea(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,mapData,this.applet));
-				}else{
-					components.add(new Block(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,mapData,this.applet));
-				}
+				components.add(new MapComponent(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,mapData,this.applet));
 				i++;
 			}
 			sc.close();

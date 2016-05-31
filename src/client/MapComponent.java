@@ -4,7 +4,10 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 
-public abstract class MapComponent extends PApplet {
+
+
+
+public class MapComponent extends PApplet {
 	//attributions
 	final public int x, y;
 	public boolean passable;
@@ -12,18 +15,55 @@ public abstract class MapComponent extends PApplet {
 	public int width=40;
 	public PApplet applet;
 	public PImage img;
+	public int type;
 	
 	//constructor
 	MapComponent(int x,int y,int num,PApplet applet){
 		this.x=x;
 		this.y=y;
 		this.applet=applet;
-
+		this.type=num;
+		
 		String filename =("./src/img/map_"+num+".png");
 		img = loadImage(filename);
+		
+		if(num==0){
+			this.passable=true;
+			this.occupiedStage=0;
+		}else if(num<=3){
+			this.passable=true;
+			this.occupiedStage=1;
+		}else{
+			this.passable=false;
+			this.occupiedStage=0;
+		}
 
 	}
 
-	public void display(){};
+	public void display(){
+		this.applet.image(img,x,y,width,width);
+		this.applet.noStroke();
+	};
+	
+	public void createWall(){
+		if(this.type==0)
+		{
+			this.type=99;
+			this.passable=false;
+			this.occupiedStage=0;
+			String filename =("./src/img/map_99.png");
+			img = loadImage(filename);
+		}
+	}
+	public void delWall(){
+		if(this.type>=4)
+		{
+			this.type=0;
+			this.passable=true;
+			this.occupiedStage=0;
+			String filename =("./src/img/map_0.png");
+			img = loadImage(filename);
+		}
+	}
 
 }
