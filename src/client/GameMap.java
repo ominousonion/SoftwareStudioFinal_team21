@@ -16,7 +16,8 @@ public class GameMap{
 	public Character character;
 	public Character opponent;
 	
-	private int ch_num;
+	public int ch_num;
+	public int max_Occupipe; 
 	private int ch_X, ch_Y, op_X, op_Y;
 	private GameClient gc;
 
@@ -34,6 +35,7 @@ public class GameMap{
 		this.SquareUnit=this.SquareWidth/15;
 		this.gc = gc;
 		this.ch_num=gc.seq;
+		this.max_Occupipe=0;
 		
 		op_X = SquareX+SquareWidth-SquareUnit;
 		op_Y = SquareY;
@@ -54,6 +56,7 @@ public class GameMap{
 			
 			while(sc.hasNext()&& i<225){
 				mapData=sc.nextInt();
+				if(mapData==1) max_Occupipe++;
 				components.add(new MapComponent(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,mapData,this.applet));
 				i++;
 			}
