@@ -15,7 +15,8 @@ public class GameServer extends JFrame{
 	private ServerSocket serverSocket;
 	private ArrayList<ConnectionThread> connections;
 	private JTextArea textArea;
-	private HashMap<String, Integer> groupData = new HashMap<String, Integer>();
+	private HashMap<String, ArrayList<String>> groupData = new HashMap<String, ArrayList<String>>();
+	private HashMap<String, Integer> itemData = new HashMap<String, Integer>();
 
 	GameServer(int portNum){
 		super("server");
@@ -51,7 +52,11 @@ public class GameServer extends JFrame{
 				ConnectionThread client = new ConnectionThread(connectionToClient);
 				client.start();
 				if(connections.isEmpty()) client.sendMessage("server:setting_1");
-				else client.sendMessage("server:setting_2");
+				else{
+					client.sendMessage("server:setting_2");
+					itemData.put("coke", itemData.get("coke")+1);
+					writeToFile();
+				}
 				connections.add(client);
 			} catch (BindException e){
 				//e.printStackTrace();
@@ -106,11 +111,15 @@ public class GameServer extends JFrame{
 	public void writeToFile(){          //write user's input to text file
 		BufferedWriter writer = null;
 		try {
-			writer = new BufferedWriter(new FileWriter("output.txt"));
+			writer = new BufferedWriter(new FileWriter("./output.txt"));
 			for(String group : groupData.keySet()){
-		    	writer.write(group.concat(" ").concat(Integer.toString(groupData.get(group))));
-			    writer.newLine();
-			    writer.flush();
+				for(String name : groupData.get(group)){
+					String type = group.concat(" ").concat(name).concat(" ").concat(itemData.get(name).toString());
+					writer.write(type);
+					writer.newLine();
+					writer.flush();
+				}
+		    	
 			}
 		}catch(IOException ex) {
 			    ex.printStackTrace();
@@ -122,14 +131,24 @@ public class GameServer extends JFrame{
 	}
 
 	public void readData(){
-		String group;
+		String group, name;
 		int times;
 		try{
-			Scanner filescn = new Scanner(new FileInputStream(".output.txt"));
+			Scanner filescn = new Scanner(new FileInputStream("./output.txt"));
 			while(filescn.hasNext()){
 				group = filescn.next();
+				name = filescn.next();
 				times = Integer.parseInt(filescn.next());
-				groupData.put(group, times);
+				itemData.put( name, times);
+				if(groupData.containsKey(group)==false){
+					ArrayList<String> list = new ArrayList<String>();
+					list.add(name);
+					groupData.put( group, list);
+					itemData.put(name, times);
+				}
+				else{
+					groupData.get(group).add(name);
+				}	
 			}
 		}catch(IOException e){
 			System.out.println("Can't not find file");

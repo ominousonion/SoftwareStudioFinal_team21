@@ -16,12 +16,26 @@ public class Character {
 	private int preX, preY;
 	public int x, y;
 	public String name;
+<<<<<<< HEAD
 	public int index;
+=======
+	public int money;
+	
+>>>>>>> 974519bafedc6bc0600e36c161d0654dbeb39f1f
 	public boolean move[]=new boolean[4];
+	public String face;
+	public int index=0;
+	public CreateBlock skillCreateBlock;
+	public DeleteBlock skillDeleteBlock;
+	private GameMap gm;
 
 
 	//constructor
+<<<<<<< HEAD
 	Character(int x,int y, int width, int height, MainApplet parent, int index){
+=======
+	Character(int x,int y, int width, int height, MainApplet parent, GameMap gm){
+>>>>>>> 974519bafedc6bc0600e36c161d0654dbeb39f1f
 		this.iniX = x;
 		this.iniY = y;
 		this.x = iniX;
@@ -29,6 +43,7 @@ public class Character {
 		this.width = width;
 		this.height = height;
 		this.parent = parent;
+<<<<<<< HEAD
 		this.oneStep = 5;  //move speed
 		for(int i=0;i<4;i++) move[i]=false;
 		this.step_count_up=0;		
@@ -38,11 +53,25 @@ public class Character {
 		this.index = index;
 		System.out.println(index);
 
+=======
+		this.money=0;
+
+		this.oneStep = 40;  //move speed
+		this.gm=gm;
+		for(int i=0;i<4;i++) move[i]=false;
+		this.face="down";
+		
+		this.skillCreateBlock=new CreateBlock(gm);
+		this.skillDeleteBlock=new DeleteBlock(gm);
+>>>>>>> 974519bafedc6bc0600e36c161d0654dbeb39f1f
 	}
 
 	public void setName(String name){
 		this.name=name;
 	}
+	
+	
+	
 	
 	public void display(){
 		// Displays the image at point (0, height/2) at half of its size
@@ -102,6 +131,11 @@ public class Character {
 				this.index+=1;
 			}
 		}
+	}
+	
+	public void plusMoney()
+	{
+		this.money+=1;//*ocpi
 	}
 
 	public void setGroup(String group){

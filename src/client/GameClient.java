@@ -30,7 +30,6 @@ public class GameClient extends JFrame{
 
 		//create window
 		this.setTitle("team21_final");
-		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(windowWidth,windowHeight);
 		this.setVisible(true);

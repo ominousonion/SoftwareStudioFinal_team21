@@ -21,6 +21,8 @@ public class MainApplet extends PApplet{
 	private Random r = new Random();
 	private int ran;
 	
+	private int moneyValue=0;
+	
 	public MainApplet(GameClient gc){
 		this.gc = gc;
 	}
@@ -56,6 +58,7 @@ public class MainApplet extends PApplet{
 			map.display();
 			state.display();
 			checkMove();
+			plusMoney();
 			
 		}
 	}
@@ -84,17 +87,37 @@ public class MainApplet extends PApplet{
 		switch(e.getKeyCode()){
 		case KeyEvent.VK_UP :
 			this.map.character.move[0]=true;
+			this.map.character.face="up";
 		break;
 		case KeyEvent.VK_DOWN :
 			this.map.character.move[1]=true;
+			this.map.character.face="down";
 		break;
 		case KeyEvent.VK_LEFT :
 			this.map.character.move[2]=true;
+			this.map.character.face="left";
 		break;
 		case KeyEvent.VK_RIGHT :
 			this.map.character.move[3]=true;
+			this.map.character.face="right";
+		break;
+		case KeyEvent.VK_Z :
+			this.map.character.skillCreateBlock.toMakeBlock();
+		break;
+		case KeyEvent.VK_X :
+			this.map.character.skillDeleteBlock.toDeleteBlock();
 		break;
 	}
+	}
+	
+	public void plusMoney()
+	{
+		moneyValue++;
+		if(moneyValue>=1000)
+		{
+			moneyValue=0;
+			this.map.character.plusMoney();
+		}
 	}
 	
 	public void checkMove(){

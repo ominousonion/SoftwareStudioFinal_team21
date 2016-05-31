@@ -15,7 +15,8 @@ public class GameMap{
 	//character
 	public Character character;
 	public Character opponent;
-
+	
+	private int ch_num;
 	private int ch_X, ch_Y, op_X, op_Y;
 	private int ch_index, op_index;
 	private GameClient gc;
@@ -33,6 +34,8 @@ public class GameMap{
 		this.SquareHeight=600;
 		this.SquareUnit=this.SquareWidth/15;//SquareUnit = 40
 		this.gc = gc;
+		this.ch_num=gc.seq;
+		
 		op_X = SquareX+SquareWidth-SquareUnit;
 		op_Y = SquareY;
 		ch_X = SquareX;
@@ -53,19 +56,13 @@ public class GameMap{
 			
 			while(sc.hasNext()&& i<225){
 				mapData=sc.nextInt();
-				if(mapData==0){
-					components.add(new Floor(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,mapData,this.applet));
-				}else if(mapData<=3){
-					components.add(new OccupiedArea(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,mapData,this.applet));
-				}else{
-					components.add(new Block(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,mapData,this.applet));
-				}
+				components.add(new MapComponent(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,mapData,this.applet));
 				i++;
 			}
 			sc.close();
 		}catch (IOException e) {System.out.println(e);}
 
-			iniCharacter(gc.seq);
+			iniCharacter(ch_num);
 		}
 
 	
@@ -82,18 +79,26 @@ public class GameMap{
 		}
 		this.character.display();
 		this.opponent.display();
-
 	}
 	
 	public void iniCharacter(int seq){
 		System.out.println("seq: "+seq);
 		if(seq==1){
+<<<<<<< HEAD
 			character= new Character(ch_X, ch_Y, SquareUnit, SquareUnit, applet, ch_index);
 			opponent = new Character(op_X, op_Y, SquareUnit, SquareUnit, applet, op_index);
 		}
 		else{
 			character= new Character(op_X, op_Y, SquareUnit, SquareUnit, applet, op_index);
 			opponent = new Character(ch_X, ch_Y, SquareUnit, SquareUnit, applet, ch_index);
+=======
+			character= new Character(ch_X, ch_Y, SquareUnit, SquareUnit, applet, this);
+			opponent = new Character(op_X, op_Y, SquareUnit, SquareUnit, applet, this);
+		}
+		else{
+			character= new Character(op_X, op_Y, SquareUnit, SquareUnit, applet, this);
+			opponent = new Character(ch_X, ch_Y, SquareUnit, SquareUnit, applet, this);
+>>>>>>> 974519bafedc6bc0600e36c161d0654dbeb39f1f
 		}
 	}
 }
