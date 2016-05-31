@@ -16,22 +16,27 @@ public class Character {
 	private int preX, preY;
 	public int x, y;
 	public String name;
-
+	public int index;
 	public boolean move[]=new boolean[4];
 
 
 	//constructor
-	Character(int x,int y, int width, int height, MainApplet parent){
+	Character(int x,int y, int width, int height, MainApplet parent, int index){
 		this.iniX = x;
-		this.iniY= y;
+		this.iniY = y;
 		this.x = iniX;
 		this.y = iniY;
 		this.width = width;
 		this.height = height;
 		this.parent = parent;
-
-		this.oneStep = 40;  //move speed
+		this.oneStep = 5;  //move speed
 		for(int i=0;i<4;i++) move[i]=false;
+		this.step_count_up=0;		
+		this.step_count_down=0;
+		this.step_count_left=0;
+		this.step_count_right=0;
+		this.index = index;
+		System.out.println(index);
 
 	}
 
@@ -59,21 +64,43 @@ public class Character {
 	}
 
 	public void move(String dir){   //undo:check for boundary
+		MapComponent com=this.parent.map.components.get(this.index);
+		MapComponent com_next;
 		if(dir.equals("up")){
 			preY = y;
 			this.y = this.y - oneStep;
+			com_next=this.parent.map.components.get(this.index-15);
+			this.x=com_next.x;
+			if(this.y == com_next.y){
+				this.index-=15;
+			}
 		}
 		else if(dir.equals("down")){
 			preY = y;
 			this.y = this.y + oneStep;
+			com_next=this.parent.map.components.get(this.index+15);
+			this.x=com_next.x;
+			if(this.y == com_next.y){
+				this.index+=15;
+			}
 		}
 		else if(dir.equals("left")){
 			preX = x;
 			this.x = this.x - oneStep;
+			com_next=this.parent.map.components.get(this.index-1);
+			this.y=com_next.y;
+			if(this.x == com_next.x){
+				this.index-=1;
+			}
 		}
 		else if(dir.equals("right")){
 			preX = x;
 			this.x = this.x + oneStep;
+			com_next=this.parent.map.components.get(this.index+1);
+			this.y=com_next.y;
+			if(this.x == com_next.x){
+				this.index+=1;
+			}
 		}
 	}
 

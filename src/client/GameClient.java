@@ -75,7 +75,7 @@ public class GameClient extends JFrame{
 					String line = this.reader.readLine();
 					//message accept
 					String [] info = line.split(":");	// info[0] name, info[1] message
-					System.out.println(info[1]);
+					//System.out.println(info[1]);
 					if(info[1].equals("setting_1")) seq = 1;
 					else seq = 2;
 					if(applet!=null)applet.map.opponent.move(info[1]);

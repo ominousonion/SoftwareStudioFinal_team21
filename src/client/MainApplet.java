@@ -98,13 +98,12 @@ public class MainApplet extends PApplet{
 	}
 	
 	public void checkMove(){
-		int pos_x=this.map.character.x, pos_y=this.map.character.y;
-		int step=this.map.character.oneStep;
 		MapComponent com;
-		int index;
+		int index=this.map.character.index;
+		MapComponent com_ori=this.map.components.get(index);
 		if(this.map.character.move[0]){
-				index=(pos_y-this.map.SquareY-this.map.SquareUnit)/this.map.SquareUnit*15+(pos_x-this.map.SquareX)/this.map.SquareUnit;
-				if(pos_y-step >= this.map.SquareY){
+				index-=15;
+				if(index >= 0){
 					com=this.map.components.get(index);
 					if(com.passable){
 						gc.sendMessage("up");
@@ -112,8 +111,8 @@ public class MainApplet extends PApplet{
 					}	
 				}	
 		}else if(this.map.character.move[1]){
-				index=(pos_y-this.map.SquareY+this.map.SquareUnit)/this.map.SquareUnit*15+(pos_x-this.map.SquareX)/this.map.SquareUnit;
-				if(pos_y+step < this.map.SquareY+this.map.SquareHeight){
+				index+=15;
+				if(index<225){
 					com=this.map.components.get(index);
 					if(com.passable){
 						gc.sendMessage("down");
@@ -121,17 +120,24 @@ public class MainApplet extends PApplet{
 					}
 				}	
 		}else if(this.map.character.move[2]){
-				index=(pos_y-this.map.SquareY)/this.map.SquareUnit*15+(pos_x-this.map.SquareX-this.map.SquareUnit)/this.map.SquareUnit;
-				if(pos_x-step >= this.map.SquareX){
-					com=this.map.components.get(index);
-					if(com.passable){
-						gc.sendMessage("left");
-						this.map.character.move("left");
-					}	
+				int row_pre = index/15;
+				int row_after = (index-1)/15;
+				index-=1;
+				if(index >= 0){
+					if(row_pre==row_after){
+						com=this.map.components.get(index);
+						if(com.passable){
+							gc.sendMessage("left");
+							this.map.character.move("left");
+						}	
+					}					
 				}
+
 		}else if(this.map.character.move[3]){
-				index=(pos_y-this.map.SquareY)/this.map.SquareUnit*15+(pos_x-this.map.SquareX+this.map.SquareUnit)/this.map.SquareUnit;
-				if(pos_x+step <this.map.SquareX+this.map.SquareWidth){
+				int row_pre = index/15;
+				int row_after = (index+1)/15;
+				index+=1;				
+				if(row_pre==row_after){
 					com=this.map.components.get(index);
 					if(com.passable){
 						gc.sendMessage("right");
@@ -144,16 +150,18 @@ public class MainApplet extends PApplet{
 	public void keyReleased(KeyEvent e){
 		switch(e.getKeyCode()){
 			case KeyEvent.VK_UP :
-				this.map.character.move[0]=false;
+				this.map.character.move[0]=false;	
 			break;
 			case KeyEvent.VK_DOWN :
-				this.map.character.move[1]=false;
+				this.map.character.move[1]=false;					
+
 			break;
 			case KeyEvent.VK_LEFT :
-				this.map.character.move[2]=false;
+				this.map.character.move[2]=false;					
+
 			break;
 			case KeyEvent.VK_RIGHT :
-				this.map.character.move[3]=false;
+				this.map.character.move[3]=false;					
 			break;
 		}
 	}
