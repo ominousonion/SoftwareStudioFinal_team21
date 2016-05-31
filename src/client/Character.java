@@ -18,10 +18,15 @@ public class Character {
 	public String name;
 
 	public boolean move[]=new boolean[4];
+	public String face;
+	public int index=0;
+	public CreateBlock skillCreateBlock;
+	public DeleteBlock skillDeleteBlock;
+	private GameMap gm;
 
 
 	//constructor
-	Character(int x,int y, int width, int height, MainApplet parent){
+	Character(int x,int y, int width, int height, MainApplet parent, GameMap gm){
 		this.iniX = x;
 		this.iniY= y;
 		this.x = iniX;
@@ -31,8 +36,12 @@ public class Character {
 		this.parent = parent;
 
 		this.oneStep = 40;  //move speed
+		this.gm=gm;
 		for(int i=0;i<4;i++) move[i]=false;
-
+		this.face="down";
+		
+		this.skillCreateBlock=new CreateBlock(gm);
+		this.skillDeleteBlock=new DeleteBlock(gm);
 	}
 
 	public void setName(String name){

@@ -84,15 +84,19 @@ public class MainApplet extends PApplet{
 		switch(e.getKeyCode()){
 		case KeyEvent.VK_UP :
 			this.map.character.move[0]=true;
+			this.map.character.face="up";
 		break;
 		case KeyEvent.VK_DOWN :
 			this.map.character.move[1]=true;
+			this.map.character.face="down";
 		break;
 		case KeyEvent.VK_LEFT :
 			this.map.character.move[2]=true;
+			this.map.character.face="left";
 		break;
 		case KeyEvent.VK_RIGHT :
 			this.map.character.move[3]=true;
+			this.map.character.face="right";
 		break;
 	}
 	}

@@ -51,7 +51,7 @@ public class MapComponent extends PApplet {
 			this.type=99;
 			this.passable=false;
 			this.occupiedStage=0;
-			String filename =("./src/img/map_99.png");
+			String filename =("./src/img/map_18.png");
 			img = loadImage(filename);
 		}
 	}
