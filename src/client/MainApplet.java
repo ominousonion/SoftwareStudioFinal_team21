@@ -101,6 +101,12 @@ public class MainApplet extends PApplet{
 			this.map.character.move[3]=true;
 			this.map.character.face="right";
 		break;
+		case KeyEvent.VK_Z :
+			this.map.character.skillCreateBlock.toMakeBlock();
+		break;
+		case KeyEvent.VK_X :
+			this.map.character.skillDeleteBlock.toDeleteBlock();
+		break;
 	}
 	}
 	

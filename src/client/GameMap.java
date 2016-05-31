@@ -89,8 +89,6 @@ public class GameMap{
 			character= new Character(op_X, op_Y, SquareUnit, SquareUnit, applet, this);
 			opponent = new Character(ch_X, ch_Y, SquareUnit, SquareUnit, applet, this);
 		}
-		character.skillCreateBlock.toMakeBlock();
-		character.skillDeleteBlock.toDeleteBlock();
 	}
 }
 
