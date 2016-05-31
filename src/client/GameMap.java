@@ -84,21 +84,12 @@ public class GameMap{
 	public void iniCharacter(int seq){
 		System.out.println("seq: "+seq);
 		if(seq==1){
-<<<<<<< HEAD
-			character= new Character(ch_X, ch_Y, SquareUnit, SquareUnit, applet, ch_index);
-			opponent = new Character(op_X, op_Y, SquareUnit, SquareUnit, applet, op_index);
+			character= new Character(ch_X, ch_Y, SquareUnit, SquareUnit, applet, this, op_index);
+			opponent = new Character(op_X, op_Y, SquareUnit, SquareUnit, applet, this, ch_index);
 		}
 		else{
-			character= new Character(op_X, op_Y, SquareUnit, SquareUnit, applet, op_index);
-			opponent = new Character(ch_X, ch_Y, SquareUnit, SquareUnit, applet, ch_index);
-=======
-			character= new Character(ch_X, ch_Y, SquareUnit, SquareUnit, applet, this);
-			opponent = new Character(op_X, op_Y, SquareUnit, SquareUnit, applet, this);
-		}
-		else{
-			character= new Character(op_X, op_Y, SquareUnit, SquareUnit, applet, this);
-			opponent = new Character(ch_X, ch_Y, SquareUnit, SquareUnit, applet, this);
->>>>>>> 974519bafedc6bc0600e36c161d0654dbeb39f1f
+			character= new Character(op_X, op_Y, SquareUnit, SquareUnit, applet, this, ch_index);
+			opponent = new Character(ch_X, ch_Y, SquareUnit, SquareUnit, applet, this, op_index);
 		}
 	}
 }
