@@ -21,6 +21,8 @@ public class MainApplet extends PApplet{
 	private Random r = new Random();
 	private int ran;
 	
+	private int moneyValue=0;
+	
 	public MainApplet(GameClient gc){
 		this.gc = gc;
 	}
@@ -56,6 +58,7 @@ public class MainApplet extends PApplet{
 			map.display();
 			state.display();
 			checkMove();
+			plusMoney();
 			
 		}
 	}
@@ -95,6 +98,16 @@ public class MainApplet extends PApplet{
 			this.map.character.move[3]=true;
 		break;
 	}
+	}
+	
+	public void plusMoney()
+	{
+		moneyValue++;
+		if(moneyValue>=1000)
+		{
+			moneyValue=0;
+			this.map.character.plusMoney();
+		}
 	}
 	
 	public void checkMove(){

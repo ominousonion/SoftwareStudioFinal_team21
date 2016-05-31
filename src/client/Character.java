@@ -16,7 +16,8 @@ public class Character {
 	private int preX, preY;
 	public int x, y;
 	public String name;
-
+	public int money;
+	
 	public boolean move[]=new boolean[4];
 
 
@@ -29,6 +30,7 @@ public class Character {
 		this.width = width;
 		this.height = height;
 		this.parent = parent;
+		this.money=0;
 
 		this.oneStep = 40;  //move speed
 		for(int i=0;i<4;i++) move[i]=false;
@@ -38,6 +40,9 @@ public class Character {
 	public void setName(String name){
 		this.name=name;
 	}
+	
+	
+	
 	
 	public void display(){
 		// Displays the image at point (0, height/2) at half of its size
@@ -75,6 +80,11 @@ public class Character {
 			preX = x;
 			this.x = this.x + oneStep;
 		}
+	}
+	
+	public void plusMoney()
+	{
+		this.money+=1;//*ocpi
 	}
 
 	public void setGroup(String group){

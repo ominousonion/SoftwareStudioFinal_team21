@@ -48,7 +48,7 @@ public class MapComponent extends PApplet {
 	
 	
 	public void occupipe(int ch){
-		if(this.type>=1 && this.type<=5)
+		if(this.type>=1 && this.type<=3)
 		{
 			this.occupiedStage=2;
 			if(ch==0){
