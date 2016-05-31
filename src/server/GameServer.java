@@ -52,7 +52,11 @@ public class GameServer extends JFrame{
 				ConnectionThread client = new ConnectionThread(connectionToClient);
 				client.start();
 				if(connections.isEmpty()) client.sendMessage("server:setting_1");
-				else client.sendMessage("server:setting_2");
+				else{
+					client.sendMessage("server:setting_2");
+					itemData.put("coke", itemData.get("coke")+1);
+					writeToFile();
+				}
 				connections.add(client);
 			} catch (BindException e){
 				//e.printStackTrace();
@@ -107,10 +111,10 @@ public class GameServer extends JFrame{
 	public void writeToFile(){          //write user's input to text file
 		BufferedWriter writer = null;
 		try {
-			writer = new BufferedWriter(new FileWriter("output.txt"));
+			writer = new BufferedWriter(new FileWriter("./output.txt"));
 			for(String group : groupData.keySet()){
 				for(String name : groupData.get(group)){
-					String type = group.concat(" ").concat(name).concat(" ").concat(itemData.get(group).toString());
+					String type = group.concat(" ").concat(name).concat(" ").concat(itemData.get(name).toString());
 					writer.write(type);
 					writer.newLine();
 					writer.flush();
@@ -130,7 +134,7 @@ public class GameServer extends JFrame{
 		String group, name;
 		int times;
 		try{
-			Scanner filescn = new Scanner(new FileInputStream(".output.txt"));
+			Scanner filescn = new Scanner(new FileInputStream("./output.txt"));
 			while(filescn.hasNext()){
 				group = filescn.next();
 				name = filescn.next();
@@ -140,10 +144,11 @@ public class GameServer extends JFrame{
 					ArrayList<String> list = new ArrayList<String>();
 					list.add(name);
 					groupData.put( group, list);
+					itemData.put(name, times);
 				}
 				else{
 					groupData.get(group).add(name);
-				}
+				}	
 			}
 		}catch(IOException e){
 			System.out.println("Can't not find file");
