@@ -43,8 +43,6 @@ public class Character {
 		this.index = index;
 
 		this.money=0;
-
-		this.oneStep = 40;  //move speed
 		this.gm=gm;
 		this.face="down";
 		this.skillCreateBlock=new CreateBlock(gm);
