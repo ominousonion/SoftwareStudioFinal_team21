@@ -1,10 +1,10 @@
-Drink coke 0
+Sneaker Nike 0
+Sneaker Addias 0
+Sneaker UA 0
+Drink coke 3
 Drink Pepsi 0
 Drink Tea 0
 Cellphone HTC 0
 Cellphone Samsung 0
 Cellphone Apple 0
 Cellphone Zenphone 0
-Sneaker Nike 0
-Sneaker Addias 0
-Sneaker UA 0
