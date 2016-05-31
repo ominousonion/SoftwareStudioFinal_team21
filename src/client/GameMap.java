@@ -15,7 +15,8 @@ public class GameMap{
 	//character
 	public Character character;
 	public Character opponent;
-
+	
+	private int ch_num;
 	private int ch_X, ch_Y, op_X, op_Y;
 	private GameClient gc;
 
@@ -32,6 +33,8 @@ public class GameMap{
 		this.SquareHeight=600;
 		this.SquareUnit=this.SquareWidth/15;
 		this.gc = gc;
+		this.ch_num=gc.seq;
+		
 		op_X = SquareX+SquareWidth-SquareUnit;
 		op_Y = SquareY;
 		ch_X = SquareX;
@@ -57,7 +60,7 @@ public class GameMap{
 			sc.close();
 		}catch (IOException e) {System.out.println(e);}
 
-			iniCharacter(gc.seq);
+			iniCharacter(ch_num);
 		}
 
 	
@@ -74,7 +77,6 @@ public class GameMap{
 		}
 		this.character.display();
 		this.opponent.display();
-
 	}
 	
 	public void iniCharacter(int seq){

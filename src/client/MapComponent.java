@@ -45,6 +45,26 @@ public class MapComponent extends PApplet {
 		this.applet.noStroke();
 	};
 	
+	
+	
+	public void occupipe(int ch){
+		if(this.type>=1 && this.type<=3)
+		{
+			this.occupiedStage=2;
+			if(ch==0){
+				this.type=2;
+				String filename =("./src/img/map2.png");
+				img = loadImage(filename);
+			}
+			else if(ch==1){
+				this.type=3;
+				String filename=("./src/img/map3.png");
+				img = loadImage(filename);
+			}
+			
+		}
+	}
+	
 	public void createWall(){
 		if(this.type==0)
 		{
