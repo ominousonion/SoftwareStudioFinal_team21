@@ -16,8 +16,10 @@ public class Character {
 	private int preX, preY;
 	public int x, y;
 	public String name;
+
 	public int money;
 	
+
 	public boolean move[]=new boolean[4];
 	public String face;
 	public int index=0;
@@ -28,21 +30,22 @@ public class Character {
 
 
 	//constructor
-	Character(int x,int y, int width, int height, MainApplet parent, GameMap gm){
+	Character(int x,int y, int width, int height, MainApplet parent, GameMap gm, int index){
+
 		this.iniX = x;
-		this.iniY= y;
+		this.iniY = y;
 		this.x = iniX;
 		this.y = iniY;
 		this.width = width;
 		this.height = height;
 		this.parent = parent;
-		this.money=0;
-
-		this.oneStep = 40;  //move speed
-		this.gm=gm;
+		this.oneStep = 5;  //move speed
 		for(int i=0;i<4;i++) move[i]=false;
+		this.index = index;
+
+		this.money=0;
+		this.gm=gm;
 		this.face="down";
-		
 		this.skillCreateBlock=new CreateBlock(gm);
 		this.skillDeleteBlock=new DeleteBlock(gm);
 		this.skillOccupipeBlock=new OccupipeBlock(gm,this);
@@ -75,21 +78,43 @@ public class Character {
 	}
 
 	public void move(String dir){   //undo:check for boundary
+		MapComponent com=this.parent.map.components.get(this.index);
+		MapComponent com_next;
 		if(dir.equals("up")){
 			preY = y;
 			this.y = this.y - oneStep;
+			com_next=this.parent.map.components.get(this.index-15);
+			this.x=com_next.x;
+			if(this.y == com_next.y){
+				this.index-=15;
+			}
 		}
 		else if(dir.equals("down")){
 			preY = y;
 			this.y = this.y + oneStep;
+			com_next=this.parent.map.components.get(this.index+15);
+			this.x=com_next.x;
+			if(this.y == com_next.y){
+				this.index+=15;
+			}
 		}
 		else if(dir.equals("left")){
 			preX = x;
 			this.x = this.x - oneStep;
+			com_next=this.parent.map.components.get(this.index-1);
+			this.y=com_next.y;
+			if(this.x == com_next.x){
+				this.index-=1;
+			}
 		}
 		else if(dir.equals("right")){
 			preX = x;
 			this.x = this.x + oneStep;
+			com_next=this.parent.map.components.get(this.index+1);
+			this.y=com_next.y;
+			if(this.x == com_next.x){
+				this.index+=1;
+			}
 		}
 	}
 	

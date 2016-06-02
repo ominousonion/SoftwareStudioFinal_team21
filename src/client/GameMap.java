@@ -19,6 +19,7 @@ public class GameMap{
 	public int ch_num;
 	public int max_Occupipe; 
 	private int ch_X, ch_Y, op_X, op_Y;
+	private int ch_index, op_index;
 	private GameClient gc;
 
 	//constructor
@@ -32,7 +33,7 @@ public class GameMap{
 		this.SquareY=30;
 		this.SquareWidth=600;
 		this.SquareHeight=600;
-		this.SquareUnit=this.SquareWidth/15;
+		this.SquareUnit=this.SquareWidth/15;//SquareUnit = 40
 		this.gc = gc;
 		this.ch_num=gc.seq;
 		this.max_Occupipe=0;
@@ -41,7 +42,8 @@ public class GameMap{
 		op_Y = SquareY;
 		ch_X = SquareX;
 		ch_Y = SquareY+SquareUnit*14;
-		
+		ch_index = (ch_Y-SquareY)/SquareUnit*15+(ch_X-SquareX)/SquareUnit;
+		op_index = (op_Y-SquareY)/SquareUnit*15+(op_X-SquareX)/SquareUnit;
 		components = new ArrayList<MapComponent>();
 		Random r = new Random();
 		int ran;
@@ -85,12 +87,12 @@ public class GameMap{
 	public void iniCharacter(int seq){
 		System.out.println("seq: "+seq);
 		if(seq==1){
-			character= new Character(ch_X, ch_Y, SquareUnit, SquareUnit, applet, this);
-			opponent = new Character(op_X, op_Y, SquareUnit, SquareUnit, applet, this);
+			character= new Character(ch_X, ch_Y, SquareUnit, SquareUnit, applet, this, ch_index);
+			opponent = new Character(op_X, op_Y, SquareUnit, SquareUnit, applet, this, op_index);
 		}
 		else{
-			character= new Character(op_X, op_Y, SquareUnit, SquareUnit, applet, this);
-			opponent = new Character(ch_X, ch_Y, SquareUnit, SquareUnit, applet, this);
+			character= new Character(op_X, op_Y, SquareUnit, SquareUnit, applet, this, op_index);
+			opponent = new Character(ch_X, ch_Y, SquareUnit, SquareUnit, applet, this, ch_index);
 		}
 	}
 }
