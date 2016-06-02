@@ -128,20 +128,44 @@ public class MainApplet extends PApplet{
 				index-=15;
 				if(index >= 0){
 					com=this.map.components.get(index);
-					if(com.passable){
+					if(this.map.character.y==com_ori.y){
+						if(com.passable){
+							gc.sendMessage("up");
+							this.map.character.move("up");
+						}						
+					}
+					else{
 						gc.sendMessage("up");
 						this.map.character.move("up");
-					}	
+					}
 				}	
+				else{
+					if(this.map.character.y > com_ori.y){
+						gc.sendMessage("up");
+						this.map.character.move("up");
+					}
+				}
 		}else if(this.map.character.move[1]){
 				index+=15;
 				if(index<225){
 					com=this.map.components.get(index);
-					if(com.passable){
+					if(this.map.character.y==com_ori.y){
+						if(com.passable){
+							gc.sendMessage("down");
+							this.map.character.move("down");
+						}						
+					}
+					else{
 						gc.sendMessage("down");
 						this.map.character.move("down");
 					}
 				}	
+				else{
+					if(this.map.character.y < com_ori.y){
+						gc.sendMessage("down");
+						this.map.character.move("down");
+					}
+				}
 		}else if(this.map.character.move[2]){
 				int row_pre = index/15;
 				int row_after = (index-1)/15;
@@ -149,11 +173,29 @@ public class MainApplet extends PApplet{
 				if(index >= 0){
 					if(row_pre==row_after){
 						com=this.map.components.get(index);
-						if(com.passable){
+						if(this.map.character.x==com_ori.x){
+							if(com.passable){
+								gc.sendMessage("left");
+								this.map.character.move("left");
+							}							
+						}
+						else{
 							gc.sendMessage("left");
 							this.map.character.move("left");
-						}	
-					}					
+						}
+					}
+					else{
+						if(this.map.character.x > com_ori.x){
+							gc.sendMessage("left");
+							this.map.character.move("left");
+						}
+					}
+				}
+				else{
+					if(this.map.character.x > com_ori.x){
+						gc.sendMessage("left");
+						this.map.character.move("left");
+					}
 				}
 
 		}else if(this.map.character.move[3]){
@@ -162,11 +204,24 @@ public class MainApplet extends PApplet{
 				index+=1;				
 				if(row_pre==row_after){
 					com=this.map.components.get(index);
-					if(com.passable){
+					if(this.map.character.x==com_ori.x){
+						if(com.passable){
+							gc.sendMessage("right");
+							this.map.character.move("right");
+						}						
+					}
+					else{
+						gc.sendMessage("right");
+						this.map.character.move("right");						
+					}
+				}
+				else{
+					if(this.map.character.x < com_ori.x){
 						gc.sendMessage("right");
 						this.map.character.move("right");
 					}
 				}
+				
 		}
 	}
 	
