@@ -107,6 +107,9 @@ public class MainApplet extends PApplet{
 		case KeyEvent.VK_X :
 			this.map.character.skillDeleteBlock.toDeleteBlock();
 		break;
+		case KeyEvent.VK_SPACE :
+			this.map.character.skillOccupipeBlock.toOccupipeBlock();
+		break;
 	}
 	}
 	

@@ -23,6 +23,7 @@ public class Character {
 	public int index=0;
 	public CreateBlock skillCreateBlock;
 	public DeleteBlock skillDeleteBlock;
+	public OccupipeBlock skillOccupipeBlock;
 	private GameMap gm;
 
 
@@ -44,6 +45,7 @@ public class Character {
 		
 		this.skillCreateBlock=new CreateBlock(gm);
 		this.skillDeleteBlock=new DeleteBlock(gm);
+		this.skillOccupipeBlock=new OccupipeBlock(gm,this);
 	}
 
 	public void setName(String name){
@@ -90,6 +92,7 @@ public class Character {
 			this.x = this.x + oneStep;
 		}
 	}
+	
 	
 	public void plusMoney()
 	{
