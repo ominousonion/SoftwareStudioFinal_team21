@@ -16,13 +16,15 @@ public class MapComponent extends PApplet {
 	public PApplet applet;
 	public PImage img;
 	public int type;
+	private GameMap map;
 	
 	//constructor
-	MapComponent(int x,int y,int num,PApplet applet){
+	MapComponent(int x,int y,int num,PApplet applet, GameMap map){
 		this.x=x;
 		this.y=y;
 		this.applet=applet;
 		this.type=num;
+		this.map=map;
 		
 		String filename =("./src/img/map_"+num+".png");
 		img = loadImage(filename);

@@ -57,7 +57,7 @@ public class GameMap{
 			
 			while(sc.hasNext()&& i<225){
 				mapData=sc.nextInt();
-				components.add(new MapComponent(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,mapData,this.applet));
+				components.add(new MapComponent(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,mapData,this.applet, this));
 				i++;
 			}
 			sc.close();
