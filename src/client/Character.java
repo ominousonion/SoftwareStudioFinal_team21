@@ -19,7 +19,7 @@ public class Character {
 
 	public int money;
 	
-
+	public boolean out_of_place;
 	public boolean move[]=new boolean[4];
 	public String face;
 	public int index=0;
@@ -42,7 +42,8 @@ public class Character {
 		this.oneStep = 5;  //move speed
 		for(int i=0;i<4;i++) move[i]=false;
 		this.index = index;
-
+		this.out_of_place=false;
+		
 		this.money=0;
 		this.gm=gm;
 		this.face="down";
@@ -81,6 +82,7 @@ public class Character {
 		MapComponent com_next;
 		int row_pre;
 		int row_after;
+		this.out_of_place=true;
 		if(dir.equals("up")){
 			preY = y;
 			this.y = this.y - oneStep;
@@ -89,6 +91,7 @@ public class Character {
 				this.x=com_next.x;
 				if(this.y == com_next.y){
 					this.index-=15;
+					this.out_of_place=false;
 				}				
 			}
 		}
@@ -100,6 +103,7 @@ public class Character {
 				this.x=com_next.x;
 				if(this.y == com_next.y){
 					this.index+=15;
+					this.out_of_place=false;
 				}				
 			}
 
@@ -116,6 +120,7 @@ public class Character {
 				}
 				if(this.x == com_next.x){
 					this.index-=1;
+					this.out_of_place=false;
 				}				
 			}
 
@@ -132,6 +137,7 @@ public class Character {
 				}
 				if(this.x == com_next.x){
 					this.index+=1;
+					this.out_of_place=false;
 				}				
 			}
 
