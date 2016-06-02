@@ -53,14 +53,14 @@ public class MapComponent extends PApplet {
 		if(this.type>=1 && this.type<=3)
 		{
 			this.occupiedStage=2;
-			if(ch==0){
+			if(ch==1){
 				this.type=2;
-				String filename =("./src/img/map2.png");
+				String filename =("./src/img/map_2.png");
 				img = loadImage(filename);
 			}
-			else if(ch==1){
+			else if(ch==2){
 				this.type=3;
-				String filename=("./src/img/map3.png");
+				String filename=("./src/img/map_3.png");
 				img = loadImage(filename);
 			}
 			

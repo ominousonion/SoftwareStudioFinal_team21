@@ -103,9 +103,15 @@ public class MainApplet extends PApplet{
 		break;
 		case KeyEvent.VK_Z :
 			this.map.character.skillCreateBlock.toMakeBlock();
+			gc.sendMessage("create");
 		break;
 		case KeyEvent.VK_X :
 			this.map.character.skillDeleteBlock.toDeleteBlock();
+			gc.sendMessage("break");
+		break;
+		case KeyEvent.VK_SPACE :
+			this.map.character.skillOccupipeBlock.toOccupipeBlock();
+			gc.sendMessage("occupipe");
 		break;
 	}
 	}
