@@ -79,41 +79,62 @@ public class Character {
 	public void move(String dir){   //undo:check for boundary
 		MapComponent com=this.parent.map.components.get(this.index);
 		MapComponent com_next;
+		int row_pre;
+		int row_after;
 		if(dir.equals("up")){
 			preY = y;
 			this.y = this.y - oneStep;
-			com_next=this.parent.map.components.get(this.index-15);
-			this.x=com_next.x;
-			if(this.y == com_next.y){
-				this.index-=15;
+			if(this.index-15 >= 0){
+				com_next=this.parent.map.components.get(this.index-15);
+				this.x=com_next.x;
+				if(this.y == com_next.y){
+					this.index-=15;
+				}				
 			}
 		}
 		else if(dir.equals("down")){
 			preY = y;
 			this.y = this.y + oneStep;
-			com_next=this.parent.map.components.get(this.index+15);
-			this.x=com_next.x;
-			if(this.y == com_next.y){
-				this.index+=15;
+			if(this.index+15 < 225){
+				com_next=this.parent.map.components.get(this.index+15);
+				this.x=com_next.x;
+				if(this.y == com_next.y){
+					this.index+=15;
+				}				
 			}
+
 		}
 		else if(dir.equals("left")){
 			preX = x;
 			this.x = this.x - oneStep;
-			com_next=this.parent.map.components.get(this.index-1);
-			this.y=com_next.y;
-			if(this.x == com_next.x){
-				this.index-=1;
+			if(this.index-1 >= 0){
+				row_pre=this.index/15;
+				row_after=(this.index-1)/15;
+				com_next=this.parent.map.components.get(this.index-1);
+				if(row_after==row_pre){
+					this.y=com_next.y;
+				}
+				if(this.x == com_next.x){
+					this.index-=1;
+				}				
 			}
+
 		}
 		else if(dir.equals("right")){
 			preX = x;
 			this.x = this.x + oneStep;
-			com_next=this.parent.map.components.get(this.index+1);
-			this.y=com_next.y;
-			if(this.x == com_next.x){
-				this.index+=1;
+			if(this.index+1 < 225){
+				row_pre=this.index/15;
+				row_after=(this.index+1)/15;
+				com_next=this.parent.map.components.get(this.index+1);
+				if(row_after==row_pre){
+					this.y=com_next.y;
+				}
+				if(this.x == com_next.x){
+					this.index+=1;
+				}				
 			}
+
 		}
 	}
 	
