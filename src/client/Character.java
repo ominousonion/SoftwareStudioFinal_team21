@@ -93,6 +93,7 @@ public class Character {
 		this.out_of_place=true;
 		if(dir.equals("up")){
 			preY = y;
+			this.face="up";
 			this.y = this.y - oneStep;
 			if(this.index-15 >= 0){
 				com_next=this.parent.map.components.get(this.index-15);
@@ -104,6 +105,7 @@ public class Character {
 			}
 		}
 		else if(dir.equals("down")){
+			this.face="down";
 			preY = y;
 			this.y = this.y + oneStep;
 			if(this.index+15 < 225){
@@ -117,6 +119,7 @@ public class Character {
 
 		}
 		else if(dir.equals("left")){
+			this.face="left";
 			preX = x;
 			this.x = this.x - oneStep;
 			if(this.index-1 >= 0){
@@ -134,6 +137,7 @@ public class Character {
 
 		}
 		else if(dir.equals("right")){
+			this.face="right";
 			preX = x;
 			this.x = this.x + oneStep;
 			if(this.index+1 < 225){
