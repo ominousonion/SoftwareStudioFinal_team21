@@ -16,7 +16,7 @@ public class GameMap{
 	public Character character;
 	public Character opponent;
 	
-	private int ch_num;
+	public int ch_num;
 	private int ch_X, ch_Y, op_X, op_Y;
 	private int ch_index, op_index;
 	private GameClient gc;
