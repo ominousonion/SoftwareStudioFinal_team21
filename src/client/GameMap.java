@@ -20,6 +20,7 @@ public class GameMap{
 	private int ch_X, ch_Y, op_X, op_Y;
 	private int ch_index, op_index;
 	private GameClient gc;
+	public int seq;
 
 	//constructor
 	GameMap(MainApplet applet,int mapNumber,GameClient gc){
@@ -82,6 +83,7 @@ public class GameMap{
 	}
 	
 	public void iniCharacter(int seq){
+		this.seq=seq;
 		System.out.println("seq: "+seq);
 		if(seq==1){
 			character= new Character(ch_X, ch_Y, SquareUnit, SquareUnit, applet, this, ch_index);

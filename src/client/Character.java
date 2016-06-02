@@ -26,6 +26,7 @@ public class Character {
 	public CreateBlock skillCreateBlock;
 	public DeleteBlock skillDeleteBlock;
 	private GameMap gm;
+	public int ocpy;
 
 
 	//constructor
