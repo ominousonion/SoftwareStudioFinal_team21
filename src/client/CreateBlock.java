@@ -24,6 +24,6 @@ public class CreateBlock {
 			this.index=gm.character.index+1;
 			if(index%15==0) faceEdge=true;
 		}
-		if(index>=0 && index<225 && !faceEdge) gm.components.get(index).createWall();
+		if(index>=0 && index<225 && !faceEdge) gm.components.get(index).createWall(index);
 	}
 }

@@ -67,23 +67,182 @@ public class MapComponent extends PApplet {
 		}
 	}
 	
-	public void createWall(){
+	public void createWall(int index){
 		if(this.type==0)
 		{
-			this.type=99;
+			int id=90000;
+			
+			if(index-15<0){
+				id+=1000;
+			}else if(map.components.get(index-15).type==0 || map.components.get(index-15).type==1){ //up block
+				id+=1000;
+			}
+			
+			if(index+15>=225){ //down block
+				id+=100;
+			}else if(map.components.get(index+15).type==1 || map.components.get(index+15).type==0){
+				id+=100;
+			}
+			
+			if(index%15==0){ //left block
+				id+=10;
+			}else if(map.components.get(index-1).type==0 || map.components.get(index-1).type==1){
+				id+=10;
+			}else if(index%15!=0 && (map.components.get(index-1).type%1000)>=100 && id%1000<100){ //left block has no block beneath it
+				id+=20;
+			}
+			
+			
+			if(index%15==14){ //right block
+				id+=1;
+			}else if(map.components.get(index+1).type==0 || map.components.get(index+1).type==1){ //right block
+				id+=1;
+			}else if(index%15!=14 && (map.components.get(index+1).type%1000)>=100 && id%1000<100){ //right block has no block beneath it
+				id+=2;
+			}	
+
+			this.type=id;
 			this.passable=false;
 			this.occupiedStage=0;
-			String filename =("./src/img/map_18.png");
+			String filename =("./src/img/map_"+id+".png");
 			img = loadImage(filename);
+			
+			if(index-15>=0){
+				if(map.components.get(index-15).type>89999){ //up
+					map.components.get(index-15).type-=100;
+				
+					if(index-15-1%15!=14 && index!=15){ //up left
+						if(map.components.get(index-15-1).type%1000>=100 || index-15==0){
+							map.components.get(index-15).type+=20;
+						}else if(map.components.get(index-15-1).type%10==2){
+							map.components.get(index-15-1).type-=2;
+							filename =("./src/img/map_"+map.components.get(index-15-1).type+".png");
+							map.components.get(index-15-1).img = loadImage(filename);
+						}
+					}
+				
+					if(index-15+1%15!=0){ //up right
+						if(map.components.get(index-15+1).type%1000>=100){
+							map.components.get(index-15).type+=2;
+						}else if(map.components.get(index-15+1).type%100>=20){
+							map.components.get(index-15+1).type-=20;
+							filename =("./src/img/map_"+map.components.get(index-15+1).type+".png");
+							map.components.get(index-15+1).img = loadImage(filename);
+						}
+					}
+				
+					filename =("./src/img/map_"+map.components.get(index-15).type+".png");
+					map.components.get(index-15).img = loadImage(filename);
+				}
+			}
+			
+			if(index+15<225){
+				if(map.components.get(index+15).type>89999){ //down
+					map.components.get(index+15).type-=1000;
+					filename =("./src/img/map_"+map.components.get(index+15).type+".png");
+					map.components.get(index+15).img = loadImage(filename);
+				}
+			}
+			
+			if(index-1%15!=14 && index-1!=-1){
+				if(map.components.get(index-1).type>89999){ //left
+					if(this.type%1000>=100 && map.components.get(index-1).type%1000<100){ //has down boundary
+						map.components.get(index-1).type+=1;
+					}else{
+						map.components.get(index-1).type-=1;
+					}
+					filename =("./src/img/map_"+map.components.get(index-1).type+".png");
+					map.components.get(index-1).img = loadImage(filename);
+				}
+			}
+			
+			if(index+1%15!=0 && index!=224){
+				if(map.components.get(index+1).type>89999){ //right
+					if(this.type%1000>=100 && map.components.get(index+1).type%1000<100){
+						map.components.get(index+1).type+=10;
+					}else{
+						map.components.get(index+1).type-=10;
+					}
+					filename =("./src/img/map_"+map.components.get(index+1).type+".png");
+					map.components.get(index+1).img = loadImage(filename);
+				}
+			}
+			
 		}
 	}
-	public void delWall(){
+	
+	
+	
+	public void delWall(int index){
 		if(this.type>=4)
 		{
+			String filename;
+			
+			if(index-15>=0){
+				if(map.components.get(index-15).type>89999){ //up
+					map.components.get(index-15).type+=100;
+					if(map.components.get(index-15).type%100>=20) map.components.get(index-15).type-=20;
+					if(map.components.get(index-15).type%10>=2 ) map.components.get(index-15).type-=2;
+				
+					if(index-15-1%15!=14 && index!=15){ //up left
+						if(map.components.get(index-15-1).type>=4 && (map.components.get(index-15-1).type%1000<100 || index-15==0)){
+							map.components.get(index-15-1).type+=2;
+							filename =("./src/img/map_"+map.components.get(index-15-1).type+".png");
+							map.components.get(index-15-1).img = loadImage(filename);
+						}
+					}
+				
+					if(index-15+1%15!=0){ //up right
+						if(map.components.get(index-15+1).type>=4 && map.components.get(index-15+1).type%1000<100){ //up right doesn't have down boundary
+							map.components.get(index-15+1).type+=20;
+							filename =("./src/img/map_"+map.components.get(index-15+1).type+".png");
+							map.components.get(index-15+1).img = loadImage(filename);
+						}
+					}
+				
+					filename =("./src/img/map_"+map.components.get(index-15).type+".png");
+					map.components.get(index-15).img = loadImage(filename);
+				}
+			}
+			
+			if(index+15<225){
+				if(map.components.get(index+15).type>89999){ //down
+					map.components.get(index+15).type+=1000;
+					filename =("./src/img/map_"+map.components.get(index+15).type+".png");
+					map.components.get(index+15).img = loadImage(filename);
+				}
+			}
+			
+			if(index-1%15!=14 && index-1!=-1){
+				if(map.components.get(index-1).type>89999){ //left
+					if(this.type%1000>=100 && map.components.get(index-1).type%1000<100){ //this has down boundary but left doesn't
+						map.components.get(index-1).type-=1;
+					}else{
+						map.components.get(index-1).type+=1;
+					}
+					filename =("./src/img/map_"+map.components.get(index-1).type+".png");
+					map.components.get(index-1).img = loadImage(filename);
+				}
+			}
+			
+			if(index+1%15!=0 && index!=224){
+				if(map.components.get(index+1).type>89999){ //right
+					if(this.type%1000>=100 && map.components.get(index+1).type%1000<100){
+						map.components.get(index+1).type-=10;
+					}else{
+						map.components.get(index+1).type+=10;
+					}
+					filename =("./src/img/map_"+map.components.get(index+1).type+".png");
+					map.components.get(index+1).img = loadImage(filename);
+				}
+			}
+			
+			
+			
 			this.type=0;
 			this.passable=true;
 			this.occupiedStage=0;
-			String filename =("./src/img/map_0.png");
+			filename =("./src/img/map_0.png");
 			img = loadImage(filename);
 		}
 	}
