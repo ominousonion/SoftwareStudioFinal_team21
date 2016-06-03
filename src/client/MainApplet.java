@@ -121,15 +121,19 @@ public class MainApplet extends PApplet{
 	public void keyPressed(KeyEvent e){
 		switch(e.getKeyCode()){
 		case KeyEvent.VK_UP :
-			this.map.character.move[0]=true;
-			this.map.character.face="up";
+			if(isStart == false && isExplain == false &&isSelected == false){
+				this.map.character.move[0]=true;
+				this.map.character.face="up";				
+			}
 		break;
 		case KeyEvent.VK_DOWN :
-			this.map.character.move[1]=true;
-			this.map.character.face="down";
+			if(isStart == false && isExplain == false &&isSelected == false){
+				this.map.character.move[1]=true;
+				this.map.character.face="down";				
+			}
 		break;	
 		case KeyEvent.VK_LEFT :
-			if( isSelected == false){
+			if( isStart == false && isExplain == false &&isSelected == false){
 				this.map.character.move[2]=true;
 				this.map.character.face="left";
 			}
@@ -139,7 +143,7 @@ public class MainApplet extends PApplet{
 			}
 			break;
 		case KeyEvent.VK_RIGHT :
-			if( isSelected == false ){
+			if( isStart == false && isExplain == false &&isSelected == false ){
 				this.map.character.move[3]=true;
 				this.map.character.face="right";
 			}
@@ -149,12 +153,29 @@ public class MainApplet extends PApplet{
 			}
 			break;
 		case KeyEvent.VK_Z :
-			this.map.character.skillCreateBlock.toMakeBlock();
-		break;
+			if( isStart == false && isExplain == false &&isSelected == false ){
+				gc.sendMessage("create");
+				this.map.character.skillCreateBlock.toMakeBlock();				
+			}
+			break;
 		case KeyEvent.VK_X :
-			this.map.character.skillDeleteBlock.toDeleteBlock();
-		break;
-	}
+			if( isStart == false && isExplain == false &&isSelected == false ){
+				gc.sendMessage("break");
+				this.map.character.skillDeleteBlock.toDeleteBlock();				
+			}
+			break;
+		case KeyEvent.VK_SPACE:
+			MapComponent com;
+			if( isStart == false && isExplain == false &&isSelected == false ){
+				com=this.map.components.get(this.map.character.index);
+				if(com.type>=1 && com.type<=3){
+					gc.sendMessage("occupipe");
+					com.occupipe(this.map.character.number);
+				}
+			}
+			break;		
+		
+		}
 	}
 	
 	public void plusMoney()
