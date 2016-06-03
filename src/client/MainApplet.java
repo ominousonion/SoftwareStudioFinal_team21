@@ -83,6 +83,7 @@ public class MainApplet extends PApplet{
 			backbtn.hideButton();
 			map.display();
 			state.display();
+			checkMove();
 		}
 		
 	}

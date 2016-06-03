@@ -77,6 +77,7 @@ public class GameClient extends JFrame{
 					//System.out.println(info[1]);
 					if(info[1].equals("setting_1")) seq = 1;
 					else seq = 2;
+					if(applet!=null) System.out.println(info[1]);
 					if(info[1].equals("up")||info[1].equals("down")|| info[1].equals("left") ||info[1].equals("right") )
 						applet.map.opponent.move(info[1]);
 					else if(info[1].equals("create"))
