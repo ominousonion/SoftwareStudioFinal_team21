@@ -5,6 +5,8 @@ import java.util.Random;
 import de.looksgood.ani.Ani;
 
 import processing.core.PApplet;
+import processing.core.PImage;
+
 @SuppressWarnings("serial")
 
 public class MainApplet extends PApplet{
@@ -15,8 +17,13 @@ public class MainApplet extends PApplet{
 	private GameClient gc;
 	private boolean isStart;//paul
 	private boolean isExplain;
+	private boolean isSelected;
 	private Button btn;//Paul added
 	private BackButton backbtn;
+	private PictureSelButton picSelButton;
+	private PicData picdata1;
+	private PImage []itemImg = new PImage[100];
+	private int sel_number;
 	
 	private Random r = new Random();
 	private int ran;
@@ -36,36 +43,54 @@ public class MainApplet extends PApplet{
 		isExplain = false;
 		btn = new Button(this);
 		backbtn = new BackButton(this);
-	
+		picSelButton = new PictureSelButton(this);
+		picdata1 = new PicData(this);
+		sel_number = 0;
+		for( String str : picdata1.getGroupData().get("Sneaker")){
+			itemImg[sel_number] = picdata1.getImageData().get(str);
+			sel_number++;
+		}
+		sel_number = 0;
 	}
 	
 	public void draw(){
-		if( isStart == true && isExplain == false){
+		if( isStart == true && isExplain == false && isSelected == false){
 			background(0);
+			picSelButton.hideButton();
 			backbtn.hideButton();
 			btn.showButton();
 			btn.display();
 		}
-		else if( isExplain == true ){
+		else if( isExplain == true && isSelected == false ){
 			background(167);
 			btn.hideButton();
 			backbtn.showButton();
 			backbtn.display();
+		}
+		else if( isSelected == true ){
+			background(color(0,125,0));
+			btn.hideButton();
+			picSelButton.showButton();
+			picSelButton.display();
+			//itemImg = picdata1.getImageData().get("Nike");
+			/*for( String str : picdata1.getGroupData().get("Sneaker")){
+				itemImg[sel_number] = picdata1.getImageData().get(str);
+			}*/
+			image(itemImg[sel_number],450,150);
 		}
 		else{
 			btn.hideButton();
 			backbtn.hideButton();
 			map.display();
 			state.display();
-			checkMove();
-			plusMoney();
-			
 		}
+		
 	}
 	
 	/*control the behavior of buttonA*/
 	public void buttonA(){
 		isStart = false;//go to the game scene
+		isSelected = true;
 	}
 	
 	/*control the behavior of buttonB*/
@@ -83,6 +108,15 @@ public class MainApplet extends PApplet{
 		isExplain = false;
 	}
 	
+	public void buttonSel1(){
+		picSelButton.hideButton();
+		isSelected = false;
+	}
+	/*public void buttonSel2(){
+		picSelButton.hideButton();
+		isSelected = false;
+	}*/
+	
 	public void keyPressed(KeyEvent e){
 		switch(e.getKeyCode()){
 		case KeyEvent.VK_UP :
@@ -92,26 +126,32 @@ public class MainApplet extends PApplet{
 		case KeyEvent.VK_DOWN :
 			this.map.character.move[1]=true;
 			this.map.character.face="down";
-		break;
+		break;	
 		case KeyEvent.VK_LEFT :
-			this.map.character.move[2]=true;
-			this.map.character.face="left";
-		break;
+			if( isSelected == false){
+				this.map.character.move[2]=true;
+				this.map.character.face="left";
+			}
+			else{
+				if(sel_number-1>=0)
+					sel_number--;
+			}
+			break;
 		case KeyEvent.VK_RIGHT :
-			this.map.character.move[3]=true;
-			this.map.character.face="right";
-		break;
+			if( isSelected == false ){
+				this.map.character.move[3]=true;
+				this.map.character.face="right";
+			}
+			else{
+				if(sel_number+1<=3)
+					sel_number++;
+			}
+			break;
 		case KeyEvent.VK_Z :
 			this.map.character.skillCreateBlock.toMakeBlock();
-			gc.sendMessage("create");
 		break;
 		case KeyEvent.VK_X :
 			this.map.character.skillDeleteBlock.toDeleteBlock();
-			gc.sendMessage("break");
-		break;
-		case KeyEvent.VK_SPACE :
-			this.map.character.skillOccupipeBlock.toOccupipeBlock();
-			gc.sendMessage("occupipe");
 		break;
 	}
 	}
