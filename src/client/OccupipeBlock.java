@@ -12,6 +12,6 @@ public class OccupipeBlock {
 	
 	public void toOccupipeBlock(){
 		this.index=pc.index;
-		gm.components.get(index).occupipe(gm.ch_num);
+		gm.components.get(index).occupipe(pc.number);
 	}
 }

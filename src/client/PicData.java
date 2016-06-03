@@ -15,6 +15,7 @@ public class PicData {
 	public PicData(MainApplet parent){
 		this.parent = parent;
 		readData();
+		loadImg();
 	}
 	
 	public void readData(){
@@ -43,8 +44,10 @@ public class PicData {
 	public void loadImg(){
 		for(String group : groupData.keySet()){
 			for(String item : groupData.get(group)){
-				PImage itemImg = parent.loadImage(address.concat(item));
+				PImage itemImg = parent.loadImage(address.concat(item).concat(".jpg"));
+				itemImg.resize(300, 300);
 				imgData.put(item, itemImg);
+
 			}
 		}
 	}

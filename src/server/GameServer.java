@@ -54,7 +54,7 @@ public class GameServer extends JFrame{
 				if(connections.isEmpty()) client.sendMessage("server:setting_1");
 				else{
 					client.sendMessage("server:setting_2");
-					itemData.put("coke", itemData.get("coke")+1);
+					//itemData.put("coke", itemData.get("coke")+1);
 					writeToFile();
 				}
 				connections.add(client);
@@ -85,8 +85,9 @@ public class GameServer extends JFrame{
 					String line = this.reader.readLine();
 					textArea.append(line+"\n");
 					for(ConnectionThread ct: connections){
-						if(ct.equals(this)==false)
+						if(ct.equals(this)==false){
 							ct.sendMessage(line);
+						}	
 					}
 				} catch (IOException e){
 					e.printStackTrace();

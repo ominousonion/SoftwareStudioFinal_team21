@@ -16,7 +16,8 @@ public class Character {
 	private int preX, preY;
 	public int x, y;
 	public String name;
-
+	public int number;
+	
 	public int money;
 	
 	public boolean out_of_place;
@@ -25,12 +26,13 @@ public class Character {
 	public int index=0;
 	public CreateBlock skillCreateBlock;
 	public DeleteBlock skillDeleteBlock;
+	public OccupipeBlock skillOccupipeBlock;
 	private GameMap gm;
 	public int ocpy;
 
 
 	//constructor
-	Character(int x,int y, int width, int height, MainApplet parent, GameMap gm, int index){
+	Character(int x,int y, int width, int height, MainApplet parent, GameMap gm, int seq,int index){
 
 		this.iniX = x;
 		this.iniY = y;
@@ -42,13 +44,17 @@ public class Character {
 		this.oneStep = 5;  //move speed
 		for(int i=0;i<4;i++) move[i]=false;
 		this.index = index;
+		this.number = seq;
+
 		this.out_of_place=false;
 		
 		this.money=0;
 		this.gm=gm;
 		this.face="down";
-		this.skillCreateBlock=new CreateBlock(gm);
-		this.skillDeleteBlock=new DeleteBlock(gm);
+		
+		this.skillCreateBlock=new CreateBlock(gm,this);
+		this.skillDeleteBlock=new DeleteBlock(gm,this);
+		this.skillOccupipeBlock=new OccupipeBlock(gm,this);
 	}
 
 	public void setName(String name){
@@ -76,7 +82,9 @@ public class Character {
 		itemImg.resize(20,20);
 		*/
 	}
-
+	
+	
+	
 	public void move(String dir){   //undo:check for boundary
 		MapComponent com=this.parent.map.components.get(this.index);
 		MapComponent com_next;
@@ -85,6 +93,7 @@ public class Character {
 		this.out_of_place=true;
 		if(dir.equals("up")){
 			preY = y;
+			this.face="up";
 			this.y = this.y - oneStep;
 			if(this.index-15 >= 0){
 				com_next=this.parent.map.components.get(this.index-15);
@@ -96,6 +105,7 @@ public class Character {
 			}
 		}
 		else if(dir.equals("down")){
+			this.face="down";
 			preY = y;
 			this.y = this.y + oneStep;
 			if(this.index+15 < 225){
@@ -109,6 +119,7 @@ public class Character {
 
 		}
 		else if(dir.equals("left")){
+			this.face="left";
 			preX = x;
 			this.x = this.x - oneStep;
 			if(this.index-1 >= 0){
@@ -126,6 +137,7 @@ public class Character {
 
 		}
 		else if(dir.equals("right")){
+			this.face="right";
 			preX = x;
 			this.x = this.x + oneStep;
 			if(this.index+1 < 225){
