@@ -22,6 +22,7 @@ public class MainApplet extends PApplet{
 	private PicData picdata1;
 	private PImage [][]itemImg = new PImage[100][100];
 	private PImage []backImg = new PImage[10];
+	private PImage explainImg;
 	private int sel_number;
 	private int sel_number_1;
 	
@@ -67,6 +68,8 @@ public class MainApplet extends PApplet{
 		this.backImg[1].resize(1200, 720);
 		this.backImg[2] = loadImage("/src/background/img3.jpg");
 		this.backImg[2].resize(1200, 720);
+		this.explainImg = loadImage("/src/img/explaintion_1.png");
+		this.explainImg.resize(1200,650);
 	}
 	
 	public void draw(){
@@ -79,6 +82,7 @@ public class MainApplet extends PApplet{
 		}
 		else if( isExplain == true && isSelected == false ){
 			background(167);
+			this.image(explainImg,0,0,1200,650);
 			btn.hideButton();
 			backbtn.showButton();
 			backbtn.display();
