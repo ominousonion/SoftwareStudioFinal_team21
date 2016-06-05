@@ -9,7 +9,7 @@ public class Character {
 
 	final public int iniX, iniY, width, height;
 	private MainApplet parent;
-	private PImage chImg, itemImg;
+	private PImage chImg;
 	private String chImgAddress, itemImgAddress;
 	private String group;
 	public int oneStep;
@@ -45,13 +45,13 @@ public class Character {
 		for(int i=0;i<4;i++) move[i]=false;
 		this.index = index;
 		this.number = seq;
-
+		this.chImgAddress="./src/img/character"+seq+"_";
 		this.out_of_place=false;
 		
 		this.money=0;
 		this.gm=gm;
 		this.face="down";
-		
+		loadData();
 		this.skillCreateBlock=new CreateBlock(gm,this);
 		this.skillDeleteBlock=new DeleteBlock(gm,this);
 		this.skillOccupipeBlock=new OccupipeBlock(gm,this);
@@ -67,20 +67,16 @@ public class Character {
 	public void display(){
 		// Displays the image at point (0, height/2) at half of its size
 		//parent.image(chImg, 0, height/2, chImg.width/2, chImg.height/2);
+		this.loadData();
+		this.parent.image(chImg,x,y,width,width);
 		this.parent.noStroke();
-		this.parent.fill(255,255,0);
-		this.parent.ellipse(this.x+20, this.y+20, 40, 40);
 		// animation : Ani.to
 
 	}
 
 	public void loadData(){
-		chImg = parent.loadImage(chImgAddress);
+		chImg = parent.loadImage(chImgAddress+this.face+".png");
 		chImg.resize(width,height);
-		/*
-		itemImg = parent.loadImage(itemImgAddress);
-		itemImg.resize(20,20);
-		*/
 	}
 	
 	
