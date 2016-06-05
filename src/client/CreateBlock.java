@@ -12,24 +12,29 @@ public class CreateBlock {
 		this.pc=pc;
 	}
 	
-	public void toMakeBlock(){
+	public boolean toMakeBlock(){
 		faceEdge=false;
+		boolean exe=false;
 		if(pc.face=="up"){
-			this.index=pc.index-15;
+			if(pc.out_of_place_up) this.index=pc.index-30;
+			else this.index=pc.index-15;
 			if(index<0) faceEdge=true;
 		}else if(pc.face=="down"){
-			this.index=pc.index+15;
+			if(pc.out_of_place_down) this.index=pc.index+30;
+			else this.index=pc.index+15;
 			if(index>=225) faceEdge=true;
 		}else if(pc.face=="left"){
-			this.index=pc.index-1;
+			if(pc.out_of_place_left) this.index=pc.index-2;
+			else this.index=pc.index-1;
 			if(index%15==14) faceEdge=true;
 		}else if(pc.face=="right"){
-			this.index=pc.index+1;
+			if(pc.out_of_place_right) this.index=pc.index+2;
+			else this.index=pc.index+1;
 			if(index%15==0) faceEdge=true;
 		}
-		if(index>=0 && index<225 && !faceEdge) gm.components.get(index).createWall(index);
-
-
-		if(index>=0 && index<225 && !faceEdge) gm.components.get(index).createWall(index);
+		if(index>=0 && index<225 && !faceEdge) exe=gm.components.get(index).createWall(index);
+		
+		return exe;
+		
 	}
 }

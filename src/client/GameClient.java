@@ -88,12 +88,25 @@ public class GameClient extends JFrame{
 						applet.map.opponent.face="left";
 					else if(info[1].equals("turn_right"))
 						applet.map.opponent.face="right";
-					else if(info[1].equals("create"))
-						applet.map.opponent.skillCreateBlock.toMakeBlock();
-					else if(info[1].equals("break"))
-						applet.map.opponent.skillDeleteBlock.toDeleteBlock();
-					else if(info[1].equals("occupipe"))
+					else if(info[1].equals("create")){
+						if(applet.map.opponent.skillCreateBlock.toMakeBlock()){
+							applet.map.opponent.money-=25;	
+						}	
+					}
+					else if(info[1].equals("break")){
+						if(applet.map.opponent.skillDeleteBlock.toDeleteBlock()){
+							applet.map.opponent.money-=25;
+						}
+					}
+					else if(info[1].equals("occupipe")){
 						applet.map.opponent.skillOccupipeBlock.toOccupipeBlock();
+						applet.map.opponent.ocpy++;
+						applet.map.opponent.money-=100;
+					}	
+					else if(info[1].equals("plus")){
+						applet.map.character.plusMoney();
+						applet.map.opponent.plusMoney();
+					}
 				} catch (IOException e){
 					e.printStackTrace();
 				}

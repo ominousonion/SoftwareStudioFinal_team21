@@ -6,7 +6,7 @@ public class CharacterState {
 	
 	int x,y,width,height, op_num;
 	private MainApplet applet;
-	private int Max_occupies = 5;
+	private int Max_occupies = 16;
 	
 	CharacterState(MainApplet applet){
 		this.x=0;

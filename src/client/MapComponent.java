@@ -67,26 +67,26 @@ public class MapComponent extends PApplet {
 		}
 	}
 	
-	public void createWall(int index){
+	public boolean createWall(int index){
 		if(this.type==0)
 		{
 			int id=90000;
 			
 			if(index-15<0){
 				id+=1000;
-			}else if(map.components.get(index-15).type==0 || map.components.get(index-15).type==1){ //up block
+			}else if(map.components.get(index-15).type<=4){ //up block
 				id+=1000;
 			}
 			
 			if(index+15>=225){ //down block
 				id+=100;
-			}else if(map.components.get(index+15).type==1 || map.components.get(index+15).type==0){
+			}else if(map.components.get(index+15).type<=4){
 				id+=100;
 			}
 			
 			if(index%15==0){ //left block
 				id+=10;
-			}else if(map.components.get(index-1).type==0 || map.components.get(index-1).type==1){
+			}else if(map.components.get(index-1).type<=4){
 				id+=10;
 			}else if(index%15!=0 && (map.components.get(index-1).type%1000)>=100 && id%1000<100){ //left block has no block beneath it
 				id+=20;
@@ -95,7 +95,7 @@ public class MapComponent extends PApplet {
 			
 			if(index%15==14){ //right block
 				id+=1;
-			}else if(map.components.get(index+1).type==0 || map.components.get(index+1).type==1){ //right block
+			}else if(map.components.get(index+1).type<=4){ //right block
 				id+=1;
 			}else if(index%15!=14 && (map.components.get(index+1).type%1000)>=100 && id%1000<100){ //right block has no block beneath it
 				id+=2;
@@ -167,13 +167,15 @@ public class MapComponent extends PApplet {
 					map.components.get(index+1).img = loadImage(filename);
 				}
 			}
-			
+			return true;
+		}else{
+			return false;
 		}
 	}
 	
 	
 	
-	public void delWall(int index){
+	public boolean delWall(int index){
 		if(this.type>=4)
 		{
 			String filename;
@@ -244,6 +246,9 @@ public class MapComponent extends PApplet {
 			this.occupiedStage=0;
 			filename =("./src/img/map_0.png");
 			img = loadImage(filename);
+			return true;
+		}else{
+			return false;
 		}
 	}
 

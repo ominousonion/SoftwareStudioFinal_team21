@@ -179,38 +179,41 @@ public class MainApplet extends PApplet{
 			break;
 		case KeyEvent.VK_Z :
 			if( isStart == false && isExplain == false && isSelected == false ){
-				gc.sendMessage("create");
-				this.map.character.skillCreateBlock.toMakeBlock();				
+				if(this.map.character.money >= 25){
+					gc.sendMessage("create");
+					if(this.map.character.skillCreateBlock.toMakeBlock()){
+						this.map.character.money-=25;							
+					}
+				}
 			}
 			break;
 		case KeyEvent.VK_X :
 			if( isStart == false && isExplain == false && isSelected == false ){
-				gc.sendMessage("break");
-				this.map.character.skillDeleteBlock.toDeleteBlock();				
+				if(this.map.character.money >= 25){
+					gc.sendMessage("break");
+					if(this.map.character.skillDeleteBlock.toDeleteBlock()){
+						this.map.character.money-=25;
+					}	
+				}
 			}
 			break;
 		case KeyEvent.VK_SPACE:
 			MapComponent com;
 			if( isStart == false && isExplain == false && isSelected == false ){
 				com=this.map.components.get(this.map.character.index);
-				if(com.type>=1 && com.type<=3){
-					gc.sendMessage("occupipe");
-					com.occupipe(this.map.character.number);
+				if(com.type>=1 && com.type<=3){	
+					if(map.character.money>=100){
+						gc.sendMessage("occupipe");
+						com.occupipe(this.map.character.number);
+						this.map.character.ocpy++;
+						this.map.character.money-=100;
+					}
 				}
 			}
 			break;
 	}
 	}
 	
-	public void plusMoney()
-	{
-		moneyValue++;
-		if(moneyValue>=1000)
-		{
-			moneyValue=0;
-			this.map.character.plusMoney();
-		}
-	}
 	
 	public void checkMove(){
 		MapComponent com;

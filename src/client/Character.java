@@ -20,7 +20,7 @@ public class Character {
 	
 	public int money;
 	
-	public boolean out_of_place;
+	public boolean out_of_place_up, out_of_place_down, out_of_place_left, out_of_place_right ;
 	public boolean move[]=new boolean[4];
 	public String face;
 	public int index=0;
@@ -46,15 +46,19 @@ public class Character {
 		this.index = index;
 		this.number = seq;
 		this.chImgAddress="./src/img/character"+seq+"_";
-		this.out_of_place=false;
+		this.out_of_place_up=false;
+		this.out_of_place_down=false;
+		this.out_of_place_left=false;
+		this.out_of_place_right=false;
 		
-		this.money=0;
+		this.money=200;
 		this.gm=gm;
 		this.face="down";
 		loadData();
 		this.skillCreateBlock=new CreateBlock(gm,this);
 		this.skillDeleteBlock=new DeleteBlock(gm,this);
 		this.skillOccupipeBlock=new OccupipeBlock(gm,this);
+		this.ocpy=0;
 	}
 
 	public void setName(String name){
@@ -86,30 +90,44 @@ public class Character {
 		MapComponent com_next;
 		int row_pre;
 		int row_after;
-		this.out_of_place=true;
+
 		if(dir.equals("up")){
 			preY = y;
 			this.face="up";
 			this.y = this.y - oneStep;
+			this.out_of_place_up=true;
+			this.out_of_place_down=true;
+			this.out_of_place_left=false;
+			this.out_of_place_right=false;			
 			if(this.index-15 >= 0){
 				com_next=this.parent.map.components.get(this.index-15);
 				this.x=com_next.x;
 				if(this.y == com_next.y){
 					this.index-=15;
-					this.out_of_place=false;
-				}				
+					this.out_of_place_up=false;
+					this.out_of_place_down=false;		
+					this.out_of_place_left=false;
+					this.out_of_place_right=false;
+				}
 			}
 		}
 		else if(dir.equals("down")){
 			this.face="down";
 			preY = y;
 			this.y = this.y + oneStep;
+			this.out_of_place_up=true;
+			this.out_of_place_down=true;
+			this.out_of_place_left=false;
+			this.out_of_place_right=false;			
 			if(this.index+15 < 225){
 				com_next=this.parent.map.components.get(this.index+15);
 				this.x=com_next.x;
 				if(this.y == com_next.y){
 					this.index+=15;
-					this.out_of_place=false;
+					this.out_of_place_up=false;
+					this.out_of_place_down=false;		
+					this.out_of_place_left=false;
+					this.out_of_place_right=false;
 				}				
 			}
 
@@ -117,7 +135,11 @@ public class Character {
 		else if(dir.equals("left")){
 			this.face="left";
 			preX = x;
-			this.x = this.x - oneStep;
+			this.x = this.x - oneStep;					
+			this.out_of_place_up=false;
+			this.out_of_place_down=false;
+			this.out_of_place_left=true;
+			this.out_of_place_right=true;
 			if(this.index-1 >= 0){
 				row_pre=this.index/15;
 				row_after=(this.index-1)/15;
@@ -127,15 +149,22 @@ public class Character {
 				}
 				if(this.x == com_next.x){
 					this.index-=1;
-					this.out_of_place=false;
-				}				
+					this.out_of_place_up=false;
+					this.out_of_place_down=false;		
+					this.out_of_place_left=false;
+					this.out_of_place_right=false;
+				}							
 			}
 
 		}
 		else if(dir.equals("right")){
 			this.face="right";
 			preX = x;
-			this.x = this.x + oneStep;
+			this.x = this.x + oneStep;					
+			this.out_of_place_left=true;
+			this.out_of_place_right=true;					
+			this.out_of_place_up=false;
+			this.out_of_place_down=false;
 			if(this.index+1 < 225){
 				row_pre=this.index/15;
 				row_after=(this.index+1)/15;
@@ -145,8 +174,11 @@ public class Character {
 				}
 				if(this.x == com_next.x){
 					this.index+=1;
-					this.out_of_place=false;
-				}				
+					this.out_of_place_up=false;
+					this.out_of_place_down=false;		
+					this.out_of_place_left=false;
+					this.out_of_place_right=false;
+				}						
 			}
 
 		}
@@ -154,7 +186,7 @@ public class Character {
 	
 	public void plusMoney()
 	{
-		this.money+=1;//*ocpi
+		this.money+=(this.ocpy*3);//*ocpi
 	}
 
 	public void setGroup(String group){
