@@ -22,8 +22,10 @@ public class MainApplet extends PApplet{
 	private BackButton backbtn;
 	private PictureSelButton picSelButton;
 	private PicData picdata1;
-	private PImage []itemImg = new PImage[100];
+	private PImage [][]itemImg = new PImage[100][100];
+	private PImage []backImg = new PImage[10];
 	private int sel_number;
+	private int sel_number_1;
 	
 	private Random r = new Random();
 	private int ran;
@@ -47,10 +49,27 @@ public class MainApplet extends PApplet{
 		picdata1 = new PicData(this);
 		sel_number = 0;
 		for( String str : picdata1.getGroupData().get("Sneaker")){
-			itemImg[sel_number] = picdata1.getImageData().get(str);
+			itemImg[0][sel_number] = picdata1.getImageData().get(str);
 			sel_number++;
 		}
 		sel_number = 0;
+		for( String str : picdata1.getGroupData().get("Drink")){
+			itemImg[1][sel_number] = picdata1.getImageData().get(str);
+			sel_number++;
+		}
+		sel_number = 0;
+		for( String str : picdata1.getGroupData().get("Cellphone")){
+			itemImg[2][sel_number] = picdata1.getImageData().get(str);
+			sel_number++;
+		}
+		sel_number = 0;
+		sel_number_1 = 0;
+		this.backImg[0] = loadImage("/src/background/img1.jpg");
+		this.backImg[0].resize(1200, 720);
+		this.backImg[1] = loadImage("/src/background/img2.jpg");
+		this.backImg[1].resize(1200, 720);
+		this.backImg[2] = loadImage("/src/background/img3.jpg");
+		this.backImg[2].resize(1200, 720);
 	}
 	
 	public void draw(){
@@ -68,15 +87,12 @@ public class MainApplet extends PApplet{
 			backbtn.display();
 		}
 		else if( isSelected == true ){
-			background(color(0,125,0));
+			image(this.backImg[sel_number_1],0,0);
 			btn.hideButton();
 			picSelButton.showButton();
 			picSelButton.display();
-			//itemImg = picdata1.getImageData().get("Nike");
-			/*for( String str : picdata1.getGroupData().get("Sneaker")){
-				itemImg[sel_number] = picdata1.getImageData().get(str);
-			}*/
-			image(itemImg[sel_number],450,150);
+			image(itemImg[sel_number_1][sel_number],450,150);
+			//image(this.backImg[0],0,0);
 		}
 		else{
 			btn.hideButton();
@@ -121,19 +137,27 @@ public class MainApplet extends PApplet{
 	public void keyPressed(KeyEvent e){
 		switch(e.getKeyCode()){
 		case KeyEvent.VK_UP :
-			if(isStart == false && isExplain == false &&isSelected == false){
+			if(isStart == false && isExplain == false && isSelected == false ){
 				this.map.character.move[0]=true;
-				this.map.character.face="up";				
+				this.map.character.face="up";
 			}
+			else{
+				if(sel_number_1-1>=0)
+					sel_number_1--;
+			}			
 		break;
 		case KeyEvent.VK_DOWN :
-			if(isStart == false && isExplain == false &&isSelected == false){
+			if(isStart == false && isExplain == false && isSelected == false){
 				this.map.character.move[1]=true;
-				this.map.character.face="down";				
+				this.map.character.face="down";
+			}
+			else{
+				if(sel_number_1+1<=2)
+					sel_number_1++;
 			}
 		break;	
 		case KeyEvent.VK_LEFT :
-			if( isStart == false && isExplain == false &&isSelected == false){
+			if( isStart == false && isExplain == false && isSelected == false){
 				this.map.character.move[2]=true;
 				this.map.character.face="left";
 			}
@@ -143,7 +167,7 @@ public class MainApplet extends PApplet{
 			}
 			break;
 		case KeyEvent.VK_RIGHT :
-			if( isStart == false && isExplain == false &&isSelected == false ){
+			if( isStart == false && isExplain == false && isSelected == false ){
 				this.map.character.move[3]=true;
 				this.map.character.face="right";
 			}
@@ -153,29 +177,16 @@ public class MainApplet extends PApplet{
 			}
 			break;
 		case KeyEvent.VK_Z :
-			if( isStart == false && isExplain == false &&isSelected == false ){
-				gc.sendMessage("create");
-				this.map.character.skillCreateBlock.toMakeBlock();				
+			if( isStart == false && isExplain == false && isSelected == false ){
+				this.map.character.skillCreateBlock.toMakeBlock();
 			}
-			break;
+		break;
 		case KeyEvent.VK_X :
-			if( isStart == false && isExplain == false &&isSelected == false ){
-				gc.sendMessage("break");
-				this.map.character.skillDeleteBlock.toDeleteBlock();				
+			if( isStart == false && isExplain == false && isSelected == false ){
+				this.map.character.skillDeleteBlock.toDeleteBlock();
 			}
-			break;
-		case KeyEvent.VK_SPACE:
-			MapComponent com;
-			if( isStart == false && isExplain == false &&isSelected == false ){
-				com=this.map.components.get(this.map.character.index);
-				if(com.type>=1 && com.type<=3){
-					gc.sendMessage("occupipe");
-					com.occupipe(this.map.character.number);
-				}
-			}
-			break;		
-		
-		}
+		break;
+	}
 	}
 	
 	public void plusMoney()
