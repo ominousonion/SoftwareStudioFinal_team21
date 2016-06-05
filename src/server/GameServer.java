@@ -82,7 +82,6 @@ public class GameServer extends JFrame{
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				broadcast("up");
 			}
 		}
 	}

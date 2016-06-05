@@ -137,6 +137,7 @@ public class MainApplet extends PApplet{
 			if(isStart == false && isExplain == false && isSelected == false ){
 				this.map.character.move[0]=true;
 				this.map.character.face="up";
+				gc.sendMessage("turn_up");
 			}
 			else{
 				if(sel_number_1-1>=0)
@@ -147,6 +148,7 @@ public class MainApplet extends PApplet{
 			if(isStart == false && isExplain == false && isSelected == false){
 				this.map.character.move[1]=true;
 				this.map.character.face="down";
+				gc.sendMessage("turn_down");
 			}
 			else{
 				if(sel_number_1+1<=2)
@@ -157,6 +159,7 @@ public class MainApplet extends PApplet{
 			if( isStart == false && isExplain == false && isSelected == false){
 				this.map.character.move[2]=true;
 				this.map.character.face="left";
+				gc.sendMessage("turn_left");
 			}
 			else{
 				if(sel_number-1>=0)
@@ -167,6 +170,7 @@ public class MainApplet extends PApplet{
 			if( isStart == false && isExplain == false && isSelected == false ){
 				this.map.character.move[3]=true;
 				this.map.character.face="right";
+				gc.sendMessage("turn_right");
 			}
 			else{
 				if(sel_number+1<=3)

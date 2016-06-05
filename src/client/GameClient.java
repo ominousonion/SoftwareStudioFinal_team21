@@ -80,6 +80,14 @@ public class GameClient extends JFrame{
 					if(applet!=null) System.out.println(info[1]);
 					if(info[1].equals("up")||info[1].equals("down")|| info[1].equals("left") ||info[1].equals("right") )
 						applet.map.opponent.move(info[1]);
+					else if(info[1].equals("turn_up"))
+						applet.map.opponent.face="up";
+					else if(info[1].equals("turn_down"))
+						applet.map.opponent.face="down";
+					else if(info[1].equals("turn_left"))
+						applet.map.opponent.face="left";
+					else if(info[1].equals("turn_right"))
+						applet.map.opponent.face="right";
 					else if(info[1].equals("create"))
 						applet.map.opponent.skillCreateBlock.toMakeBlock();
 					else if(info[1].equals("break"))
