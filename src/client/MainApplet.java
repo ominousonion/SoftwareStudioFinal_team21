@@ -2,7 +2,6 @@ package client;
 
 import java.awt.event.KeyEvent;
 import java.util.Random;
-import de.looksgood.ani.Ani;
 
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -11,7 +10,6 @@ import processing.core.PImage;
 
 public class MainApplet extends PApplet{
 	public GameMap map;
-	private Ani ani;
 	private final static int width = 1200, height = 650;
 	private CharacterState state;
 	private GameClient gc;
@@ -37,7 +35,6 @@ public class MainApplet extends PApplet{
 	}
 	
 	public void setup(){
-		Ani.init(this);
 		size(width,height);
 		map=new GameMap(this,r.nextInt(1)+1, gc);
 		state=new CharacterState(this);
@@ -178,14 +175,26 @@ public class MainApplet extends PApplet{
 			break;
 		case KeyEvent.VK_Z :
 			if( isStart == false && isExplain == false && isSelected == false ){
-				this.map.character.skillCreateBlock.toMakeBlock();
+				gc.sendMessage("create");
+				this.map.character.skillCreateBlock.toMakeBlock();				
 			}
-		break;
+			break;
 		case KeyEvent.VK_X :
 			if( isStart == false && isExplain == false && isSelected == false ){
-				this.map.character.skillDeleteBlock.toDeleteBlock();
+				gc.sendMessage("break");
+				this.map.character.skillDeleteBlock.toDeleteBlock();				
 			}
-		break;
+			break;
+		case KeyEvent.VK_SPACE:
+			MapComponent com;
+			if( isStart == false && isExplain == false && isSelected == false ){
+				com=this.map.components.get(this.map.character.index);
+				if(com.type>=1 && com.type<=3){
+					gc.sendMessage("occupipe");
+					com.occupipe(this.map.character.number);
+				}
+			}
+			break;
 	}
 	}
 	
