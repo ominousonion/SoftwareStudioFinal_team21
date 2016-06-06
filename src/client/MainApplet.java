@@ -13,7 +13,8 @@ import gifAnimation.*;
 
 public class MainApplet extends PApplet{
 	public GameMap map;
-	private Ani ani;
+	public ShowResult viewResult;
+
 	private final static int width = 1200, height = 650;
 	private CharacterState state;
 	private GameClient gc;
@@ -49,7 +50,7 @@ public class MainApplet extends PApplet{
 	}
 	
 	public void setup(){
-		Ani.init(this);
+
 		size(width,height);
 		map=new GameMap(this,r.nextInt(1)+1, gc);
 		state=new CharacterState(this);
@@ -80,6 +81,9 @@ public class MainApplet extends PApplet{
 		sel_number = 0;
 		sel_number_1 = 0;
 		
+		
+		
+		viewResult=new ShowResult(this);
 		explainImg=loadImage("/src/img/explaintion_1.png");
 		
 		this.MainImage = loadImage("/src/background/main.jpg");
@@ -104,7 +108,7 @@ public class MainApplet extends PApplet{
 	}
 	
 	public void draw(){
-		if( isStart == true && isExplain == false && isSelected == false){
+		if( isStart == true && isExplain == false && isSelected == false && isView == false){
 			//background(0);
 			image(this.MainImage,0,0);
 			image(myAnimation,900,100);
@@ -120,7 +124,7 @@ public class MainApplet extends PApplet{
 			else
 				frogX=1200;
 		}
-		else if( isExplain == true && isSelected == false ){
+		else if( isExplain == true && isSelected == false && isView == false){
 			image(explainImg,0,0);
 			btn.hideButton();
 			backbtn.showButton();
@@ -132,6 +136,14 @@ public class MainApplet extends PApplet{
 			picSelButton.showButton();
 			picSelButton.display();
 			image(itemImg[sel_number_1][sel_number],450,150);
+			//image(this.backImg[0],0,0);
+		}
+		else if( isView == true ){
+			
+			btn.hideButton();
+			viewResult.display();
+			backbtn.showButton();
+			backbtn.display();
 			//image(this.backImg[0],0,0);
 		}
 		else if(isBegin == false){
@@ -192,6 +204,7 @@ public class MainApplet extends PApplet{
 	/*control the behavior of backButton*/
 	public void backBtn(){
 		isExplain = false;
+		isView=false;
 	}
 	
 	public void buttonSel1(){
@@ -237,33 +250,43 @@ public class MainApplet extends PApplet{
 			}
 		break;	
 		case KeyEvent.VK_LEFT :
-			if( isStart == false && isExplain == false && isSelected == false){
-				if(!isEnding){
-					this.map.character.move[2]=true;
-					this.map.character.face="left";
-					gc.sendMessage("turn_left");					
-				}
+			if(isView==true){
+				viewResult.changeGroup(false);
 			}
 			else{
-				if(sel_number-1>=0)
-					sel_number--;
+				if( isStart == false && isExplain == false && isSelected == false){
+					if(!isEnding){
+						this.map.character.move[2]=true;
+						this.map.character.face="left";
+						gc.sendMessage("turn_left");					
+					}				
+				}
+				else{
+					if(sel_number-1>=0)
+						sel_number--;
+				}
 			}
 			break;
 		case KeyEvent.VK_RIGHT :
-			if( isStart == false && isExplain == false && isSelected == false ){
-				if(!isEnding){
-					this.map.character.move[3]=true;
-					this.map.character.face="right";
-					gc.sendMessage("turn_right");					
-				}
+			if(isView==true){
+				viewResult.changeGroup(true);
 			}
 			else{
-				if(sel_number+1<=3)
-					sel_number++;
+				if( isStart == false && isExplain == false && isSelected == false ){
+					if(!isEnding){
+						this.map.character.move[3]=true;
+						this.map.character.face="right";
+						gc.sendMessage("turn_right");					
+					}
+				}
+				else{
+					if(sel_number+1<=3)
+						sel_number++;
+				}
 			}
 			break;
 		case KeyEvent.VK_Z :
-			if( isStart == false && isExplain == false && isSelected == false ){
+			if( isStart == false && isExplain == false && isSelected == false && isView==false){
 				if(!isEnding){
 					if(this.map.character.money >= 25){
 						gc.sendMessage("create");
@@ -275,7 +298,7 @@ public class MainApplet extends PApplet{
 			}
 			break;
 		case KeyEvent.VK_X :
-			if( isStart == false && isExplain == false && isSelected == false ){
+			if( isStart == false && isExplain == false && isSelected == false && isView==false){
 				if(!isEnding){
 					if(this.map.character.money >= 25){
 						gc.sendMessage("break");
@@ -289,7 +312,7 @@ public class MainApplet extends PApplet{
 		case KeyEvent.VK_SPACE:
 			MapComponent com;
 			int index=-1;
-			if( isStart == false && isExplain == false && isSelected == false ){
+			if( isStart == false && isExplain == false && isSelected == false && isView==false){
 				if(!isEnding){
 					if(this.map.character.face=="up"){
 						index=this.map.character.index-15;
@@ -307,9 +330,14 @@ public class MainApplet extends PApplet{
 								gc.sendMessage("occupipe");
 								this.map.character.skillOccupipeBlock.toOccupipeBlock();
 							}
-						}
+						}else if(com.type==4){
+							if(map.character.money >= 1000){
+								gc.sendMessage("win");
+								isEnding=true;
+							}
+						}					
 					}					
-				}								
+				}						
 			}
 			break;
 		}

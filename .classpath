@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="C:/Users/user/Downloads/Libraries/Libraries/Processing/json-lib-2.4-jdk15.jar"/>
 	<classpathentry kind="lib" path="C:/Users/user/Downloads/controlP5-2.2.5/controlP5/library/controlP5.jar"/>
 	<classpathentry kind="lib" path="C:/Users/user/Downloads/Ani-latest/Ani/library/Ani.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Downloads/gifAnimation.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
