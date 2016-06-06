@@ -51,7 +51,7 @@ public class Character {
 		this.out_of_place_left=false;
 		this.out_of_place_right=false;
 		
-		this.money=1000;
+		this.money=500;
 		this.gm=gm;
 		this.face="down";
 		loadData();
