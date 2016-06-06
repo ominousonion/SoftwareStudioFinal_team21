@@ -12,6 +12,7 @@ public class GameMap{
 	//map components
 	public ArrayList<MapComponent> components;
 	private File mapFile;
+	public storeLabel sl;
 	//character
 	public Character character;
 	public Character opponent;
@@ -48,6 +49,7 @@ public class GameMap{
 		int ran;
 		
 		this.mapFile=new File("./src/map/mapfile_1.map");
+		this.sl=new storeLabel(applet,this);
 
 		try
 		{
@@ -80,6 +82,7 @@ public class GameMap{
 		}
 		this.character.display();
 		this.opponent.display();
+		this.sl.display();
 	}
 	
 	public void iniCharacter(int seq){
