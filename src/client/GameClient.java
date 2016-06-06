@@ -106,7 +106,7 @@ public class GameClient extends JFrame{
 							applet.map.character.plusMoney();
 							applet.map.opponent.plusMoney();
 						}
-						if(info[1].equals("startgame"))
+						else if(info[1].equals("startgame"))
 							applet.isBegin = true;
 					
 				} catch (IOException e){
