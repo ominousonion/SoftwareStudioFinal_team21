@@ -114,7 +114,7 @@ public class MapComponent extends PApplet {
 					if(index-15-1%15!=14 && index!=15){ //up left
 						if(map.components.get(index-15-1).type%1000>=100 || index-15==0){
 							map.components.get(index-15).type+=20;
-						}else if(map.components.get(index-15-1).type%10==2){
+						}else if(map.components.get(index-15-1).type%10==2 && map.components.get(index-15-1).type!=2){
 							map.components.get(index-15-1).type-=2;
 							filename =("./src/img/map_"+map.components.get(index-15-1).type+".png");
 							map.components.get(index-15-1).img = loadImage(filename);
