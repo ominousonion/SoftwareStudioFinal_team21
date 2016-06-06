@@ -21,8 +21,12 @@ public class Button {
 		.setPosition(2000/4, 3*370/4)
 		.setSize(200, 50);
 		cp5.addButton("buttonC")
-		.setLabel("Exit")
+		.setLabel("Static View")
 		.setPosition(2000/4,370)
+		.setSize(200,50);
+		cp5.addButton("buttonD")
+		.setLabel("Exit")
+		.setPosition(2000/4,5*370/4)
 		.setSize(200,50);
 	}
 	
