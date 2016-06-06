@@ -12,8 +12,9 @@ public class CreateBlock {
 		this.pc=pc;
 	}
 	
-	public void toMakeBlock(){
+	public boolean toMakeBlock(){
 		faceEdge=false;
+		boolean exe=false;
 		if(pc.face=="up"){
 			this.index=pc.index-15;
 			if(index<0) faceEdge=true;
@@ -27,7 +28,9 @@ public class CreateBlock {
 			this.index=pc.index+1;
 			if(index%15==0) faceEdge=true;
 		}
-
-		if(index>=0 && index<225 && !faceEdge) gm.components.get(index).createWall();
+		if(index>=0 && index<225 && !faceEdge) exe=gm.components.get(index).createWall(index);
+		
+		return exe;
+		
 	}
 }

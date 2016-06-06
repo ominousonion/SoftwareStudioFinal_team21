@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Timer;
 import javax.swing.*;
 import java.awt.*;
 
@@ -17,6 +18,8 @@ public class GameServer extends JFrame{
 	private JTextArea textArea;
 	private HashMap<String, ArrayList<String>> groupData = new HashMap<String, ArrayList<String>>();
 	private HashMap<String, Integer> itemData = new HashMap<String, Integer>();
+	private boolean start;
+	private EventCall event = new EventCall(); 
 
 	GameServer(int portNum){
 		super("server");
@@ -29,6 +32,7 @@ public class GameServer extends JFrame{
 		this.add(this.textArea);
 		this.setVisible(true);
 		this.setResizable(false);
+		
 		connections = new ArrayList<ConnectionThread>();
 		try {
 			//create server socket
@@ -54,14 +58,31 @@ public class GameServer extends JFrame{
 				if(connections.isEmpty()) client.sendMessage("server:setting_1");
 				else{
 					client.sendMessage("server:setting_2");
-					itemData.put("coke", itemData.get("coke")+1);
-					writeToFile();
+					//itemData.put("coke", itemData.get("coke")+1);
+					event.start();
+					//writeToFile();
 				}
 				connections.add(client);
 			} catch (BindException e){
 				//e.printStackTrace();
 			} catch (IOException e){
 				//e.printStackTrace();
+			}
+			
+		}
+		
+	}
+	
+	public class EventCall extends Thread{
+		public void run(){
+			while(true){
+				
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				broadcast("plus");
 			}
 		}
 	}
@@ -85,8 +106,9 @@ public class GameServer extends JFrame{
 					String line = this.reader.readLine();
 					textArea.append(line+"\n");
 					for(ConnectionThread ct: connections){
-						if(ct.equals(this)==false)
+						if(ct.equals(this)==false){
 							ct.sendMessage(line);
+						}	
 					}
 				} catch (IOException e){
 					e.printStackTrace();
@@ -99,14 +121,16 @@ public class GameServer extends JFrame{
 			this.writer.flush();
 		}
 	}
-	/*
+	
 	public void broadcast(String message){
-			//send message to every clients in the list
-			for (ConnectionThread connection: connections) {
-				connection.sendMessage(message);
-			}
+		//send message to every clients in the list
+		String msg = "server:";
+		textArea.append("event");
+		for (ConnectionThread connection: connections) {
+			connection.sendMessage(msg.concat(message));
 		}
-		*/
+	}
+		
 
 	public void writeToFile(){          //write user's input to text file
 		BufferedWriter writer = null;

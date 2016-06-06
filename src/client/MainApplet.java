@@ -2,7 +2,6 @@ package client;
 
 import java.awt.event.KeyEvent;
 import java.util.Random;
-import de.looksgood.ani.Ani;
 
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -11,7 +10,6 @@ import processing.core.PImage;
 
 public class MainApplet extends PApplet{
 	public GameMap map;
-	private Ani ani;
 	private final static int width = 1200, height = 650;
 	private CharacterState state;
 	private GameClient gc;
@@ -24,6 +22,7 @@ public class MainApplet extends PApplet{
 	private PicData picdata1;
 	private PImage [][]itemImg = new PImage[100][100];
 	private PImage []backImg = new PImage[10];
+	private PImage explainImg;
 	private int sel_number;
 	private int sel_number_1;
 	
@@ -37,7 +36,6 @@ public class MainApplet extends PApplet{
 	}
 	
 	public void setup(){
-		Ani.init(this);
 		size(width,height);
 		map=new GameMap(this,r.nextInt(1)+1, gc);
 		state=new CharacterState(this);
@@ -70,6 +68,8 @@ public class MainApplet extends PApplet{
 		this.backImg[1].resize(1200, 720);
 		this.backImg[2] = loadImage("/src/background/img3.jpg");
 		this.backImg[2].resize(1200, 720);
+		this.explainImg = loadImage("/src/img/explaintion_1.png");
+		this.explainImg.resize(1200,650);
 	}
 	
 	public void draw(){
@@ -82,6 +82,7 @@ public class MainApplet extends PApplet{
 		}
 		else if( isExplain == true && isSelected == false ){
 			background(167);
+			this.image(explainImg,0,0,1200,650);
 			btn.hideButton();
 			backbtn.showButton();
 			backbtn.display();
@@ -140,6 +141,7 @@ public class MainApplet extends PApplet{
 			if(isStart == false && isExplain == false && isSelected == false ){
 				this.map.character.move[0]=true;
 				this.map.character.face="up";
+				gc.sendMessage("turn_up");
 			}
 			else{
 				if(sel_number_1-1>=0)
@@ -150,6 +152,7 @@ public class MainApplet extends PApplet{
 			if(isStart == false && isExplain == false && isSelected == false){
 				this.map.character.move[1]=true;
 				this.map.character.face="down";
+				gc.sendMessage("turn_down");
 			}
 			else{
 				if(sel_number_1+1<=2)
@@ -160,6 +163,7 @@ public class MainApplet extends PApplet{
 			if( isStart == false && isExplain == false && isSelected == false){
 				this.map.character.move[2]=true;
 				this.map.character.face="left";
+				gc.sendMessage("turn_left");
 			}
 			else{
 				if(sel_number-1>=0)
@@ -170,6 +174,7 @@ public class MainApplet extends PApplet{
 			if( isStart == false && isExplain == false && isSelected == false ){
 				this.map.character.move[3]=true;
 				this.map.character.face="right";
+				gc.sendMessage("turn_right");
 			}
 			else{
 				if(sel_number+1<=3)
@@ -178,26 +183,41 @@ public class MainApplet extends PApplet{
 			break;
 		case KeyEvent.VK_Z :
 			if( isStart == false && isExplain == false && isSelected == false ){
-				this.map.character.skillCreateBlock.toMakeBlock();
+				if(this.map.character.money >= 25){
+					gc.sendMessage("create");
+					if(this.map.character.skillCreateBlock.toMakeBlock()){
+						this.map.character.money-=25;							
+					}
+				}
 			}
-		break;
+			break;
 		case KeyEvent.VK_X :
 			if( isStart == false && isExplain == false && isSelected == false ){
-				this.map.character.skillDeleteBlock.toDeleteBlock();
+				if(this.map.character.money >= 25){
+					gc.sendMessage("break");
+					if(this.map.character.skillDeleteBlock.toDeleteBlock()){
+						this.map.character.money-=25;
+					}	
+				}
 			}
-		break;
+			break;
+		case KeyEvent.VK_SPACE:
+			MapComponent com;
+			if( isStart == false && isExplain == false && isSelected == false ){
+				com=this.map.components.get(this.map.character.index);
+				if(com.type>=1 && com.type<=3){	
+					if(map.character.money>=100){
+						gc.sendMessage("occupipe");
+						com.occupipe(this.map.character.number);
+						this.map.character.ocpy++;
+						this.map.character.money-=100;
+					}
+				}
+			}
+			break;
 	}
 	}
 	
-	public void plusMoney()
-	{
-		moneyValue++;
-		if(moneyValue>=1000)
-		{
-			moneyValue=0;
-			this.map.character.plusMoney();
-		}
-	}
 	
 	public void checkMove(){
 		MapComponent com;
