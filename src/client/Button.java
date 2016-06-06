@@ -21,7 +21,7 @@ public class Button {
 		.setPosition(2000/4, 3*370/4)
 		.setSize(200, 50);
 		cp5.addButton("buttonC")
-		.setLabel("Static View")
+		.setLabel("Statistic View")
 		.setPosition(2000/4,370)
 		.setSize(200,50);
 		cp5.addButton("buttonD")
