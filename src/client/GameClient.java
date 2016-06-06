@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 import java.net.*;
 @SuppressWarnings("serial")
 public class GameClient extends JFrame{
-	private final static int windowWidth = 1200, windowHeight = 700;
+	private final static int windowWidth = 1200, windowHeight = 680;
 	//applet
 	private MainApplet applet;
 	public int seq = 0;
@@ -114,7 +114,10 @@ public class GameClient extends JFrame{
 						}
 						else if(info[1].equals("startgame"))
 							applet.isBegin = true;
-					
+						else if(info[1].equals("win")){
+							applet.victory=false;
+							applet.isEnding=true;
+						}
 				} catch (IOException e){
 					e.printStackTrace();
 				}

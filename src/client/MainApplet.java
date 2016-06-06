@@ -23,7 +23,8 @@ public class MainApplet extends PApplet{
 	private boolean isSelected;
 	private boolean isView;
 	public  boolean isBegin;
-	private boolean isEnding;	
+	public boolean isEnding;
+	public boolean victory;
 	private Button btn;//Paul added
 	private BackButton backbtn;
 	private PictureSelButton picSelButton;
@@ -32,12 +33,16 @@ public class MainApplet extends PApplet{
 	private PImage []backImg = new PImage[10];
 	private PImage MainImage = new PImage();
 	private PImage explainImg;
+	private PImage winImg;
+	private PImage loseImg;
 	private int sel_number;
 	private int sel_number_1;
 	private Gif myAnimation;
 	private Gif myAnimation2;
 	private Gif myAnimation3;
 	private Gif myAnimation4;
+	private Gif myAnimation5;
+	private Gif myAnimation6;
 	private int frogX;
 
 	private Random r = new Random();
@@ -50,7 +55,6 @@ public class MainApplet extends PApplet{
 	}
 	
 	public void setup(){
-
 		size(width,height);
 		map=new GameMap(this,r.nextInt(1)+1, gc);
 		state=new CharacterState(this);
@@ -59,6 +63,7 @@ public class MainApplet extends PApplet{
 		isBegin = false;
 		isView=false;
 		isEnding=false;
+		victory=false;
 		btn = new Button(this);
 		backbtn = new BackButton(this);
 		picSelButton = new PictureSelButton(this);
@@ -79,6 +84,16 @@ public class MainApplet extends PApplet{
 			sel_number++;
 		}
 		sel_number = 0;
+		for( String str : picdata1.getGroupData().get("Caffee")){
+			itemImg[3][sel_number] = picdata1.getImageData().get(str);
+			sel_number++;
+		}
+		sel_number = 0;
+		for(String str : picdata1.getGroupData().get("Fastfood")){
+			itemImg[4][sel_number] = picdata1.getImageData().get(str);
+			sel_number++;
+		}
+		sel_number = 0;
 		sel_number_1 = 0;
 		
 		
@@ -94,6 +109,14 @@ public class MainApplet extends PApplet{
 		this.backImg[1].resize(1200, 720);
 		this.backImg[2] = loadImage("/src/background/img3.jpg");
 		this.backImg[2].resize(1200, 720);
+		this.backImg[3] = loadImage("/src/background/img4.jpg");
+		this.backImg[3].resize(width, height);
+		this.backImg[4] = loadImage("/src/background/img5.jpg");
+		this.backImg[4].resize(width, height);
+		this.backImg[5] = loadImage("/src/background/img6.jpg");
+		this.backImg[5].resize(width, height);
+		this.winImg = loadImage("/src/img/Game_WIN.png");
+		this.loseImg = loadImage("/src/img/Game_lose.png");
 		myAnimation = new Gif(this, "/src/animation/bird.GIF"); 
 		myAnimation.play();
 		myAnimation2 = new Gif(this, "/src/animation/frog.gif"); 
@@ -103,6 +126,10 @@ public class MainApplet extends PApplet{
 		myAnimation3.play();
 		myAnimation4 = new Gif(this, "/src/animation/signature_3.gif"); 
 		myAnimation4.play();
+		myAnimation5 = new Gif(this, "/src/animation/arrow1.gif"); 
+		myAnimation5.play();
+		myAnimation6 = new Gif(this, "/src/animation/arrow2.gif"); 
+		myAnimation6.play();
 		
 		
 	}
@@ -136,6 +163,8 @@ public class MainApplet extends PApplet{
 			picSelButton.showButton();
 			picSelButton.display();
 			image(itemImg[sel_number_1][sel_number],450,150);
+			image(myAnimation5,290,250);
+			image(myAnimation6,780,250);
 			//image(this.backImg[0],0,0);
 		}
 		else if( isView == true ){
@@ -154,18 +183,23 @@ public class MainApplet extends PApplet{
 		}
 		else{
 			if(isEnding){
-				/*ending picture*/
 				btn.hideButton();
 				backbtn.hideButton();
-				map.display();
-				state.display();
-				checkMove();				
+				//map.display();
+				state.display();	
+				if(victory){
+					image(this.winImg, 360, 100, 500, 500);
+				}
+				else{
+					image(this.loseImg, 360, 100, 500, 500);
+				}
 			}			
 			else{
 				btn.hideButton();
 				backbtn.hideButton();
 				map.display();
 				state.display();
+				//image(this.backImg[5],100,0);
 				checkMove();	
 			}
 		}
@@ -173,14 +207,18 @@ public class MainApplet extends PApplet{
 	}
 	
 	public void reset(){
-		this.map.reset();
-		this.map.character.reset();
-		this.map.opponent.reset();
 		isStart = true;
 		isExplain = false;
 		isBegin = false;
 		isView = false;
 		isEnding = false;
+		victory = false;
+		sel_number = 0;
+		sel_number_1 = 0;
+		this.map.reset();
+		this.map.character.reset();
+		this.map.opponent.reset();
+
 	}
 	
 	/*control the behavior of buttonA*/
@@ -197,6 +235,8 @@ public class MainApplet extends PApplet{
 	/*control the behavior of buttonC*/
 	public void buttonC(){ 
 		isView = true;
+		viewResult.Setini();
+		picdata1.readData();
 	}
 	
 	
@@ -212,7 +252,12 @@ public class MainApplet extends PApplet{
 	
 	public void buttonSel1(){
 		picSelButton.hideButton();
-		String g_name = (String) picdata1.getGroupData().keySet().toArray()[sel_number_1];
+		String g_name ;
+		if(sel_number_1==0) g_name ="Sneaker";
+		else if(sel_number_1==1) g_name ="Drink";
+		else if(sel_number_1==2) g_name ="Cellphone";
+		else if(sel_number_1==3) g_name ="Caffee";
+		else g_name = "Fastfood";
 		String selected = "selected";
 		ArrayList<String> g = (ArrayList<String>) picdata1.getGroupData().get(g_name);
 		String selname = (String) g.toArray()[sel_number];
@@ -255,8 +300,10 @@ public class MainApplet extends PApplet{
 				}
 			}
 			else{
-				if(sel_number_1-1>=0)
+				if(sel_number_1-1>=0){
 					sel_number_1--;
+					sel_number = 0;
+				}
 			}			
 		break;
 		case KeyEvent.VK_DOWN :
@@ -268,8 +315,10 @@ public class MainApplet extends PApplet{
 				}
 			}
 			else{
-				if(sel_number_1+1<=2)
+				if(sel_number_1+1<=4){
 					sel_number_1++;
+					sel_number = 0;
+				}
 			}
 		break;	
 		case KeyEvent.VK_LEFT :
@@ -285,8 +334,9 @@ public class MainApplet extends PApplet{
 					}				
 				}
 				else{
-					if(sel_number-1>=0)
+					if(sel_number-1>=0){
 						sel_number--;
+					}
 				}
 			}
 			break;
@@ -303,8 +353,9 @@ public class MainApplet extends PApplet{
 					}
 				}
 				else{
-					if(sel_number+1<=3)
+					if(sel_number+1<=4)
 						sel_number++;
+					
 				}
 			}
 			break;
@@ -356,11 +407,16 @@ public class MainApplet extends PApplet{
 						}else if(com.type==4){
 							if(map.character.money >= 1000){
 								gc.sendMessage("win");
+								victory=true;
 								isEnding=true;
 							}
 						}					
 					}					
-				}						
+				}
+				else{
+
+					reset();
+				}
 			}
 			break;
 		}
@@ -487,7 +543,6 @@ public class MainApplet extends PApplet{
 			break;
 			case KeyEvent.VK_DOWN :
 				this.map.character.move[1]=false;					
-
 			break;
 			case KeyEvent.VK_LEFT :
 				this.map.character.move[2]=false;					

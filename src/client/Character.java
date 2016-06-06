@@ -77,8 +77,9 @@ public class Character {
 		this.out_of_place_down=false;
 		this.out_of_place_left=false;
 		this.out_of_place_right=false;
-		this.money=200;
+		this.money=500;
 		this.ocpy=0;
+		this.face="down";
 	}
 	
 	public void display(){
@@ -87,8 +88,6 @@ public class Character {
 		this.loadData();
 		this.parent.image(chImg,x,y,width,width);
 		this.parent.noStroke();
-		// animation : Ani.to
-
 	}
 
 	public void loadData(){
