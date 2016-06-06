@@ -20,6 +20,7 @@ public class MainApplet extends PApplet{
 	private boolean isStart;//paul
 	private boolean isExplain;
 	private boolean isSelected;
+	private boolean isView;
 	public  boolean isBegin;
 	private Button btn;//Paul added
 	private BackButton backbtn;
@@ -28,6 +29,7 @@ public class MainApplet extends PApplet{
 	private PImage [][]itemImg = new PImage[100][100];
 	private PImage []backImg = new PImage[10];
 	private PImage MainImage = new PImage();
+	private PImage explainImg;
 	private int sel_number;
 	private int sel_number_1;
 	private Gif myAnimation;
@@ -53,6 +55,7 @@ public class MainApplet extends PApplet{
 		isStart = true;
 		isExplain = false;
 		isBegin = false;
+		isView=false;
 		btn = new Button(this);
 		backbtn = new BackButton(this);
 		picSelButton = new PictureSelButton(this);
@@ -74,6 +77,9 @@ public class MainApplet extends PApplet{
 		}
 		sel_number = 0;
 		sel_number_1 = 0;
+		
+		explainImg=loadImage("/src/img/explaintion_1.png");
+		
 		this.MainImage = loadImage("/src/background/main.jpg");
 		this.MainImage.resize(width, height);
 		this.backImg[0] = loadImage("/src/background/img1.jpg");
@@ -112,7 +118,7 @@ public class MainApplet extends PApplet{
 				frogX=1200;
 		}
 		else if( isExplain == true && isSelected == false ){
-			background(167);
+			image(explainImg,0,0);
 			btn.hideButton();
 			backbtn.showButton();
 			backbtn.display();
@@ -153,7 +159,12 @@ public class MainApplet extends PApplet{
 	}
 	
 	/*control the behavior of buttonC*/
-	public void buttonC(){
+	public void buttonC(){ 
+		isView = true;
+	}
+	
+	
+	public void buttonD(){
 		System.exit(0);//leave the game
 	}
 	
