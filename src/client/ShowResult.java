@@ -41,15 +41,16 @@ public class ShowResult {
 	}
 	
 	public void display(){
+		applet.background(255);
 		if(x<=width/2+100){
-			x+=2;
+			x+=3;
 			iniAngle += applet.radians(1);
 		}
 		pieChart( 300, data.get(id));
-		if(id<graphdata.getGroupData().size()-1)   nextId = id+1;
+		if(id<graphdata.getGroupData().keySet().size()-1)   nextId = id+1;
 		else nextId = 0;
 		if(id != 0) preId = id-1;
-		else preId = graphdata.getGroupData().size()-1;
+		else preId = graphdata.getGroupData().keySet().size()-1;
 		nextpieChart(150, data.get(nextId));
 		prepieChart(150,  data.get(preId));
 	}
@@ -113,8 +114,17 @@ public class ShowResult {
 		id = 0;
 	}
 	
-	public void changeGroup(int id){
-		this.id = id;
+	public void changeGroup(boolean right){
+		if(right) this.id = (this.id+1)%(graphdata.getGroupData().keySet().size());
+		else this.id = (this.id-1+graphdata.getGroupData().keySet().size())%(graphdata.getGroupData().keySet().size());
 		x = 0;
+		nowGroup = (String) graphdata.getGroupData().keySet().toArray()[id];
+		if(id<graphdata.getGroupData().keySet().size()-1)   nextId = id+1;
+		else nextId = 0;
+		if(id != 0) preId = id-1;
+		else preId = graphdata.getGroupData().keySet().size()-1;
+		pieChart( 300, data.get(id));
+		nextpieChart(150, data.get(nextId));
+		prepieChart(150,  data.get(preId));
 	}
 }

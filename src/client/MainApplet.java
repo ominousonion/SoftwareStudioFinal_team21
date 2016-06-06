@@ -13,6 +13,7 @@ import gifAnimation.*;
 
 public class MainApplet extends PApplet{
 	public GameMap map;
+	public ShowResult viewResult;
 	private Ani ani;
 	private final static int width = 1200, height = 650;
 	private CharacterState state;
@@ -78,6 +79,9 @@ public class MainApplet extends PApplet{
 		sel_number = 0;
 		sel_number_1 = 0;
 		
+		
+		
+		viewResult=new ShowResult(this);
 		explainImg=loadImage("/src/img/explaintion_1.png");
 		
 		this.MainImage = loadImage("/src/background/main.jpg");
@@ -98,10 +102,12 @@ public class MainApplet extends PApplet{
 		myAnimation4 = new Gif(this, "/src/animation/signature_3.gif"); 
 		myAnimation4.play();
 		
+		
+		
 	}
 	
 	public void draw(){
-		if( isStart == true && isExplain == false && isSelected == false){
+		if( isStart == true && isExplain == false && isSelected == false && isView == false){
 			//background(0);
 			image(this.MainImage,0,0);
 			image(myAnimation,900,100);
@@ -117,7 +123,7 @@ public class MainApplet extends PApplet{
 			else
 				frogX=1200;
 		}
-		else if( isExplain == true && isSelected == false ){
+		else if( isExplain == true && isSelected == false && isView == false){
 			image(explainImg,0,0);
 			btn.hideButton();
 			backbtn.showButton();
@@ -129,6 +135,14 @@ public class MainApplet extends PApplet{
 			picSelButton.showButton();
 			picSelButton.display();
 			image(itemImg[sel_number_1][sel_number],450,150);
+			//image(this.backImg[0],0,0);
+		}
+		else if( isView == true ){
+			
+			btn.hideButton();
+			viewResult.display();
+			backbtn.showButton();
+			backbtn.display();
 			//image(this.backImg[0],0,0);
 		}
 		else if(isBegin == false){
@@ -171,6 +185,7 @@ public class MainApplet extends PApplet{
 	/*control the behavior of backButton*/
 	public void backBtn(){
 		isExplain = false;
+		isView=false;
 	}
 	
 	public void buttonSel1(){
@@ -201,7 +216,7 @@ public class MainApplet extends PApplet{
 			}			
 		break;
 		case KeyEvent.VK_DOWN :
-			if(isStart == false && isExplain == false && isSelected == false){
+			if(isStart == false && isExplain == false && isSelected == false && isView==false){
 				this.map.character.move[1]=true;
 				this.map.character.face="down";
 				gc.sendMessage("turn_down");
@@ -212,7 +227,11 @@ public class MainApplet extends PApplet{
 			}
 		break;	
 		case KeyEvent.VK_LEFT :
-			if( isStart == false && isExplain == false && isSelected == false){
+			if(isView==true)
+			{
+				viewResult.changeGroup(false);
+			}
+			else if( isStart == false && isExplain == false && isSelected == false && isView==false){
 				this.map.character.move[2]=true;
 				this.map.character.face="left";
 				gc.sendMessage("turn_left");
@@ -223,7 +242,11 @@ public class MainApplet extends PApplet{
 			}
 			break;
 		case KeyEvent.VK_RIGHT :
-			if( isStart == false && isExplain == false && isSelected == false ){
+			if(isView==true)
+			{
+				viewResult.changeGroup(true);
+			}
+			else if( isStart == false && isExplain == false && isSelected == false && isView==false){
 				this.map.character.move[3]=true;
 				this.map.character.face="right";
 				gc.sendMessage("turn_right");
@@ -234,7 +257,7 @@ public class MainApplet extends PApplet{
 			}
 			break;
 		case KeyEvent.VK_Z :
-			if( isStart == false && isExplain == false && isSelected == false ){
+			if( isStart == false && isExplain == false && isSelected == false && isView==false){
 				if(this.map.character.money >= 25){
 					gc.sendMessage("create");
 					if(this.map.character.skillCreateBlock.toMakeBlock()){
@@ -244,7 +267,7 @@ public class MainApplet extends PApplet{
 			}
 			break;
 		case KeyEvent.VK_X :
-			if( isStart == false && isExplain == false && isSelected == false ){
+			if( isStart == false && isExplain == false && isSelected == false && isView==false){
 				if(this.map.character.money >= 25){
 					gc.sendMessage("break");
 					if(this.map.character.skillDeleteBlock.toDeleteBlock()){
@@ -256,7 +279,7 @@ public class MainApplet extends PApplet{
 		case KeyEvent.VK_SPACE:
 			MapComponent com;
 			int index=-1;
-			if( isStart == false && isExplain == false && isSelected == false ){
+			if( isStart == false && isExplain == false && isSelected == false && isView==false){
 				if(this.map.character.face=="up"){
 					index=this.map.character.index-15;
 				}else if(this.map.character.face=="down"){
