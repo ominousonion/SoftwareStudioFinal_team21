@@ -1,30 +1,40 @@
 package client;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Random;
+import de.looksgood.ani.Ani;
 
 import processing.core.PApplet;
 import processing.core.PImage;
+import gifAnimation.*;
 
 @SuppressWarnings("serial")
 
 public class MainApplet extends PApplet{
 	public GameMap map;
+	private Ani ani;
 	private final static int width = 1200, height = 650;
 	private CharacterState state;
 	private GameClient gc;
 	private boolean isStart;//paul
 	private boolean isExplain;
 	private boolean isSelected;
+	public  boolean isBegin;
 	private Button btn;//Paul added
 	private BackButton backbtn;
 	private PictureSelButton picSelButton;
 	private PicData picdata1;
 	private PImage [][]itemImg = new PImage[100][100];
 	private PImage []backImg = new PImage[10];
-	private PImage explainImg;
+	private PImage MainImage = new PImage();
 	private int sel_number;
 	private int sel_number_1;
+	private Gif myAnimation;
+	private Gif myAnimation2;
+	private Gif myAnimation3;
+	private Gif myAnimation4;
+	private int frogX;
 	
 	private Random r = new Random();
 	private int ran;
@@ -36,11 +46,13 @@ public class MainApplet extends PApplet{
 	}
 	
 	public void setup(){
+		Ani.init(this);
 		size(width,height);
 		map=new GameMap(this,r.nextInt(1)+1, gc);
 		state=new CharacterState(this);
 		isStart = true;
 		isExplain = false;
+		isBegin = false;
 		btn = new Button(this);
 		backbtn = new BackButton(this);
 		picSelButton = new PictureSelButton(this);
@@ -62,27 +74,45 @@ public class MainApplet extends PApplet{
 		}
 		sel_number = 0;
 		sel_number_1 = 0;
+		this.MainImage = loadImage("/src/background/main.jpg");
+		this.MainImage.resize(width, height);
 		this.backImg[0] = loadImage("/src/background/img1.jpg");
 		this.backImg[0].resize(1200, 720);
 		this.backImg[1] = loadImage("/src/background/img2.jpg");
 		this.backImg[1].resize(1200, 720);
 		this.backImg[2] = loadImage("/src/background/img3.jpg");
 		this.backImg[2].resize(1200, 720);
-		this.explainImg = loadImage("/src/img/explaintion_1.png");
-		this.explainImg.resize(1200,650);
+		myAnimation = new Gif(this, "/src/animation/bird.GIF"); 
+		myAnimation.play();
+		myAnimation2 = new Gif(this, "/src/animation/frog.gif"); 
+		myAnimation2.play();
+		frogX = 300;
+		myAnimation3 = new Gif(this, "/src/animation/flower.gif"); 
+		myAnimation3.play();
+		myAnimation4 = new Gif(this, "/src/animation/signature_3.gif"); 
+		myAnimation4.play();
+		
 	}
 	
 	public void draw(){
 		if( isStart == true && isExplain == false && isSelected == false){
-			background(0);
+			//background(0);
+			image(this.MainImage,0,0);
+			image(myAnimation,900,100);
+			image(myAnimation2,frogX,500);
+			image(myAnimation3,200,550);
+			image(myAnimation4,500,50);
 			picSelButton.hideButton();
 			backbtn.hideButton();
 			btn.showButton();
 			btn.display();
+			if(frogX>=1)
+				frogX--;
+			else
+				frogX=1200;
 		}
 		else if( isExplain == true && isSelected == false ){
 			background(167);
-			this.image(explainImg,0,0,1200,650);
 			btn.hideButton();
 			backbtn.showButton();
 			backbtn.display();
@@ -94,6 +124,12 @@ public class MainApplet extends PApplet{
 			picSelButton.display();
 			image(itemImg[sel_number_1][sel_number],450,150);
 			//image(this.backImg[0],0,0);
+		}
+		else if(isBegin == false){
+			btn.hideButton();
+			backbtn.hideButton();
+			map.display();
+			state.display();
 		}
 		else{
 			btn.hideButton();
@@ -128,6 +164,11 @@ public class MainApplet extends PApplet{
 	
 	public void buttonSel1(){
 		picSelButton.hideButton();
+		String g_name = (String) picdata1.getGroupData().keySet().toArray()[sel_number_1];
+		String selected = "selected";
+		ArrayList<String> g = (ArrayList<String>) picdata1.getGroupData().get(g_name);
+		String selname = (String) g.toArray()[sel_number];
+		gc.sendMessage(selected.concat(" ").concat(selname));
 		isSelected = false;
 	}
 	/*public void buttonSel2(){
@@ -183,41 +224,38 @@ public class MainApplet extends PApplet{
 			break;
 		case KeyEvent.VK_Z :
 			if( isStart == false && isExplain == false && isSelected == false ){
-				if(this.map.character.money >= 25){
-					gc.sendMessage("create");
-					if(this.map.character.skillCreateBlock.toMakeBlock()){
-						this.map.character.money-=25;							
-					}
-				}
+				gc.sendMessage("create");
+				this.map.character.skillCreateBlock.toMakeBlock();				
 			}
 			break;
 		case KeyEvent.VK_X :
 			if( isStart == false && isExplain == false && isSelected == false ){
-				if(this.map.character.money >= 25){
-					gc.sendMessage("break");
-					if(this.map.character.skillDeleteBlock.toDeleteBlock()){
-						this.map.character.money-=25;
-					}	
-				}
+				gc.sendMessage("break");
+				this.map.character.skillDeleteBlock.toDeleteBlock();				
 			}
 			break;
 		case KeyEvent.VK_SPACE:
 			MapComponent com;
 			if( isStart == false && isExplain == false && isSelected == false ){
 				com=this.map.components.get(this.map.character.index);
-				if(com.type>=1 && com.type<=3){	
-					if(map.character.money>=100){
-						gc.sendMessage("occupipe");
-						com.occupipe(this.map.character.number);
-						this.map.character.ocpy++;
-						this.map.character.money-=100;
-					}
+				if(com.type>=1 && com.type<=3){
+					gc.sendMessage("occupipe");
+					com.occupipe(this.map.character.number);
 				}
 			}
 			break;
-	}
+		}
 	}
 	
+	public void plusMoney()
+	{
+		moneyValue++;
+		if(moneyValue>=1000)
+		{
+			moneyValue=0;
+			this.map.character.plusMoney();
+		}
+	}
 	
 	public void checkMove(){
 		MapComponent com;

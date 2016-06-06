@@ -19,7 +19,8 @@ public class GameServer extends JFrame{
 	private HashMap<String, ArrayList<String>> groupData = new HashMap<String, ArrayList<String>>();
 	private HashMap<String, Integer> itemData = new HashMap<String, Integer>();
 	private boolean start;
-	private EventCall event = new EventCall(); 
+	private EventCall event = new EventCall();
+	private int sel_count = 0;
 
 	GameServer(int portNum){
 		super("server");
@@ -78,11 +79,11 @@ public class GameServer extends JFrame{
 			while(true){
 				
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(10000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				broadcast("plus");
+				broadcast("up");
 			}
 		}
 	}
@@ -105,11 +106,22 @@ public class GameServer extends JFrame{
 				try {
 					String line = this.reader.readLine();
 					textArea.append(line+"\n");
-					for(ConnectionThread ct: connections){
-						if(ct.equals(this)==false){
-							ct.sendMessage(line);
-						}	
+					String [] info = line.split(":");
+					if(info[1].contains("selected")){
+						String[] itemsel = info[1].split(" ");
+						itemData.put(itemsel[1], itemData.get(itemsel[1])+1);
+						sel_count++;
+						if(sel_count == 2) broadcast("startgame");
+						textArea.append(sel_count+"\n");
 					}
+					else{
+						for(ConnectionThread ct: connections){
+							if(ct.equals(this)==false){
+								ct.sendMessage(line);
+							}	
+						}
+					}
+					
 				} catch (IOException e){
 					e.printStackTrace();
 				}
@@ -125,7 +137,7 @@ public class GameServer extends JFrame{
 	public void broadcast(String message){
 		//send message to every clients in the list
 		String msg = "server:";
-		textArea.append("event");
+		//textArea.append("event");
 		for (ConnectionThread connection: connections) {
 			connection.sendMessage(msg.concat(message));
 		}
