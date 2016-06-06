@@ -90,14 +90,14 @@ public class GameServer extends JFrame{
 				if(start){
 					broadcast("plus");
 					
-					if(eventcnt==5) eventcnt=0;
+					if(eventcnt==20) eventcnt=0; /////// change the period of event
 					else if(eventcnt!=0) eventcnt++;
 					else eventcnt=0;
 					
-					if(ran.nextInt(5)==0 && eventcnt==0){
-						broadcast("event");
+					if(ran.nextInt(10)==0 && eventcnt==0){
+						broadcast("event"+ran.nextInt(5));
 						eventcnt=1;
-					}else if(eventcnt==3){
+					}else if(eventcnt==4){  ///// time of picture 
 						broadcast("pichide");
 					}
 				}

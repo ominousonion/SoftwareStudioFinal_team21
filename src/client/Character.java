@@ -60,6 +60,7 @@ public class Character {
 		this.skillDeleteBlock=new DeleteBlock(gm,this);
 		this.skillOccupipeBlock=new OccupipeBlock(gm,this);
 		this.ocpy=0;
+		this.type=0;
 	}
 
 	public void setName(String name){
@@ -80,6 +81,7 @@ public class Character {
 		this.money=500;
 		this.ocpy=0;
 		this.face="down";
+		this.type=0;
 	}
 	
 	public void display(){

@@ -106,17 +106,31 @@ public class GameClient extends JFrame{
 							applet.map.character.plusMoney();
 							applet.map.opponent.plusMoney();
 						}
-						else if(info[1].substring(0, 5).equals("event")){ //event
-							applet.map.Event(4);
+						else if(info[1].equals("event0")){ //event
+							applet.map.Event(0);
 						}
-						else if(info[1].equals("pichide")){ //event
+						else if(info[1].equals("event1")) applet.map.Event(1);
+						else if(info[1].equals("event2")) applet.map.Event(2);
+						else if(info[1].equals("event3")) applet.map.Event(3);
+						else if(info[1].equals("event4")) applet.map.Event(4);
+						/*else if(info[1].equals("event5")) applet.map.Event(5);
+						else if(info[1].equals("event6")) applet.map.Event(6);
+						else if(info[1].equals("event7")) applet.map.Event(7);
+						else if(info[1].equals("event8")) applet.map.Event(8);*/
+						else if(info[1].equals("pichide")){ //hide picture
 							applet.map.ep.show=false;
 						}
-						else if(info[1].equals("startgame"))
-							applet.isBegin = true;
+						else if(info[1].equals("startgame")){
+							if(applet.map.opponent.type!=0) sendMessage("type"+applet.map.opponent.type);
+							applet.isBegin = true;			
+						}
 						else if(info[1].equals("win")){
 							applet.victory=false;
 							applet.isEnding=true;
+						}
+						else if(info[1].substring(0, 4).equals("type")){ //
+							if(applet.map.character.type==info[1].charAt(4)+'0' && applet.map.opponent.type!=0){} 
+							else applet.map.opponent.type=info[1].charAt(4)+'0';
 						}
 				} catch (IOException e){
 					e.printStackTrace();

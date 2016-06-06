@@ -225,7 +225,7 @@ public class MapComponent extends PApplet {
 	
 	
 	public boolean delWall(int index){
-		if(this.type>=4)
+		if(this.type>4)
 		{
 			String filename;
 			

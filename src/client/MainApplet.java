@@ -265,19 +265,19 @@ public class MainApplet extends PApplet{
 		isSelected = false;
 		
 		if(g_name=="Sneaker"){
-			gc.sendMessage("1");
+			gc.sendMessage("type1");
 			map.character.type=1;
-		}else if(g_name==""){
-			gc.sendMessage("2");
+		}else if(g_name=="Drink"){
+			gc.sendMessage("type2");
 			map.character.type=2;
-		}else if(g_name==""){
-			gc.sendMessage("3");
+		}else if(g_name=="Cellphone"){
+			gc.sendMessage("type3");
 			map.character.type=3;
-		}else if(g_name==""){
-			gc.sendMessage("4");
+		}else if(g_name=="Caffee"){
+			gc.sendMessage("type4");
 			map.character.type=4;
-		}else if(g_name==""){
-			gc.sendMessage("5");
+		}else if(g_name=="Fastfood"){
+			gc.sendMessage("type5");
 			map.character.type=5;
 		}
 		

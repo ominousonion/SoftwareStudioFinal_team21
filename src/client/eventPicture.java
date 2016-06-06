@@ -15,12 +15,10 @@ public class eventPicture  extends PApplet {
 		this.y=y;
 		this.show=false;
 		this.applet=applet;
-		String filename =("./src/img/gg.jpg");
-		img = loadImage(filename);
 	}
 	
 	public void LoadPicture(int index){
-		String filename =("./src/img/gg.jpg");
+		String filename =("./src/img/event"+index+".png");
 		img = loadImage(filename);
 	}
 	
