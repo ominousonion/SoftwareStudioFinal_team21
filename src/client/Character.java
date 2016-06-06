@@ -186,7 +186,7 @@ public class Character {
 	
 	public void plusMoney()
 	{
-		this.money+=((this.ocpy+1)*3);//*ocpi
+		this.money+=((this.ocpy+1)*2);//*ocpi
 	}
 
 	public void setGroup(String group){
