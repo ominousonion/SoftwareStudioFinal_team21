@@ -33,6 +33,7 @@ public class GameServer extends JFrame{
 		this.add(this.textArea);
 		this.setVisible(true);
 		this.setResizable(false);
+		this.start=false;
 		
 		connections = new ArrayList<ConnectionThread>();
 		try {
@@ -77,13 +78,14 @@ public class GameServer extends JFrame{
 	public class EventCall extends Thread{
 		public void run(){
 			while(true){
-				
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				broadcast("plus");
+				if(start){
+					broadcast("plus");
+				}
 			}
 		}
 	}
@@ -105,23 +107,28 @@ public class GameServer extends JFrame{
 			while(true) {
 				try {
 					String line = this.reader.readLine();
-					textArea.append(line+"\n");
-					String [] info = line.split(":");
-					if(info[1].contains("selected")){
-						String[] itemsel = info[1].split(" ");
-						itemData.put(itemsel[1], itemData.get(itemsel[1])+1);
-						sel_count++;
-						if(sel_count == 2) broadcast("startgame");
-						textArea.append(sel_count+"\n");
-					}
-					else{
-						for(ConnectionThread ct: connections){
-							if(ct.equals(this)==false){
-								ct.sendMessage(line);
-							}	
+					if(line!=null){
+						textArea.append(line+"\n");
+						String [] info = line.split(":");
+						if(info[1].contains("selected")){
+							String[] itemsel = info[1].split(" ");
+							itemData.put(itemsel[1], itemData.get(itemsel[1])+1);
+							sel_count++;
+							if(sel_count == 2) {
+								broadcast("startgame");
+								start=true;
+							}
+							textArea.append(sel_count+"\n");
 						}
+						else{
+							for(ConnectionThread ct: connections){
+								if(ct.equals(this)==false){
+									ct.sendMessage(line);
+								}	
+							}
+						}						
 					}
-					
+
 				} catch (IOException e){
 					e.printStackTrace();
 				}

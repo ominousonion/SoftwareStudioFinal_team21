@@ -58,16 +58,14 @@ public class MapComponent extends PApplet {
 				if(this.type==3){
 					if(this.map.character.number==ch){
 						this.map.opponent.ocpy--;
-						this.map.character.ocpy++;
 						this.map.character.money-=100;
 					}			
 					else if(this.map.opponent.number==ch){
 						this.map.character.ocpy--;
-						this.map.opponent.ocpy++;
 						this.map.opponent.money-=100;
 					}
-					this.type=2;
-					String filename =("./src/img/map_2.png");
+					this.type=1;
+					String filename =("./src/img/map_1.png");
 					img = loadImage(filename);
 				}
 				else if(this.type==1){
@@ -89,16 +87,14 @@ public class MapComponent extends PApplet {
 				if(this.type==2){
 					if(this.map.character.number==ch){
 						this.map.opponent.ocpy--;
-						this.map.character.ocpy++;
 						this.map.character.money-=100;
 					}			
 					else if(this.map.opponent.number==ch){
 						this.map.character.ocpy--;
-						this.map.opponent.ocpy++;
 						this.map.opponent.money-=100;
 					}
-					this.type=3;
-					String filename=("./src/img/map_3.png");
+					this.type=1;
+					String filename=("./src/img/map_1.png");
 					img = loadImage(filename);
 				}
 				else if(this.type==1){

@@ -33,6 +33,7 @@ public class GameClient extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(windowWidth,windowHeight);
 		this.setVisible(true);
+		this.setResizable(false);
 
 	}
 
