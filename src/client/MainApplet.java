@@ -22,6 +22,7 @@ public class MainApplet extends PApplet{
 	private boolean isSelected;
 	private boolean isView;
 	public  boolean isBegin;
+	private boolean isEnding;	
 	private Button btn;//Paul added
 	private BackButton backbtn;
 	private PictureSelButton picSelButton;
@@ -37,7 +38,7 @@ public class MainApplet extends PApplet{
 	private Gif myAnimation3;
 	private Gif myAnimation4;
 	private int frogX;
-	
+
 	private Random r = new Random();
 	private int ran;
 	
@@ -56,6 +57,7 @@ public class MainApplet extends PApplet{
 		isExplain = false;
 		isBegin = false;
 		isView=false;
+		isEnding=false;
 		btn = new Button(this);
 		backbtn = new BackButton(this);
 		picSelButton = new PictureSelButton(this);
@@ -98,6 +100,7 @@ public class MainApplet extends PApplet{
 		myAnimation4 = new Gif(this, "/src/animation/signature_3.gif"); 
 		myAnimation4.play();
 		
+		
 	}
 	
 	public void draw(){
@@ -138,12 +141,30 @@ public class MainApplet extends PApplet{
 			state.display();
 		}
 		else{
-			btn.hideButton();
-			backbtn.hideButton();
-			map.display();
-			state.display();
-			checkMove();
+			if(isEnding){
+				/*ending picture*/
+				btn.hideButton();
+				backbtn.hideButton();
+				map.display();
+				state.display();
+				checkMove();				
+			}			
+			else{
+				
+			}
 		}
+		
+	}
+	
+	public void reset(){
+		this.map.reset();
+		this.map.character.reset();
+		this.map.opponent.reset();
+		isStart = true;
+		isExplain = false;
+		isBegin = false;
+		isView = false;
+		isEnding = false;
 		
 	}
 	
@@ -191,9 +212,11 @@ public class MainApplet extends PApplet{
 		switch(e.getKeyCode()){
 		case KeyEvent.VK_UP :
 			if(isStart == false && isExplain == false && isSelected == false ){
-				this.map.character.move[0]=true;
-				this.map.character.face="up";
-				gc.sendMessage("turn_up");
+				if(!isEnding){
+					this.map.character.move[0]=true;
+					this.map.character.face="up";
+					gc.sendMessage("turn_up");					
+				}
 			}
 			else{
 				if(sel_number_1-1>=0)
@@ -202,9 +225,11 @@ public class MainApplet extends PApplet{
 		break;
 		case KeyEvent.VK_DOWN :
 			if(isStart == false && isExplain == false && isSelected == false){
-				this.map.character.move[1]=true;
-				this.map.character.face="down";
-				gc.sendMessage("turn_down");
+				if(!isEnding){
+					this.map.character.move[1]=true;
+					this.map.character.face="down";
+					gc.sendMessage("turn_down");					
+				}
 			}
 			else{
 				if(sel_number_1+1<=2)
@@ -213,9 +238,11 @@ public class MainApplet extends PApplet{
 		break;	
 		case KeyEvent.VK_LEFT :
 			if( isStart == false && isExplain == false && isSelected == false){
-				this.map.character.move[2]=true;
-				this.map.character.face="left";
-				gc.sendMessage("turn_left");
+				if(!isEnding){
+					this.map.character.move[2]=true;
+					this.map.character.face="left";
+					gc.sendMessage("turn_left");					
+				}
 			}
 			else{
 				if(sel_number-1>=0)
@@ -224,9 +251,11 @@ public class MainApplet extends PApplet{
 			break;
 		case KeyEvent.VK_RIGHT :
 			if( isStart == false && isExplain == false && isSelected == false ){
-				this.map.character.move[3]=true;
-				this.map.character.face="right";
-				gc.sendMessage("turn_right");
+				if(!isEnding){
+					this.map.character.move[3]=true;
+					this.map.character.face="right";
+					gc.sendMessage("turn_right");					
+				}
 			}
 			else{
 				if(sel_number+1<=3)
@@ -235,47 +264,52 @@ public class MainApplet extends PApplet{
 			break;
 		case KeyEvent.VK_Z :
 			if( isStart == false && isExplain == false && isSelected == false ){
-				if(this.map.character.money >= 25){
-					gc.sendMessage("create");
-					if(this.map.character.skillCreateBlock.toMakeBlock()){
-						this.map.character.money-=25;							
-					}
+				if(!isEnding){
+					if(this.map.character.money >= 25){
+						gc.sendMessage("create");
+						if(this.map.character.skillCreateBlock.toMakeBlock()){
+							this.map.character.money-=25;							
+						}
+					}					
 				}			
 			}
 			break;
 		case KeyEvent.VK_X :
 			if( isStart == false && isExplain == false && isSelected == false ){
-				if(this.map.character.money >= 25){
-					gc.sendMessage("break");
-					if(this.map.character.skillDeleteBlock.toDeleteBlock()){
-						this.map.character.money-=25;
-					}	
-				}				
+				if(!isEnding){
+					if(this.map.character.money >= 25){
+						gc.sendMessage("break");
+						if(this.map.character.skillDeleteBlock.toDeleteBlock()){
+							this.map.character.money-=25;
+						}	
+					}					
+				}			
 			}
 			break;
 		case KeyEvent.VK_SPACE:
 			MapComponent com;
 			int index=-1;
 			if( isStart == false && isExplain == false && isSelected == false ){
-				if(this.map.character.face=="up"){
-					index=this.map.character.index-15;
-				}else if(this.map.character.face=="down"){
-					index=this.map.character.index+15;
-				}else if(this.map.character.face=="left"){
-					index=this.map.character.index-1;
-				}else if(this.map.character.face=="right"){
-					index=this.map.character.index+1;
-				}
-				if(index>=0 && index<225){
-					com=this.map.components.get(index);
-					if(com.type>=1 && com.type<=3){
-						if(map.character.money >= 100){
-							gc.sendMessage("occupipe");
-							this.map.character.skillOccupipeBlock.toOccupipeBlock();
-						}
+				if(!isEnding){
+					if(this.map.character.face=="up"){
+						index=this.map.character.index-15;
+					}else if(this.map.character.face=="down"){
+						index=this.map.character.index+15;
+					}else if(this.map.character.face=="left"){
+						index=this.map.character.index-1;
+					}else if(this.map.character.face=="right"){
+						index=this.map.character.index+1;
 					}
-				}				
-				
+					if(index>=0 && index<225){
+						com=this.map.components.get(index);
+						if(com.type>=1 && com.type<=3){
+							if(map.character.money >= 100){
+								gc.sendMessage("occupipe");
+								this.map.character.skillOccupipeBlock.toOccupipeBlock();
+							}
+						}
+					}					
+				}								
 			}
 			break;
 		}
@@ -414,8 +448,6 @@ public class MainApplet extends PApplet{
 		}
 	}
 	
-	public void reset(){
-		
-	}
+
 	
 }
