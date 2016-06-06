@@ -66,7 +66,19 @@ public class Character {
 	}
 	
 	
-	
+	public void reset(){
+		this.x = iniX;
+		this.y = iniY;
+		for(int i=0;i<4;i++) move[i]=false;
+
+		this.index=(this.y-this.parent.map.SquareY)/this.parent.map.SquareUnit*15+(this.x-this.parent.map.SquareX)/this.parent.map.SquareUnit;
+		this.out_of_place_up=false;
+		this.out_of_place_down=false;
+		this.out_of_place_left=false;
+		this.out_of_place_right=false;
+		this.money=200;
+		this.ocpy=0;
+	}
 	
 	public void display(){
 		// Displays the image at point (0, height/2) at half of its size
