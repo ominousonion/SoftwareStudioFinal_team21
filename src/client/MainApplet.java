@@ -210,6 +210,7 @@ public class MainApplet extends PApplet{
 	/*control the behavior of buttonC*/
 	public void buttonC(){ 
 		isView = true;
+		picdata1.readData();
 	}
 	
 	

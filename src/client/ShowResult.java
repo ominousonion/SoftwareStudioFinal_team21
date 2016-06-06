@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class ShowResult {
 
@@ -18,6 +19,7 @@ public class ShowResult {
 	private String nowGroup;
 	private float iniAngle = 0;
 	private int nextId, preId;
+	private PImage bg;
 		
 	ShowResult(MainApplet applet){
 		this.x=0;
@@ -26,6 +28,8 @@ public class ShowResult {
 		this.height=670;
 		this.applet=applet;
 		graphdata = applet.picdata1;
+		bg = applet.loadImage("./src/img/Notebook.png");
+		bg.resize(1200, 670);
 		nowGroup = (String) graphdata.getGroupData().keySet().toArray()[0];
 		id = 0;
 		for(String g : graphdata.getGroupData().keySet()){
@@ -41,7 +45,7 @@ public class ShowResult {
 	}
 	
 	public void display(){
-		applet.background(255);
+		applet.image(bg,0,0);
 		if(x<=width/2+100){
 			x+=3;
 			iniAngle += applet.radians(1);
