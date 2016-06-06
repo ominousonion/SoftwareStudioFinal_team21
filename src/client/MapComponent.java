@@ -33,7 +33,7 @@ public class MapComponent extends PApplet {
 			this.passable=true;
 			this.occupiedStage=0;
 		}else if(num<=3){
-			this.passable=true;
+			this.passable=false;
 			this.occupiedStage=1;
 		}else{
 			this.passable=false;

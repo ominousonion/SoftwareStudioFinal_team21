@@ -236,12 +236,25 @@ public class MainApplet extends PApplet{
 			break;
 		case KeyEvent.VK_SPACE:
 			MapComponent com;
+			int index=-1;
 			if( isStart == false && isExplain == false && isSelected == false ){
-				com=this.map.components.get(this.map.character.index);
-				if(com.type>=1 && com.type<=3){
-					gc.sendMessage("occupipe");
-					com.occupipe(this.map.character.number);
+				if(this.map.character.face=="up"){
+					index=this.map.character.index-15;
+				}else if(this.map.character.face=="down"){
+					index=this.map.character.index+15;
+				}else if(this.map.character.face=="left"){
+					index=this.map.character.index-1;
+				}else if(this.map.character.face=="right"){
+					index=this.map.character.index+1;
 				}
+				if(index>=0 && index<225){
+					com=this.map.components.get(index);
+					if(com.type>=1 && com.type<=3){
+						gc.sendMessage("occupipe");
+						com.occupipe(this.map.character.number);
+					}
+				}				
+				
 			}
 			break;
 		}
