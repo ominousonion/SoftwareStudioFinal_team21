@@ -29,6 +29,7 @@ public class Character {
 	public OccupipeBlock skillOccupipeBlock;
 	private GameMap gm;
 	public int ocpy;
+	public int type;
 
 
 	//constructor

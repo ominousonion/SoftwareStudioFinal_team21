@@ -218,6 +218,26 @@ public class MainApplet extends PApplet{
 		String selname = (String) g.toArray()[sel_number];
 		gc.sendMessage(selected.concat(" ").concat(selname));
 		isSelected = false;
+		
+		if(g_name=="Sneaker"){
+			gc.sendMessage("1");
+			map.character.type=1;
+		}else if(g_name==""){
+			gc.sendMessage("2");
+			map.character.type=2;
+		}else if(g_name==""){
+			gc.sendMessage("3");
+			map.character.type=3;
+		}else if(g_name==""){
+			gc.sendMessage("4");
+			map.character.type=4;
+		}else if(g_name==""){
+			gc.sendMessage("5");
+			map.character.type=5;
+		}
+		
+		
+		
 	}
 	/*public void buttonSel2(){
 		picSelButton.hideButton();

@@ -45,7 +45,7 @@ public class MapComponent extends PApplet {
 	public void display(){
 		this.applet.image(img,x,y,width,width);
 		this.applet.noStroke();
-	};
+	}
 	
 	
 	

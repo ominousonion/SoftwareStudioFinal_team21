@@ -106,6 +106,12 @@ public class GameClient extends JFrame{
 							applet.map.character.plusMoney();
 							applet.map.opponent.plusMoney();
 						}
+						else if(info[1].substring(0, 5).equals("event")){ //event
+							applet.map.Event(4);
+						}
+						else if(info[1].equals("pichide")){ //event
+							applet.map.ep.show=false;
+						}
 						else if(info[1].equals("startgame"))
 							applet.isBegin = true;
 					
