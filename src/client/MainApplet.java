@@ -24,7 +24,7 @@ public class MainApplet extends PApplet{
 	private Button btn;//Paul added
 	private BackButton backbtn;
 	private PictureSelButton picSelButton;
-	private PicData picdata1;
+	public PicData picdata1;
 	private PImage [][]itemImg = new PImage[100][100];
 	private PImage []backImg = new PImage[10];
 	private PImage MainImage = new PImage();
