@@ -162,7 +162,11 @@ public class MainApplet extends PApplet{
 				checkMove();				
 			}			
 			else{
-				
+				btn.hideButton();
+				backbtn.hideButton();
+				map.display();
+				state.display();
+				checkMove();	
 			}
 		}
 		
@@ -177,7 +181,6 @@ public class MainApplet extends PApplet{
 		isBegin = false;
 		isView = false;
 		isEnding = false;
-		
 	}
 	
 	/*control the behavior of buttonA*/
