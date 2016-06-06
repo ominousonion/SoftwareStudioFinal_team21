@@ -224,34 +224,37 @@ public class MainApplet extends PApplet{
 			break;
 		case KeyEvent.VK_Z :
 			if( isStart == false && isExplain == false && isSelected == false ){
-				if(this.map.character.money >= 25){
-					gc.sendMessage("create");
-					if(this.map.character.skillCreateBlock.toMakeBlock()){
-						this.map.character.money-=25;							
-					}
-				}				
+				gc.sendMessage("create");
+				this.map.character.skillCreateBlock.toMakeBlock();				
 			}
 			break;
 		case KeyEvent.VK_X :
 			if( isStart == false && isExplain == false && isSelected == false ){
-				if(this.map.character.money >= 25){
-					gc.sendMessage("break");
-					if(this.map.character.skillDeleteBlock.toDeleteBlock()){
-						this.map.character.money-=25;
-					}	
-				}				
+				gc.sendMessage("break");
+				this.map.character.skillDeleteBlock.toDeleteBlock();				
 			}
 			break;
 		case KeyEvent.VK_SPACE:
 			MapComponent com;
+			int index=-1;
 			if( isStart == false && isExplain == false && isSelected == false ){
-				com=this.map.components.get(this.map.character.index);
-				if(com.type>=1 && com.type<=3){
-					if(map.character.money >= 100){
-						gc.sendMessage("occupipe");
-						this.map.character.skillOccupipeBlock.toOccupipeBlock();
-					}
+				if(this.map.character.face=="up"){
+					index=this.map.character.index-15;
+				}else if(this.map.character.face=="down"){
+					index=this.map.character.index+15;
+				}else if(this.map.character.face=="left"){
+					index=this.map.character.index-1;
+				}else if(this.map.character.face=="right"){
+					index=this.map.character.index+1;
 				}
+				if(index>=0 && index<225){
+					com=this.map.components.get(index);
+					if(com.type>=1 && com.type<=3){
+						gc.sendMessage("occupipe");
+						com.occupipe(this.map.character.number);
+					}
+				}				
+				
 			}
 			break;
 		}
@@ -259,8 +262,12 @@ public class MainApplet extends PApplet{
 	
 	public void plusMoney()
 	{
-		this.map.character.plusMoney();
-		
+		moneyValue++;
+		if(moneyValue>=1000)
+		{
+			moneyValue=0;
+			this.map.character.plusMoney();
+		}
 	}
 	
 	public void checkMove(){
