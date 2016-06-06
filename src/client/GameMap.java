@@ -69,6 +69,27 @@ public class GameMap{
 		}
 
 	
+	public void reset(){
+		components.clear();
+		
+		try
+		{
+			Scanner sc=new Scanner(mapFile);
+			int mapData;
+			int i=0;
+			
+			while(sc.hasNext()&& i<225){
+				mapData=sc.nextInt();
+				components.add(new MapComponent(SquareX+(i%15)*SquareUnit,SquareY+(i/15)*SquareUnit,mapData,this.applet, this));
+				i++;
+			}
+			sc.close();
+		}
+		catch (IOException e) {
+			System.out.println(e);
+		}
+			
+	}
 	
 	public void display(){
 		this.applet.noStroke();

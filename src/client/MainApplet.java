@@ -420,4 +420,8 @@ public class MainApplet extends PApplet{
 		}
 	}
 	
+	public void reset(){
+		
+	}
+	
 }
