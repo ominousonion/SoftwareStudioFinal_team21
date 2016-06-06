@@ -51,17 +51,70 @@ public class MapComponent extends PApplet {
 	
 	public void occupipe(int ch){
 		if(this.type>=1 && this.type<=3)
-		{
+		{	
 			this.occupiedStage=2;
+			
 			if(ch==1){
-				this.type=2;
-				String filename =("./src/img/map_2.png");
-				img = loadImage(filename);
+				if(this.type==3){
+					if(this.map.character.number==ch){
+						this.map.opponent.ocpy--;
+						this.map.character.ocpy++;
+						this.map.character.money-=100;
+					}			
+					else if(this.map.opponent.number==ch){
+						this.map.character.ocpy--;
+						this.map.opponent.ocpy++;
+						this.map.opponent.money-=100;
+					}
+					this.type=2;
+					String filename =("./src/img/map_2.png");
+					img = loadImage(filename);
+				}
+				else if(this.type==1){
+					if(this.map.character.number==ch){
+						this.map.character.ocpy++;
+						this.map.character.money-=100;
+					}			
+					else if(this.map.opponent.number==ch){
+						this.map.opponent.ocpy++;
+						this.map.opponent.money-=100;
+					}	
+					this.type=2;
+					String filename =("./src/img/map_2.png");
+					img = loadImage(filename);
+				}
+
 			}
 			else if(ch==2){
-				this.type=3;
-				String filename=("./src/img/map_3.png");
-				img = loadImage(filename);
+				if(this.type==2){
+					if(this.map.character.number==ch){
+						this.map.opponent.ocpy--;
+						this.map.character.ocpy++;
+						this.map.character.money-=100;
+					}			
+					else if(this.map.opponent.number==ch){
+						this.map.character.ocpy--;
+						this.map.opponent.ocpy++;
+						this.map.opponent.money-=100;
+					}
+					this.type=3;
+					String filename=("./src/img/map_3.png");
+					img = loadImage(filename);
+				}
+				else if(this.type==1){
+					if(this.map.character.number==ch){
+						this.map.character.ocpy++;
+						this.map.character.money-=100;
+					}			
+					else if(this.map.opponent.number==ch){
+						this.map.opponent.ocpy++;
+						this.map.opponent.money-=100;
+					}	
+					this.type=3;
+					String filename=("./src/img/map_3.png");
+					img = loadImage(filename);
+				}
+				
 			}
 			
 		}
