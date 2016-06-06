@@ -16,20 +16,16 @@ public class CreateBlock {
 		faceEdge=false;
 		boolean exe=false;
 		if(pc.face=="up"){
-			if(pc.out_of_place_up) this.index=pc.index-30;
-			else this.index=pc.index-15;
+			this.index=pc.index-15;
 			if(index<0) faceEdge=true;
 		}else if(pc.face=="down"){
-			if(pc.out_of_place_down) this.index=pc.index+30;
-			else this.index=pc.index+15;
+			this.index=pc.index+15;
 			if(index>=225) faceEdge=true;
 		}else if(pc.face=="left"){
-			if(pc.out_of_place_left) this.index=pc.index-2;
-			else this.index=pc.index-1;
+			this.index=pc.index-1;
 			if(index%15==14) faceEdge=true;
 		}else if(pc.face=="right"){
-			if(pc.out_of_place_right) this.index=pc.index+2;
-			else this.index=pc.index+1;
+			this.index=pc.index+1;
 			if(index%15==0) faceEdge=true;
 		}
 		if(index>=0 && index<225 && !faceEdge) exe=gm.components.get(index).createWall(index);
