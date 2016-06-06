@@ -296,6 +296,12 @@ public class MainApplet extends PApplet{
 							gc.sendMessage("occupipe");
 							this.map.character.skillOccupipeBlock.toOccupipeBlock();
 						}
+					}else if(com.type==4){
+						if(map.character.money >= 1000){
+							gc.sendMessage("win");
+							isExplain = true;
+							isSelected = false;
+						}
 					}
 				}				
 				
