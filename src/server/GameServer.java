@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Timer;
 import javax.swing.*;
 import java.awt.*;
 
@@ -94,7 +93,7 @@ public class GameServer extends JFrame{
 					else if(eventcnt!=0) eventcnt++;
 					else eventcnt=0;
 					
-					if(ran.nextInt(10)==0 && eventcnt==0){
+					if(ran.nextInt(30)==0 && eventcnt==0){
 						broadcast("event"+ran.nextInt(5));
 						eventcnt=1;
 					}else if(eventcnt==4){  ///// time of picture 

@@ -3,7 +3,6 @@ package client;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
-import de.looksgood.ani.Ani;
 
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -46,7 +45,6 @@ public class MainApplet extends PApplet{
 	private int frogX;
 
 	private Random r = new Random();
-	private int ran;
 	
 	private int moneyValue=0;
 	

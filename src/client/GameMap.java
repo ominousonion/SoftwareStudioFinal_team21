@@ -20,7 +20,6 @@ public class GameMap{
 	public int ch_num;
 	private int ch_X, ch_Y, op_X, op_Y;
 	private int ch_index, op_index;
-	private GameClient gc;
 	public int seq;
 	
 	public eventPicture ep;
@@ -38,7 +37,6 @@ public class GameMap{
 		this.SquareWidth=600;
 		this.SquareHeight=600;
 		this.SquareUnit=this.SquareWidth/15;//SquareUnit = 40
-		this.gc = gc;
 		this.ch_num=gc.seq;
 		
 		op_X = SquareX+SquareWidth-SquareUnit;
