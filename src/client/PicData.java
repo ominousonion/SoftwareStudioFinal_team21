@@ -9,6 +9,7 @@ public class PicData {
 	
 	private HashMap<String,PImage> imgData = new  HashMap<String,PImage>();
 	private HashMap<String, ArrayList<String>> groupData = new HashMap<String, ArrayList<String>>();
+	private HashMap<String, Integer> itemData = new HashMap<String, Integer>();
 	private String address = "./src/itemimg/";
 	private MainApplet parent;
 	
@@ -27,6 +28,7 @@ public class PicData {
 				group = filescn.next();
 				name = filescn.next();
 				times = Integer.parseInt(filescn.next());
+				itemData.put( name, times);
 				if(groupData.containsKey(group)==false){
 					ArrayList<String> list = new ArrayList<String>();
 					list.add(name);
@@ -58,5 +60,9 @@ public class PicData {
 	
 	public HashMap<String, ArrayList<String>> getGroupData(){
 		return groupData;
+	}
+	
+	public HashMap<String, Integer> getItemData(){
+		return itemData;
 	}
 }
