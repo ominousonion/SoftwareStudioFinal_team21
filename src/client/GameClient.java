@@ -108,7 +108,10 @@ public class GameClient extends JFrame{
 						}
 						else if(info[1].equals("startgame"))
 							applet.isBegin = true;
-					
+						else if(info[1].equals("win")){
+							applet.victory=false;
+							applet.isEnding=true;
+						}
 				} catch (IOException e){
 					e.printStackTrace();
 				}

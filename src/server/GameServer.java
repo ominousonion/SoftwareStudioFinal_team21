@@ -121,6 +121,10 @@ public class GameServer extends JFrame{
 							textArea.append(sel_count+"\n");
 						}
 						else{
+							if(info[1].equals("win")){
+								start=false;
+								sel_count=0;
+							}
 							for(ConnectionThread ct: connections){
 								if(ct.equals(this)==false){
 									ct.sendMessage(line);

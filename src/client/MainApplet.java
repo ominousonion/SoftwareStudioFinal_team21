@@ -23,7 +23,8 @@ public class MainApplet extends PApplet{
 	private boolean isSelected;
 	private boolean isView;
 	public  boolean isBegin;
-	private boolean isEnding;	
+	public boolean isEnding;
+	public boolean victory;
 	private Button btn;//Paul added
 	private BackButton backbtn;
 	private PictureSelButton picSelButton;
@@ -32,6 +33,8 @@ public class MainApplet extends PApplet{
 	private PImage []backImg = new PImage[10];
 	private PImage MainImage = new PImage();
 	private PImage explainImg;
+	private PImage winImg;
+	private PImage loseImg;
 	private int sel_number;
 	private int sel_number_1;
 	private Gif myAnimation;
@@ -50,7 +53,6 @@ public class MainApplet extends PApplet{
 	}
 	
 	public void setup(){
-
 		size(width,height);
 		map=new GameMap(this,r.nextInt(1)+1, gc);
 		state=new CharacterState(this);
@@ -59,6 +61,7 @@ public class MainApplet extends PApplet{
 		isBegin = false;
 		isView=false;
 		isEnding=false;
+		victory=false;
 		btn = new Button(this);
 		backbtn = new BackButton(this);
 		picSelButton = new PictureSelButton(this);
@@ -94,6 +97,8 @@ public class MainApplet extends PApplet{
 		this.backImg[1].resize(1200, 720);
 		this.backImg[2] = loadImage("/src/background/img3.jpg");
 		this.backImg[2].resize(1200, 720);
+		this.winImg = loadImage("/src/img/Game_WIN.png");
+		this.loseImg = loadImage("/src/img/Game_lose.png");
 		myAnimation = new Gif(this, "/src/animation/bird.GIF"); 
 		myAnimation.play();
 		myAnimation2 = new Gif(this, "/src/animation/frog.gif"); 
@@ -154,12 +159,16 @@ public class MainApplet extends PApplet{
 		}
 		else{
 			if(isEnding){
-				/*ending picture*/
 				btn.hideButton();
 				backbtn.hideButton();
-				map.display();
-				state.display();
-				checkMove();				
+				//map.display();
+				state.display();	
+				if(victory){
+					image(this.winImg, 360, 100, 500, 500);
+				}
+				else{
+					image(this.loseImg, 360, 100, 500, 500);
+				}
 			}			
 			else{
 				btn.hideButton();
@@ -173,14 +182,18 @@ public class MainApplet extends PApplet{
 	}
 	
 	public void reset(){
-		this.map.reset();
-		this.map.character.reset();
-		this.map.opponent.reset();
 		isStart = true;
 		isExplain = false;
 		isBegin = false;
 		isView = false;
 		isEnding = false;
+		victory = false;
+		sel_number = 0;
+		sel_number_1 = 0;
+		this.map.reset();
+		this.map.character.reset();
+		this.map.opponent.reset();
+
 	}
 	
 	/*control the behavior of buttonA*/
@@ -336,11 +349,16 @@ public class MainApplet extends PApplet{
 						}else if(com.type==4){
 							if(map.character.money >= 1000){
 								gc.sendMessage("win");
+								victory=true;
 								isEnding=true;
 							}
 						}					
 					}					
-				}						
+				}
+				else{
+
+					reset();
+				}
 			}
 			break;
 		}
@@ -467,7 +485,6 @@ public class MainApplet extends PApplet{
 			break;
 			case KeyEvent.VK_DOWN :
 				this.map.character.move[1]=false;					
-
 			break;
 			case KeyEvent.VK_LEFT :
 				this.map.character.move[2]=false;					
