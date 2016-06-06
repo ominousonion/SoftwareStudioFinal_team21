@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 import java.net.*;
 @SuppressWarnings("serial")
 public class GameClient extends JFrame{
-	private final static int windowWidth = 1200, windowHeight = 700;
+	private final static int windowWidth = 1200, windowHeight = 680;
 	//applet
 	private MainApplet applet;
 	public int seq = 0;
