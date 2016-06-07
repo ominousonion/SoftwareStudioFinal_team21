@@ -15,7 +15,7 @@ public class ShowResult {
 	private PicData graphdata;
 	private int id;
 	private int[] sum =  new int [5];
-	private String[] color = {"#6495ED", "#7FFFD4", "#32CD32", "#FF6347", "	#FFA54F","#B452CD", "#FF0000"};
+	private String[] color = {"#6495ED", "#7FFFD4", "#32CD32", "#FF6347", "#FFA54F","#B452CD", "#FF0000"};
 	private String nowGroup;
 	private float iniAngle = 0;
 	private int nextId, preId;
