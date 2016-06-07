@@ -160,7 +160,7 @@ public class MapComponent extends PApplet {
 				if(map.components.get(index-15).type>89999){ //up
 					map.components.get(index-15).type-=100;
 				
-					if(index-15-1%15!=14 && index!=15){ //up left
+					if(index%15!=0 && index!=15){ //up left
 						if(map.components.get(index-15-1).type%1000>=100 || index-15==0){
 							map.components.get(index-15).type+=20;
 						}else if(map.components.get(index-15-1).type%10==2 && map.components.get(index-15-1).type!=2){
@@ -170,7 +170,7 @@ public class MapComponent extends PApplet {
 						}
 					}
 				
-					if(index-15+1%15!=0){ //up right
+					if(index%15!=14){ //up right
 						if(map.components.get(index-15+1).type%1000>=100){
 							map.components.get(index-15).type+=2;
 						}else if(map.components.get(index-15+1).type%100>=20){
@@ -193,7 +193,7 @@ public class MapComponent extends PApplet {
 				}
 			}
 			
-			if(index-1%15!=14 && index-1!=-1){
+			if(index%15!=0 && index-1!=-1){
 				if(map.components.get(index-1).type>89999){ //left
 					if(this.type%1000>=100 && map.components.get(index-1).type%1000<100){ //has down boundary
 						map.components.get(index-1).type+=1;
@@ -205,7 +205,7 @@ public class MapComponent extends PApplet {
 				}
 			}
 			
-			if(index+1%15!=0 && index!=224){
+			if(index%15!=14 && index!=224){
 				if(map.components.get(index+1).type>89999){ //right
 					if(this.type%1000>=100 && map.components.get(index+1).type%1000<100){
 						map.components.get(index+1).type+=10;
@@ -235,7 +235,7 @@ public class MapComponent extends PApplet {
 					if(map.components.get(index-15).type%100>=20) map.components.get(index-15).type-=20;
 					if(map.components.get(index-15).type%10>=2 ) map.components.get(index-15).type-=2;
 				
-					if(index-15-1%15!=14 && index!=15){ //up left
+					if(index!=0 && index!=15){ //up left
 						if(map.components.get(index-15-1).type>=4 && (map.components.get(index-15-1).type%1000<100 || index-15==0)){
 							map.components.get(index-15-1).type+=2;
 							filename =("./src/img/map_"+map.components.get(index-15-1).type+".png");
@@ -243,7 +243,7 @@ public class MapComponent extends PApplet {
 						}
 					}
 				
-					if(index-15+1%15!=0){ //up right
+					if(index%15!=14){ //up right
 						if(map.components.get(index-15+1).type>=4 && map.components.get(index-15+1).type%1000<100){ //up right doesn't have down boundary
 							map.components.get(index-15+1).type+=20;
 							filename =("./src/img/map_"+map.components.get(index-15+1).type+".png");
@@ -264,7 +264,7 @@ public class MapComponent extends PApplet {
 				}
 			}
 			
-			if(index-1%15!=14 && index-1!=-1){
+			if(index%15!=0 && index-1!=-1){
 				if(map.components.get(index-1).type>89999){ //left
 					if(this.type%1000>=100 && map.components.get(index-1).type%1000<100){ //this has down boundary but left doesn't
 						map.components.get(index-1).type-=1;
@@ -276,7 +276,7 @@ public class MapComponent extends PApplet {
 				}
 			}
 			
-			if(index+1%15!=0 && index!=224){
+			if(index%15!=14 && index!=224){
 				if(map.components.get(index+1).type>89999){ //right
 					if(this.type%1000>=100 && map.components.get(index+1).type%1000<100){
 						map.components.get(index+1).type-=10;
