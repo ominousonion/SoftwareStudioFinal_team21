@@ -45,7 +45,7 @@ public class MapComponent extends PApplet {
 	public void display(){
 		this.applet.image(img,x,y,width,width);
 		this.applet.noStroke();
-	};
+	}
 	
 	
 	
@@ -225,7 +225,7 @@ public class MapComponent extends PApplet {
 	
 	
 	public boolean delWall(int index){
-		if(this.type>=4)
+		if(this.type>4)
 		{
 			String filename;
 			

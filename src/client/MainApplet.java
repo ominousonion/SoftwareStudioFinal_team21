@@ -3,7 +3,6 @@ package client;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
-import de.looksgood.ani.Ani;
 
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -46,7 +45,6 @@ public class MainApplet extends PApplet{
 	private int frogX;
 
 	private Random r = new Random();
-	private int ran;
 	
 	private int moneyValue=0;
 	
@@ -263,6 +261,26 @@ public class MainApplet extends PApplet{
 		String selname = (String) g.toArray()[sel_number];
 		gc.sendMessage(selected.concat(" ").concat(selname));
 		isSelected = false;
+		
+		if(g_name=="Sneaker"){
+			gc.sendMessage("type1");
+			map.character.type=1;
+		}else if(g_name=="Drink"){
+			gc.sendMessage("type2");
+			map.character.type=2;
+		}else if(g_name=="Cellphone"){
+			gc.sendMessage("type3");
+			map.character.type=3;
+		}else if(g_name=="Caffee"){
+			gc.sendMessage("type4");
+			map.character.type=4;
+		}else if(g_name=="Fastfood"){
+			gc.sendMessage("type5");
+			map.character.type=5;
+		}
+		
+		
+		
 	}
 	/*public void buttonSel2(){
 		picSelButton.hideButton();

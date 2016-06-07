@@ -10,10 +10,9 @@ public class Character {
 	final public int iniX, iniY, width, height;
 	private MainApplet parent;
 	private PImage chImg;
-	private String chImgAddress, itemImgAddress;
+	private String chImgAddress;
 	private String group;
 	public int oneStep;
-	private int preX, preY;
 	public int x, y;
 	public String name;
 	public int number;
@@ -27,8 +26,8 @@ public class Character {
 	public CreateBlock skillCreateBlock;
 	public DeleteBlock skillDeleteBlock;
 	public OccupipeBlock skillOccupipeBlock;
-	private GameMap gm;
 	public int ocpy;
+	public int type;
 
 
 	//constructor
@@ -52,13 +51,13 @@ public class Character {
 		this.out_of_place_right=false;
 		
 		this.money=500;
-		this.gm=gm;
 		this.face="down";
 		loadData();
 		this.skillCreateBlock=new CreateBlock(gm,this);
 		this.skillDeleteBlock=new DeleteBlock(gm,this);
 		this.skillOccupipeBlock=new OccupipeBlock(gm,this);
 		this.ocpy=0;
+		this.type=0;
 	}
 
 	public void setName(String name){
@@ -79,6 +78,7 @@ public class Character {
 		this.money=500;
 		this.ocpy=0;
 		this.face="down";
+		this.type=0;
 	}
 	
 	public void display(){
@@ -97,13 +97,11 @@ public class Character {
 	
 	
 	public void move(String dir){   //undo:check for boundary
-		MapComponent com=this.parent.map.components.get(this.index);
 		MapComponent com_next;
 		int row_pre;
 		int row_after;
 
 		if(dir.equals("up")){
-			preY = y;
 			this.face="up";
 			this.y = this.y - oneStep;
 			this.out_of_place_up=true;
@@ -124,7 +122,6 @@ public class Character {
 		}
 		else if(dir.equals("down")){
 			this.face="down";
-			preY = y;
 			this.y = this.y + oneStep;
 			this.out_of_place_up=true;
 			this.out_of_place_down=true;
@@ -145,7 +142,6 @@ public class Character {
 		}
 		else if(dir.equals("left")){
 			this.face="left";
-			preX = x;
 			this.x = this.x - oneStep;					
 			this.out_of_place_up=false;
 			this.out_of_place_down=false;
@@ -170,7 +166,6 @@ public class Character {
 		}
 		else if(dir.equals("right")){
 			this.face="right";
-			preX = x;
 			this.x = this.x + oneStep;					
 			this.out_of_place_left=true;
 			this.out_of_place_right=true;					

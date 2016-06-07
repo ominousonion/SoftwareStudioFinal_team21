@@ -6,8 +6,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Scanner;
-import java.util.Timer;
 import javax.swing.*;
 import java.awt.*;
 
@@ -21,6 +21,7 @@ public class GameServer extends JFrame{
 	private boolean start;
 	private EventCall event = new EventCall();
 	private int sel_count = 0;
+	private Random ran;
 
 	GameServer(int portNum){
 		super("server");
@@ -34,6 +35,7 @@ public class GameServer extends JFrame{
 		this.setVisible(true);
 		this.setResizable(false);
 		this.start=false;
+		this.ran=new Random();
 		
 		connections = new ArrayList<ConnectionThread>();
 		try {
@@ -77,6 +79,7 @@ public class GameServer extends JFrame{
 	
 	public class EventCall extends Thread{
 		public void run(){
+			int eventcnt=0;
 			while(true){
 				try {
 					Thread.sleep(1000);
@@ -85,7 +88,19 @@ public class GameServer extends JFrame{
 				}
 				if(start){
 					broadcast("plus");
+					
+					if(eventcnt==20) eventcnt=0; /////// change the period of event
+					else if(eventcnt!=0) eventcnt++;
+					else eventcnt=0;
+					
+					if(ran.nextInt(30)==0 && eventcnt==0){
+						broadcast("event"+ran.nextInt(5));
+						eventcnt=1;
+					}else if(eventcnt==4){  ///// time of picture 
+						broadcast("pichide");
+					}
 				}
+				
 			}
 		}
 	}
@@ -121,6 +136,10 @@ public class GameServer extends JFrame{
 							textArea.append(sel_count+"\n");
 						}
 						else{
+							if(info[1].equals("win")){
+								start=false;
+								sel_count=0;
+							}
 							for(ConnectionThread ct: connections){
 								if(ct.equals(this)==false){
 									ct.sendMessage(line);
