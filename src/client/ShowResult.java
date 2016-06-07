@@ -14,8 +14,8 @@ public class ShowResult {
 	private HashMap<Integer, ArrayList<Integer>> data = new HashMap<Integer, ArrayList<Integer>>() ;
 	private PicData graphdata;
 	private int id;
-	private int[] sum =  new int [5];
-	private String[] color = {"#6495ED", "#7FFFD4", "#32CD32", "#FF6347", "	#FFA54F","#B452CD", "#FF0000"};
+	private int[] sum =  new int [10];
+	private String[] color = {"#6495ED", "#7FFFD4", "#32CD32", "#FF6347", "#8F4586","#B452CD", "#FF0000"};
 	private String nowGroup;
 	private float iniAngle = 0;
 	private int nextId, preId;
@@ -63,7 +63,7 @@ public class ShowResult {
 	    float lastAngle = 0;
 	    int k = 0;
 		for (int i : data) {
-			float rad = 360 / sum[id] * i;
+			float rad = 360 * i / sum[id] ;
 		    applet.fill(hex2Rgb(color[k]).getRGB());
 		    applet.arc(x, height/2, diameter, diameter, iniAngle+lastAngle, iniAngle+lastAngle+applet.radians(rad));
 		    applet.rect(500,100+40*k,100,20); //x,y,w,h
@@ -71,7 +71,7 @@ public class ShowResult {
 		    this.applet.textSize(30);
 		    this.applet.text(nowGroup+" :", 40, 50);
 			this.applet.textSize(18);
-			this.applet.text((String)graphdata.getGroupData().get(nowGroup).toArray()[k],650,115+40*k);
+			if(graphdata.getGroupData().get(nowGroup).toArray()[k]!=null)this.applet.text((String)graphdata.getGroupData().get(nowGroup).toArray()[k],650,115+40*k);
 		    lastAngle += applet.radians(rad);  
 		    k++;
 		}
