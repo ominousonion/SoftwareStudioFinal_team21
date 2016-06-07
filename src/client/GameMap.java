@@ -176,11 +176,9 @@ public class GameMap{
 		}else if(eventIndex==1){ //股市崩盤
 			this.character.money=0;
 			this.opponent.money=0;
-		}else if(eventIndex==2){ //經濟大蕭條
-			if(this.character.money>200) this.character.money-=200;
-			else this.character.money=0;
-			if(this.opponent.money>200) this.opponent.money-=200;
-			else this.opponent.money=0;
+		}else if(eventIndex==2){ //台灣領海發現一堆石油
+			this.character.money+=400;
+			this.opponent.money+=400;
 		}else if(eventIndex==3){ //政府課重稅1
 			if(this.character.money>this.opponent.money){
 				if(this.character.money>200) this.character.money-=200;

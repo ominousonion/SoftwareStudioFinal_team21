@@ -96,7 +96,7 @@ public class GameServer extends JFrame{
 					if(ran.nextInt(30)==0 && eventcnt==0){
 						broadcast("event"+ran.nextInt(5));
 						eventcnt=1;
-					}else if(eventcnt==4){  ///// time of picture 
+					}else if(eventcnt==5){  ///// time of picture 
 						broadcast("pichide");
 					}
 				}

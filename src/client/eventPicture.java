@@ -18,7 +18,7 @@ public class eventPicture  extends PApplet {
 	}
 	
 	public void LoadPicture(int index){
-		String filename =("./src/img/event"+index+".png");
+		String filename =("./src/img/event"+index+".jpg");
 		img = loadImage(filename);
 	}
 	
